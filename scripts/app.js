@@ -7,21 +7,47 @@ function init() {
   const cellCount = width * width
   const outerCells = []
   const cells = []
+  const innerCells = []
+  let setAnimation
+  
+  const player = {
+    class: 'player_down',
+    sprite: '<img src = "assets/test_left.png">',
+    position: 209,
+    facingDirection: 'down',
+    horizontalPosition: null,
+    verticalPosition: null,
+    setPosition(){
+      this.horizontalPosition = this.position % width
+      this.verticalPosition = Math.floor(this.position / width)
+    },
+  }
+
+  const cpuOneDefaultTarget = {
+    position: 399,
+    horizontalPosition: null,
+    verticalPosition: null,
+    setPosition(){
+      this.horizontalPosition = this.position % width
+      this.verticalPosition = Math.floor(this.position / width)
+    },
+  }
+
+  const cpuOne = {
+    class: 'cpuOneClass',
+    position: 0,
+    target: [cpuOneDefaultTarget.horizontalPosition,cpuOneDefaultTarget.verticalPosition],
+    facingDirection: 'down',
+    speed: 200,
+    horizontalPosition: null,
+    verticalPosition: null,
+    setPosition(){
+      this.horizontalPosition = this.position % width
+      this.verticalPosition = Math.floor(this.position / width)
+    },
+  }
 
 
-  const playerClass = 'playerClass'
-  const cpuOneClass = 'cpuOneClass'
-
-  //* POSITIONS
-  let playerPosition = 209
-  let cpuOnePosition = 0
-  const playerFacingDirection = 'down'
-
-  let cpuOneHorizontalPosition = cpuOnePosition % width
-  let cpuOneVerticalPosition = Math.floor(cpuOnePosition / width)
-
-  let playerHorizontalPosition = playerPosition % width
-  let playerVerticalPosition = Math.floor(playerPosition / width)
 
 
   //* backend programme 
@@ -30,35 +56,35 @@ function init() {
   const cpuOnePositionDisplay = document.querySelector('#cpu_one_position')
 
   function printPosition(){
-    playerPositionDisplay.innerHTML = `${playerPosition} Horizontal:${playerHorizontalPosition} Vertical:${playerVerticalPosition}`
-    cpuOnePositionDisplay.innerHTML = `${cpuOnePosition} Horizontal:${cpuOneVerticalPosition} Vertical:${cpuOneVerticalPosition}`
+    playerPositionDisplay.innerHTML = `${player.position} Horizontal:${player.horizontalPosition} Vertical:${player.verticalPosition}`
+    cpuOnePositionDisplay.innerHTML = `${cpuOne.position} Horizontal:${cpuOne.verticalPosition} Vertical:${cpuOne.verticalPosition}`
   }
-
-
- 
-
 
 
   
   // * Make a grid 
-  function createGrid(playerPosition) {
+  function createGrid() {
     for (let i = 0; i < cellCount; i++) {
       const outerCell = document.createElement('div')
       const cell = document.createElement('div')
+      const innerCell = document.createElement('div')
       cell.setAttribute('id', i)
-      // cell.setAttribute('id', `cell-${i}`)
-      cell.innerText = i
+      outerCell.classList.add('outer_cell')
+      cell.classList.add('cell')
+      // cell.innerText = i
       outerCell.appendChild(cell)
       grid.appendChild(outerCell)
+      cell.appendChild(innerCell)
       outerCells.push(outerCell)
       cells.push(cell)
+      innerCells.push(innerCell)
     }
-    addPlayer(playerPosition)
-    addCpu(cpuOnePosition,cpuOneClass)
+    addPlayer(player.position)
+    addCpu(cpuOne.position,cpuOne.class)
   } 
 
   //* initialise
-  createGrid(playerPosition)
+  createGrid()
   
   // * Make walls
   // walls defined by adding class to cells, according to what is mentioned in the array
@@ -72,12 +98,44 @@ function init() {
   }
   createWalls(cellsWithWalls)
   
+  
 
+  //* Animation
+
+  
+
+  function animateSprite(target,frameNo) {
+    
+    //// target.innerHTML = `<img src ='/images/${frames}.png' alt = 'bunny animation' >`
+    const LIMIT = frameNo
+    const frameSize = cells[0].offsetHeight
+    const speed = 140
+    let i = 0
+    let move
+
+    setAnimation = setInterval(function () {
+
+      // move = '0px ' + -((frameNo - i) * frameSize) + 'px'
+      move = '0px ' + -(i * frameSize) + 'px'
+      //! using target.style overwrites whatever set by css, hence it needs to be redeclared
+      target.style.margin = move
+      target.style.height = '100%'
+      target.style.width = '100%'
+      if (i === LIMIT) {
+        i = frameNo
+      } else {
+        i++
+      }
+    }, speed)
+
+
+  }
 
 
   // * Add cpuOne to grid
   function addCpu(position,classToAdd) {
     cells[position].classList.add(classToAdd)
+    cpuOne.setPosition()
     //change class to add depending on the direction facing
   }
 
@@ -98,114 +156,143 @@ function init() {
 
 
   function cpuMovementDecision(){
+    cpuOneDefaultTarget.setPosition()
+    cpuOne.target = [cpuOneDefaultTarget.horizontalPosition,cpuOneDefaultTarget.verticalPosition]
+    // cpuOne.target = [player.horizontalPosition,player.verticalPosition]
+
     cpuMotion = []
-    if (cpuOneHorizontalPosition < playerHorizontalPosition){
+    if (cpuOne.horizontalPosition < cpuOne.target[0]){
       cpuMotion.push('right')
     } else {
       cpuMotion.push('left')
     }
-    if (cpuOneVerticalPosition < playerVerticalPosition){
+    if (cpuOne.verticalPosition < cpuOne.target[1]){
       cpuMotion.push('down')
     } else {
       cpuMotion.push('up')
     }
+    console.log(cpuOne.target[0])
   }
 
 
   // * Move cpu
   function cpuMovement() {
-    removeCpu(cpuOnePosition,cpuOneClass)
+    removeCpu(cpuOne.position,cpuOne.class)
     
     //! this might be called from object or array if CPUs shared similar function
     //! this may potentially be renamed cpuOneMovement... 
-    const horizontalPosition = cpuOneHorizontalPosition
-    const verticalPosition = cpuOneVerticalPosition
+    const horizontalPosition = cpuOne.horizontalPosition
+    const verticalPosition = cpuOne.verticalPosition
     const motionIndex =  Math.floor(Math.random() * cpuMotion.length)
 
     cpuMovementDecision()
-    console.log(cpuMotion)
+  
     switch (cpuMotion[motionIndex]) {
       case 'right':
-        if (horizontalPosition < width - 1 && !outerCells[(cpuOnePosition + 1)].classList.contains('wall')) cpuOnePosition++
+        if (horizontalPosition < width - 1 && !outerCells[(cpuOne.position + 1)].classList.contains('wall')) cpuOne.position++ 
         break
       case 'left': 
-        if (horizontalPosition > 0 && !outerCells[(cpuOnePosition - 1)].classList.contains('wall')) cpuOnePosition--
+        if (horizontalPosition > 0 && !outerCells[(cpuOne.position - 1)].classList.contains('wall')) cpuOne.position--
         break
       case 'up': 
-        if (verticalPosition > 0 && !outerCells[(cpuOnePosition - width)].classList.contains('wall')) cpuOnePosition -= width
+        if (verticalPosition > 0 && !outerCells[(cpuOne.position - width)].classList.contains('wall')) cpuOne.position -= width
         break
       case 'down':
-        if (verticalPosition < width - 1 && !outerCells[(cpuOnePosition + width)].classList.contains('wall')) cpuOnePosition += width
+        if (verticalPosition < width - 1 && !outerCells[(cpuOne.position + width)].classList.contains('wall')) cpuOne.position += width
         break
       default:
-        console.log('INVALID KEY')
+        console.log('cpu invalid command')
     }
   
-    addCpu(cpuOnePosition,cpuOneClass)
+    addCpu(cpuOne.position,cpuOne.class)
     
     //!redfining positions, maybe this could be a function?
-    cpuOneHorizontalPosition = cpuOnePosition % width
-    cpuOneVerticalPosition = Math.floor(cpuOnePosition / width)
     
 
     //TODO backend
     printPosition()
   }
   
-  setInterval(cpuMovement,200)
+  setInterval(cpuMovement,cpuOne.speed)
 
 
   //* player related motions
 
-  // * Add Player to grid
+  //// Add Player to grid
   function addPlayer(position) {
-    cells[position].classList.add(playerClass)
-    //change class to add depending on the direction facing
+    // cells[position].classList.add(player.class)
+    innerCells[position].innerHTML = player.sprite
+    player.setPosition()
+    animateSprite(innerCells[position],3)
   }
 
-  // * Remove Player from the grid
+  //// Remove Player from the grid
   function removePlayer(position) {
-    cells[position].classList.remove(playerClass)
+    // cells[position].classList.remove(player.class)
+    innerCells[position].innerHTML = ''
+    clearInterval(setAnimation)
   }
   
   
   // * Move Player
   function handleMovementWithKey(e) {
-    removePlayer(playerPosition)
+    removePlayer(player.position)
     
     //! consider refactor later
-    const horizontalPosition = playerHorizontalPosition
-    const verticalPosition = playerVerticalPosition
+    const horizontalPosition = player.horizontalPosition
+    const verticalPosition = player.verticalPosition
     
-    console.log('playerposition',playerPosition)
-    console.log('horizontalPosition',horizontalPosition)
-    console.log('verticalPosition',verticalPosition)
+    //// console.log('playerposition',player.position)
+    //// console.log('horizontalPosition',horizontalPosition)
+    //// console.log('verticalPosition',verticalPosition)
+    turnPlayer(e.key)
 
     switch (e.key) {
-      case 'ArrowRight': //arrow right
-        // player can move to the right until gird '9' (hence width - 1)
-        if (horizontalPosition < width - 1 && !outerCells[(playerPosition + 1)].classList.contains('wall')) playerPosition++
+      case 'ArrowRight': 
+        //// player can move to the right until grid '9' (hence width - 1)
+        if (horizontalPosition < width - 1 && !outerCells[(player.position + 1)].classList.contains('wall')) player.position++
         break
-      case 'ArrowLeft': //arrow left
-        if (horizontalPosition > 0 && !outerCells[(playerPosition - 1)].classList.contains('wall')) playerPosition--
+      case 'ArrowLeft': 
+        if (horizontalPosition > 0 && !outerCells[(player.position - 1)].classList.contains('wall')) player.position--
         break
-      case 'ArrowUp': //arrow up
-        if (verticalPosition > 0 && !outerCells[(playerPosition - width)].classList.contains('wall')) playerPosition -= width
+      case 'ArrowUp': 
+        if (verticalPosition > 0 && !outerCells[(player.position - width)].classList.contains('wall')) player.position -= width
         break
-      case 'ArrowDown': //arrow down
-        if (verticalPosition < width - 1 && !outerCells[(playerPosition + width)].classList.contains('wall')) playerPosition += width
+      case 'ArrowDown': 
+        if (verticalPosition < width - 1 && !outerCells[(player.position + width)].classList.contains('wall')) player.position += width
         break
       default:
-        console.log('INVALID KEY')
+        console.log('invalid command')
     }
 
-    addPlayer(playerPosition)
+    addPlayer(player.position)
     printPosition()
-
-    playerHorizontalPosition = playerPosition % width
-    playerVerticalPosition = Math.floor(playerPosition / width)
+    
   }
   
+  function turnPlayer(keyPressed){
+    switch (keyPressed) {
+      case 'ArrowRight': 
+        player.sprite = '<img src = "assets/test_right.png">'
+        break
+      case 'ArrowLeft': 
+        player.sprite = '<img src = "assets/test_left.png">'
+        break
+      case 'ArrowUp': 
+        player.sprite = '<img src = "assets/test_back.png">'
+        break
+      case 'ArrowDown': 
+        player.sprite = '<img src = "assets/test_front.png">'
+        break
+      default:
+        console.log('invalid command')
+    }
+
+  }
+
+
+
+
 
 
   

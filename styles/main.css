@@ -8,7 +8,7 @@ body {
   margin: 0;
   background-color:darkgrey;
   font-family:sans-serif;
-  color:grey;
+  color:rgb(136, 217, 255);
   font-size:10px;
 }
 
@@ -26,43 +26,61 @@ body {
   /* box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2); */
   display: flex;
   flex-wrap: wrap;
-  height: 100%;
   justify-content: center;
   height: 600px;
   width: 600px;
 }
 
-.grid div {
+.outer_cell {
   border: 1px solid lightgrey;
   /* flex-grow: 1; */
   height: 5%;
   width: 5%;
-  overflow: visible;
-  display:flex;
+  overflow: hidden;
+  /* display:flex;
   justify-content:center;
   align-items:center;
+  text-align: center; */
 }
 
-.grid div > div {
+.cell {
   border: 0px;
   /* flex-grow: 1; */
-  height: 130%;
-  width: 130%;
-  /* margin-bottom: -5px; */
-  overflow: visible;
+  height: 100%;
+  width: 400%;
+  /* margin-bottom: 10px; */
+  /* overflow: visible; */
   /* background-color:rgba(100,10,10,0.8); */
-}
-
-.grid div > div.playerClass {
-  background-image: url('../assets/test_sprite.svg');
   background-repeat: no-repeat;
   background-size:100%;
 }
 
-.grid div > div.cpuOneClass {
+.cell > div > img {
+  height:100%;
+  width: 100%;
+}
+
+/* obsolete */
+/* .cell .player_down {
+  background-image: url('../assets/test_sprite.svg');
+}
+
+.cell .player_left {
+  background-image: url('../assets/test_sprite_left.svg');
+}
+
+.cell .player_right {
+  background-image: url('../assets/test_sprite_right.svg');
+}
+
+.cell .player_up {
+  background-image: url('../assets/test_sprite_back.svg');
+} */
+
+.outer_cell .cpuOneClass {
   background-image: url('../assets/test_sprite2.svg');
   background-repeat: no-repeat;
-  background-size:100%;
+  background-size:contain;
 }
 
 
