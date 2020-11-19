@@ -1,1 +1,1 @@
-# sei-project-1
+# sei_project_1
