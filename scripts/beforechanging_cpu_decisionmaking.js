@@ -1,20 +1,13 @@
 
-
-//! if you can't click, you need to disable cover
-
-//TODO add alt to images
-
 function init() {
   // * Variables
   const grid = document.querySelector('.grid')
-  const cover = document.querySelector('.cover')
+  
   const width = 20
   const cellCount = width * width
   const outerCells = []
   const cells = []
   const innerCells = []
-
-  //! maybe add this inside an object
   let setAnimation
   
   const player = {
@@ -56,22 +49,16 @@ function init() {
   }
 
 
-  //* pageitems
-  const scoreDisplay = document.querySelector('.score')
-  const scoreDisplayWrapper = document.querySelector('.score_wrapper')
-  let score = 0
 
-  
-  //TODO
+
+  //* backend programme 
+
   const playerPositionDisplay = document.querySelector('#player_position')
   const cpuOnePositionDisplay = document.querySelector('#cpu_one_position')
   const wallPositionDisplay = document.querySelector('#wall_position')
-  const itemPositionDisplay = document.querySelector('#item_position')
- 
-  
 
-  //* SETTINGS
-  const scoreFromNormalItem = 100
+ 
+
   
   // * Make a grid 
   function createGrid() {
@@ -82,7 +69,7 @@ function init() {
       cell.setAttribute('id', i)
       outerCell.classList.add('outer_cell')
       cell.classList.add('cell')
-      // cell.innerText = i
+      cell.innerText = i
       outerCell.appendChild(cell)
       grid.appendChild(outerCell)
       cell.appendChild(innerCell)
@@ -103,20 +90,17 @@ function init() {
   // const cellsWithWalls = [1,2,4,3,5,6,7,8,10,11,12,13,14,0,15,16,17,18,19,20,40,60,80,100,120,140,160,200,220,240,260,280,300,320,340,360,380,381,382,383,384,385,386,387,388,389,391,392,393,394,395,396,397,398,399,379,35,59,79,39,99,119,139,159,179,219,239,259,279,299,319,339,359,343,323,303,127,147,167,168,169,170,171,172,152,132,45,65,64,63,83,124,123,143,163,74,94,95,96,116,237,236,235,234,254,274,273,271,251,231,230,313,314,315,316,296,336,324,325,305,285,265,245,244,267,287,288,289,329,328,327,347,202,222,261,262,321,185,205,206,207,194,174,154,155,134,195,196,192,189,67,47,48,50,70,90,89,71,72]
   
 
-  const cellsWithItems = [24,25,23,22,22,21,41,61,62,64,44,63,26,27,28,48,68,67,66,65,69,70,50,30,31,32,33,34,54,35,37,38,36,58,78,77,76,75,74,73,72,71,92,112,111,110,114,115,114,96,116,113,98,118,138,158,157,156,136,155,154,153,152,132,130,150,149,148,128,108,107,106,86,126,146,145,144,124,104,84,103,102,101,81,378,373,373,314,316,315,296,297,298,318,338,358,377,376,375,375,374,353,352,373,351,372,350,370,369,368,366,367,365,364,363,362,361,341,321,301,281,261,262,264,263,303,302,323,324,344,325,305,285,265]
-
-  function populateCells(array,classToAdd){
+  function createWalls(array){
     for (let i = 0; i < array.length ; i++) {
-      outerCells[array[i]].classList.add(classToAdd)
+      outerCells[array[i]].classList.add('wall')
     }
   }
-  populateCells(cellsWithWalls,'wall')
-  populateCells(cellsWithItems,'item')
+  createWalls(cellsWithWalls)
   
 
   function printPosition(){
     playerPositionDisplay.innerHTML = `${player.position} Horizontal:${player.horizontalPosition} Vertical:${player.verticalPosition}`
-    cpuOnePositionDisplay.innerHTML = `${cpuOne.position} Horizontal:${cpuOne.verticalPosition} Vertical:${cpuOne.verticalPosition} cpu motion: ${cpuMotion} cpu facing ${cpuOne.facingDirection}`
+    cpuOnePositionDisplay.innerHTML = `${cpuOne.position} Horizontal:${cpuOne.verticalPosition} Vertical:${cpuOne.verticalPosition} cpu motion: ${cpuMotion}`
     wallPositionDisplay.innerHTML = `${cellsWithWalls}`
   }
 
@@ -170,96 +154,38 @@ function init() {
   
   
   const defaultMotion = ['right','left','up','down']
-  //// const motionDownRight = ['down','right']
-  //// const motionUpRight = ['up','right']
-  //// const motionDownLeft = ['down','left']
-  //// const motionUpLeft = ['up','left']
+  // const motionDownRight = ['down','right']
+  // const motionUpRight = ['up','right']
+  // const motionDownLeft = ['down','left']
+  // const motionUpLeft = ['up','left']
   let cpuMotion = defaultMotion
 
   function cpuDetermineTarget(cpu){
-    cpuOneDefaultTarget.setPosition()
-    cpu.target = [cpuOneDefaultTarget.horizontalPosition,cpuOneDefaultTarget.verticalPosition]
-    // cpu.target = [player.horizontalPosition,player.verticalPosition]
+    // cpuOneDefaultTarget.setPosition()
+    // cpu.target = [cpuOneDefaultTarget.horizontalPosition,cpuOneDefaultTarget.verticalPosition]
+    cpu.target = [player.horizontalPosition,player.verticalPosition]
   } 
-  
-  function isWallOnRightOf(target){
-    return outerCells[(target.position + 1)].classList.contains('wall')
-  }
-
-  function isWallOnLeftOf(target){
-    return outerCells[(target.position - 1)].classList.contains('wall')
-  }
-  
-  function isWallAbove(target){
-    return outerCells[(target.position - width)].classList.contains('wall')
-  }
-
-  function isWallBelow(target){
-    return outerCells[(target.position + width)].classList.contains('wall')
-  }
-
-
 
 
   function cpuMovementDecision(){
 
     cpuDetermineTarget(cpuOne)
-
-    //!new logic to be put in here to make it chase or run away from player
+    cpuMotion = []
     
-    //* when facing right and nothing in the way
-    if (cpuOne.facingDirection === 'right' && !isWallOnRightOf(cpuOne)){
-      cpuMotion = ['right','right']
+    // adds option to movement depending on wall position
+    if (outerCells[(cpuOne.position + 1)].classList.contains('wall')){
+      cpuMotion.push('left')
     }
-    
-    //* when facing left and nothing in the way
-    if (cpuOne.facingDirection === 'left' && !isWallOnLeftOf(cpuOne)){
-      cpuMotion = ['left','left']
+    if (outerCells[(cpuOne.position - 1)].classList.contains('wall')){
+      cpuMotion.push('right')
     }
-
-    //* when facing down and nothing in the way
-    if (cpuOne.facingDirection === 'down' && !isWallBelow(cpuOne)){
-      cpuMotion = ['down','down']
+    if (outerCells[(cpuOne.position - width)].classList.contains('wall')){
+      cpuMotion.push('down')
     }
-
-    //* when facing up and nothing in the way
-    if (cpuOne.facingDirection === 'up' && !isWallAbove(cpuOne)){
-      cpuMotion = ['up','up']
-    }
-    
-
-    //* when facing right or left and wall is on facing direction
-    if ((cpuOne.facingDirection === 'right' && isWallOnRightOf(cpuOne)) || (cpuOne.facingDirection === 'left' && isWallOnLeftOf(cpuOne))){
-      cpuMotion = ['up','down']
+    if (outerCells[(cpuOne.position + width)].classList.contains('wall')){
+      cpuMotion.push('up')
     }
 
-    //* when facing down or up and wall is on facing direction
-    if ((cpuOne.facingDirection === 'down' && isWallBelow(cpuOne)) || (cpuOne.facingDirection === 'up' && isWallAbove(cpuOne))){
-      cpuMotion = ['left','right']
-    }
-
-    
-    //* when wall at top and right
-    if (isWallAbove(cpuOne) && isWallOnRightOf(cpuOne)){
-      cpuMotion = ['down','left']
-    }
-    
-    //* when wall at top and left
-    if (isWallAbove(cpuOne) && isWallOnLeftOf(cpuOne)){
-      cpuMotion = ['right','down']
-    }
-
-    //* when wall at bottom and right
-    if (isWallBelow(cpuOne) && isWallOnRightOf(cpuOne)){
-      cpuMotion = ['up','left']
-    }
-    
-    //* when wall at bottom and left
-    if (isWallBelow(cpuOne) && isWallOnLeftOf(cpuOne)){
-      cpuMotion = ['up','right']
-    }
-
-    //*movement based on target position
     if (cpuOne.horizontalPosition < cpuOne.target[0]){
       cpuMotion.push('right')
     } else {
@@ -282,25 +208,23 @@ function init() {
     //! this may potentially be renamed cpuOneMovement... 
     //// const horizontalPosition = cpuOne.horizontalPosition
     //// const verticalPosition = cpuOne.verticalPosition
-  
-    cpuMovementDecision()
-    // cpuMotion = ['right']
     const motionIndex =  Math.floor(Math.random() * cpuMotion.length)
 
-    cpuOne.facingDirection = cpuMotion[motionIndex]
+    cpuMovementDecision()
+    // cpuMotion = ['right']
   
     switch (cpuMotion[motionIndex]) {
       case 'right':
-        if (cpuOne.horizontalPosition < width - 1 && !isWallOnRightOf(cpuOne)) cpuOne.position++ 
+        if (cpuOne.horizontalPosition < width - 1 && !outerCells[(cpuOne.position + 1)].classList.contains('wall')) cpuOne.position++ 
         break
       case 'left': 
-        if (cpuOne.horizontalPosition > 0 && !isWallOnLeftOf(cpuOne)) cpuOne.position--
+        if (cpuOne.horizontalPosition > 0 && !outerCells[(cpuOne.position - 1)].classList.contains('wall')) cpuOne.position--
         break
       case 'up': 
-        if (cpuOne.verticalPosition > 0 && !isWallAbove(cpuOne)) cpuOne.position -= width
+        if (cpuOne.verticalPosition > 0 && !outerCells[(cpuOne.position - width)].classList.contains('wall')) cpuOne.position -= width
         break
       case 'down':
-        if (cpuOne.verticalPosition < width - 1 && !isWallBelow(cpuOne)) cpuOne.position += width
+        if (cpuOne.verticalPosition < width - 1 && !outerCells[(cpuOne.position + width)].classList.contains('wall')) cpuOne.position += width
         break
       default:
         console.log('cpu invalid command')
@@ -341,51 +265,7 @@ function init() {
   //   innerCells[position].innerHTML = ''
   //   clearInterval(setAnimation)
   // }
-
-
-  //TODO mejirushi
   
-  
-  function takeItemAndEarnScore(){
-    if (outerCells[player.position].classList.contains('item')){
-      outerCells[player.position].classList.remove('item')
-      score += scoreFromNormalItem
-      scoreDisplay.innerHTML = score
-      scoreDisplayWrapper.classList.add('animate')
-      
-
-      // animate score board
-      setTimeout(function(){
-        scoreDisplayWrapper.classList.remove('animate')
-      },200)
-      
-      //animate items when taken
-      const itemPositionY = outerCells[player.position].getBoundingClientRect().y
-      const itemPositionX = outerCells[player.position].getBoundingClientRect().x
-      const itemHeight = outerCells[player.position].getBoundingClientRect().height
-      const itemWidth = outerCells[player.position].getBoundingClientRect().width
-      
-      const itemTaken = document.createElement('div')
-      itemTaken.classList.add('effect_animation')
-      itemTaken.innerHTML = '<img src = "assets/item.gif" ></img>'
-      itemTaken.style.top = `${itemPositionY}px`
-      itemTaken.style.left = `${itemPositionX}px`
-      itemTaken.style.height = `${itemHeight}px`
-      itemTaken.style.width = `${itemWidth}px`
-      cover.appendChild(itemTaken)
-      
-      setTimeout(function(){
-        itemTaken.style.top = '0'
-        itemTaken.style.left = '100%'
-      },100)
-
-      setTimeout(function(){
-        cover.removeChild(itemTaken)
-      },1000)
-
-    }
-  }
-
   
   // * Move Player
   function handleMovementWithKey(e) {
@@ -397,26 +277,28 @@ function init() {
     setTimeout(function(){
       removePlayer(player.position)
       completePlayerMotion(e.key)
+      //! consider refactor later
+      // const horizontalPosition = player.horizontalPosition
+      // const verticalPosition = player.verticalPosition
 
       switch (e.key) {
         case 'ArrowRight': 
-          if (player.horizontalPosition < width - 1 && !isWallOnRightOf(player)) player.position++
+          if (player.horizontalPosition < width - 1 && !outerCells[(player.position + 1)].classList.contains('wall')) player.position++
           break
         case 'ArrowLeft': 
-          if (player.horizontalPosition > 0 && !isWallOnLeftOf(player)) player.position--
+          if (player.horizontalPosition > 0 && !outerCells[(player.position - 1)].classList.contains('wall')) player.position--
           break
         case 'ArrowUp': 
-          if (player.verticalPosition > 0 && !isWallAbove(player)) player.position -= width
+          if (player.verticalPosition > 0 && !outerCells[(player.position - width)].classList.contains('wall')) player.position -= width
           break
         case 'ArrowDown': 
-          if (player.verticalPosition < width - 1 && !isWallBelow(player)) player.position += width
+          if (player.verticalPosition < width - 1 && !outerCells[(player.position + width)].classList.contains('wall')) player.position += width
           break
         default:
           console.log('invalid command')
       }
 
       addPlayer(player.position)
-      takeItemAndEarnScore()
       printPosition()
     
     },360)  
@@ -462,20 +344,13 @@ function init() {
   }
 
 
-  //! used to make walls to develop levels
+
   function makeWall(e) {
     e.target.classList.add('wall')
     cellsWithWalls.push(cells.indexOf(e.target))
     wallPositionDisplay.innerHTML = `${cellsWithWalls}`
   }
-
-  function makeItem(e) {
-    e.target.classList.add('item')
-    cellsWithItems.push(cells.indexOf(e.target))
-    itemPositionDisplay.innerHTML = `${cellsWithItems}`
-  }
   
-  //! used to make walls to develop levels
   // function removeWall(e){
   //   e.target.classList.remove('wall')
   //   cellsWithWalls.filter(cell => {
@@ -493,8 +368,7 @@ function init() {
   document.addEventListener('keyup', handleMovementWithKey)
 
   cells.forEach(cell => {
-    // cell.addEventListener('click', makeWall)
-    cell.addEventListener('click', makeItem)
+    cell.addEventListener('click', makeWall)
   })
 
   // cells.forEach(cell => {
@@ -510,37 +384,3 @@ function init() {
 }
 
 window.addEventListener('DOMContentLoaded', init)
-
-
-
-// function cpuMovementDecision(){
-
-//   cpuDetermineTarget(cpuOne)
-//   cpuMotion = []
-  
-//   // adds option to movement depending on wall position
-//   if (outerCells[(cpuOne.position + 1)].classList.contains('wall')){
-//     cpuMotion.push('left')
-//   }
-//   if (outerCells[(cpuOne.position - 1)].classList.contains('wall')){
-//     cpuMotion.push('right')
-//   }
-//   if (outerCells[(cpuOne.position - width)].classList.contains('wall')){
-//     cpuMotion.push('down')
-//   }
-//   if (outerCells[(cpuOne.position + width)].classList.contains('wall')){
-//     cpuMotion.push('up')
-//   }
-
-//   if (cpuOne.horizontalPosition < cpuOne.target[0]){
-//     cpuMotion.push('right')
-//   } else {
-//     cpuMotion.push('left')
-//   }
-//   if (cpuOne.verticalPosition < cpuOne.target[1]){
-//     cpuMotion.push('down')
-//   } else {
-//     cpuMotion.push('up')
-//   }
-//   console.log(cpuOne.target[0])
-// }
