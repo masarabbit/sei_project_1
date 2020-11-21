@@ -6,7 +6,7 @@
 body {
   height: 100vh;
   margin: 0;
-  background-color:darkgrey;
+  background-color:rgb(23, 22, 82);
   font-family:sans-serif;
   color:rgb(136, 217, 255);
   font-size:10px;
@@ -27,10 +27,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color:white;
+  background-color:rgb(16, 13, 54);
 }
 
 .grid {
+  background-color:rgb(145, 248, 255);
   align-items: center;
   /* box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2); */
   display: flex;
@@ -56,12 +57,14 @@ body {
   border: 0px;
   /* flex-grow: 1; */
   height: 100%;
-  width: 400%;
+  width: 100%;
+  /* width: 400%; */
   /* margin-bottom: 10px; */
   /* overflow: visible; */
   /* background-color:rgba(100,10,10,0.8); */
   background-repeat: no-repeat;
-  background-size:100%;
+  background-size:contain;
+  /* background-size:100%; */
 }
 
 .cell > div > img {
@@ -75,23 +78,27 @@ body {
 } */
 
 /* obsolete */
-/* .cell .player_down {
-  background-image: url('../assets/test_sprite.svg');
+.cell.player_down {
+  background-color: lightblue;
+  /* background-image: url('../assets/down.gif'); */
 }
 
-.cell .player_left {
-  background-image: url('../assets/test_sprite_left.svg');
+.cell.player_left {
+  background-color: lightcoral;
+  /* background-image: url('../assets/left.gif'); */
 }
 
-.cell .player_right {
-  background-image: url('../assets/test_sprite_right.svg');
+.cell.player_right {
+  background-color: lightseagreen;
+  /* background-image: url('../assets/right.gif'); */
 }
 
-.cell .player_up {
-  background-image: url('../assets/test_sprite_back.svg');
-} */
+.cell.player_up {
+  background-color: lightslategray;
+  /* background-image: url('../assets/up.gif'); */
+}
 
-.outer_cell .cpuOneClass {
+.cell.cpuOneClass {
   background-image: url('../assets/test_sprite2.svg');
   background-repeat: no-repeat;
   background-size:contain;
@@ -99,7 +106,7 @@ body {
 
 
 .wall{
-  background-color:pink;
+  background-color:rgb(64, 147, 255);
 }
 
 .item{
@@ -149,14 +156,28 @@ span.score{
 
 p.score_wrapper.animate {
   width:220px;
-  font-size:30px;
+  font-size:40px;
 }
 
 .effect_animation {
   transition:1s;
   position:absolute;
 }
-.effect_animation img {
+.effect_animation img, .effect_animation_fast img {
   width:100%;
   height:100%;
+}
+
+.effect_animation_fast {
+  transition:0.3s;
+  position:absolute;
+  box-sizing:content-box;
+  /* border:1px solid red; */
+}
+
+.effect_animation_fast > img {
+  margin-top:-30%;
+  margin-left:-30%;
+  height:160%;
+  width:160%;
 }
