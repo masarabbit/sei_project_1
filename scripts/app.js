@@ -2,14 +2,18 @@
 
 //! if you can't click, you need to disable cover
 
+//!something needs to be added to react to user changing viewport size
+
+
 //TODO add alt to images
 
 function init() {
   // * Variables
   const grid = document.querySelector('.grid')
   const cover = document.querySelector('.cover')
-  const width = 20
-  const cellCount = width * width
+  const width = 40
+  const height = 25
+  const cellCount = width * height
   const outerCells = []
   const cells = []
   const innerCells = []
@@ -21,7 +25,7 @@ function init() {
     class: 'player_down',
     staticGif: 'down.gif',
     motionGif: 'down.gif',
-    sprite: '<img src = "assets/test_left.png">',
+    //// sprite: '<img src = "assets/test_left.png">',
     position: 209,
     display: document.createElement('div'),
     prevPosition: null,
@@ -46,7 +50,10 @@ function init() {
 
   const cpuOne = {
     class: 'cpuOneClass',
+    staticGif: 'down.gif',
+    motionGif: 'down.gif',
     position: 61,
+    display: document.createElement('div'),
     target: [cpuOneDefaultTarget.horizontalPosition,cpuOneDefaultTarget.verticalPosition],
     facingDirection: 'down',
     speed: 200,
@@ -100,11 +107,29 @@ function init() {
   //* initialise
   createGrid()
   displayTargetImage(player)
+  displayTargetImage(cpuOne)
+
+
+  //* reset periodically to in case player resize screen
+  function rePositionImage(target){
+    target.display.style.top = `${cells[target.position].getBoundingClientRect().y}px`
+    target.display.style.left = `${cells[target.position].getBoundingClientRect().x}px`
+  }
+  
+  setInterval(function(){
+    rePositionImage(player)
+    // rePositionImage(cpuOne) // may not be necessary?(cpu moves anyway)
+  },100)
+
+
+  
+
+
   
   // * Make walls
   // walls defined by adding class to cells, according to what is mentioned in the array
-  const cellsWithWalls = [0,1,2,3,4,5,6,7,8,9,29,49,10,11,12,13,14,15,16,17,17,18,19,20,40,60,42,43,45,46,47,51,52,53,55,56,57,39,59,79,99,119,80,100,82,83,85,105,125,88,89,90,109,129,87,127,147,167,187,166,165,169,189,91,93,94,95,120,121,122,123,143,142,141,140,180,181,182,183,203,202,201,200,205,225,245,227,228,229,243,242,241,240,260,280,300,320,340,282,283,284,304,230,231,249,269,289,131,151,171,191,172,173,133,134,135,97,117,137,176,175,177,178,179,195,215,196,197,198,199,237,238,278,279,299,319,339,359,379,399,398,397,396,395,393,360,380,381,382,383,384,386,385,387,388,389,390,391,392,394,328,329,330,331,332,327,326,349,371,334,335,336,355,213,233,253,271,291,292,293,295,275,255,276,322,342,343,346,345,348,347,354,317,337,357,356,267,287,286]
-  // const cellsWithWalls = [1,2,4,3,5,6,7,8,10,11,12,13,14,0,15,16,17,18,19,20,40,60,80,100,120,140,160,200,220,240,260,280,300,320,340,360,380,381,382,383,384,385,386,387,388,389,391,392,393,394,395,396,397,398,399,379,35,59,79,39,99,119,139,159,179,219,239,259,279,299,319,339,359,343,323,303,127,147,167,168,169,170,171,172,152,132,45,65,64,63,83,124,123,143,163,74,94,95,96,116,237,236,235,234,254,274,273,271,251,231,230,313,314,315,316,296,336,324,325,305,285,265,245,244,267,287,288,289,329,328,327,347,202,222,261,262,321,185,205,206,207,194,174,154,155,134,195,196,192,189,67,47,48,50,70,90,89,71,72]
+  const cellsWithWalls = [0,1,2,3]
+  // const cellsWithWalls = [0,1,2,3,4,5,6,7,8,9,29,49,10,11,12,13,14,15,16,17,17,18,19,20,40,60,42,43,45,46,47,51,52,53,55,56,57,39,59,79,99,119,80,100,82,83,85,105,125,88,89,90,109,129,87,127,147,167,187,166,165,169,189,91,93,94,95,120,121,122,123,143,142,141,140,180,181,182,183,203,202,201,200,205,225,245,227,228,229,243,242,241,240,260,280,300,320,340,282,283,284,304,230,231,249,269,289,131,151,171,191,172,173,133,134,135,97,117,137,176,175,177,178,179,195,215,196,197,198,199,237,238,278,279,299,319,339,359,379,399,398,397,396,395,393,360,380,381,382,383,384,386,385,387,388,389,390,391,392,394,328,329,330,331,332,327,326,349,371,334,335,336,355,213,233,253,271,291,292,293,295,275,255,276,322,342,343,346,345,348,347,354,317,337,357,356,267,287,286]
   
 
   const cellsWithItems = [24,25,23,22,22,21,41,61,62,64,44,63,26,27,28,48,68,67,66,65,69,70,50,30,31,32,33,34,54,35,37,38,36,58,78,77,76,75,74,73,72,71,92,112,111,110,114,115,114,96,116,113,98,118,138,158,157,156,136,155,154,153,152,132,130,150,149,148,128,108,107,106,86,126,146,145,144,124,104,84,103,102,101,81,378,373,373,314,316,315,296,297,298,318,338,358,377,376,375,375,374,353,352,373,351,372,350,370,369,368,366,367,365,364,363,362,361,341,321,301,281,261,262,264,263,303,302,323,324,344,325,305,285,265]
@@ -125,6 +150,7 @@ function init() {
   }
   
   //* Animation
+  //* displaying image on page based on movement in the grid
 
   //TODO mejirushi
 
@@ -149,38 +175,12 @@ function init() {
     setTimeout(function(){
       target.display.innerHTML = `<img src = "assets/${target.staticGif}" ></img>`
     },500)
-
   }
+
+
   
 
-  
 
-  
-  //TODO redundant
-  // function animateSprite(target,frameNo) {
-  
-  //   const LIMIT = frameNo
-  //   const frameSize = cells[0].offsetHeight
-  //   const speed = 90
-  //   let i = 0
-  //   let move
-
-  //   setAnimation = setInterval(function () {
-
-  //     move = '0px ' + -(i * frameSize) + 'px'
-  //     //! using target.style overwrites whatever set by css, hence it needs to be redeclared
-  //     target.style.margin = move
-  //     target.style.height = '100%'
-  //     target.style.width = '100%'
-  //     if (i === LIMIT) {
-  //       i = frameNo
-  //     } else {
-  //       i++
-  //     }
-  //   }, speed)
-
-
-  // }
 
 
   // * Add cpuOne to grid
@@ -199,16 +199,12 @@ function init() {
   
   
   const defaultMotion = ['right','left','up','down']
-  //// const motionDownRight = ['down','right']
-  //// const motionUpRight = ['up','right']
-  //// const motionDownLeft = ['down','left']
-  //// const motionUpLeft = ['up','left']
   let cpuMotion = defaultMotion
 
   function cpuDetermineTarget(cpu){
     cpuOneDefaultTarget.setPosition()
-    cpu.target = [cpuOneDefaultTarget.horizontalPosition,cpuOneDefaultTarget.verticalPosition]
-    // cpu.target = [player.horizontalPosition,player.verticalPosition]
+    // cpu.target = [cpuOneDefaultTarget.horizontalPosition,cpuOneDefaultTarget.verticalPosition]
+    cpu.target = [player.horizontalPosition,player.verticalPosition]
   } 
   
   function isWallOnRightOf(target){
@@ -301,22 +297,57 @@ function init() {
     }
     console.log(cpuOne.target[0])
   }
+  
 
+  function turnCpu(target,cpuFacingDirection){
+    switch (cpuFacingDirection) {
+      case 'right': 
+        target.class = 'cpu_right'
+        target.staticGif = 'right.gif'
+        target.motionGif = 'right_roll.gif'
+        break
+      case 'left': 
+        target.class = 'cpu_left'
+        target.staticGif = 'left.gif'
+        target.motionGif = 'shift_left.gif'
+        break
+      case 'up': 
+        target.class = 'cpu_up'
+        target.staticGif = 'up.gif'
+        target.motionGif = 'up.gif'
+        break
+      case 'down': 
+        target.class = 'cpu_down'
+        target.staticGif = 'down.gif'
+        target.motionGif = 'down.gif'
+        break
+      default:
+        console.log('invalid command')
+    }
+  }
+
+
+
+
+
+  //TODO mejirushi
+
+  //! this might be called from object or array if CPUs shared similar function
+  //! this may potentially be renamed cpuOneMovement... 
 
   // * Move cpu
   function cpuMovement() {
     removeCpu(cpuOne.position,cpuOne.class)
     
-    //! this might be called from object or array if CPUs shared similar function
-    //! this may potentially be renamed cpuOneMovement... 
-    //// const horizontalPosition = cpuOne.horizontalPosition
-    //// const verticalPosition = cpuOne.verticalPosition
+    
   
     cpuMovementDecision()
-    // cpuMotion = ['right']
     const motionIndex =  Math.floor(Math.random() * cpuMotion.length)
 
     cpuOne.facingDirection = cpuMotion[motionIndex]
+
+    turnCpu(cpuOne,cpuMotion[motionIndex])
+    
   
     switch (cpuMotion[motionIndex]) {
       case 'right':
@@ -329,7 +360,7 @@ function init() {
         if (cpuOne.verticalPosition > 0 && !isWallAbove(cpuOne)) cpuOne.position -= width
         break
       case 'down':
-        if (cpuOne.verticalPosition < width - 1 && !isWallBelow(cpuOne)) cpuOne.position += width
+        if (cpuOne.verticalPosition < height - 1 && !isWallBelow(cpuOne)) cpuOne.position += width
         break
       default:
         console.log('cpu invalid command')
@@ -338,6 +369,7 @@ function init() {
     
   
     addCpu(cpuOne.position,cpuOne.class)
+    changeTargetImageAndMoveToNewPosition(cpuOne)
     
     //!redfining positions, maybe this could be a function?
     
@@ -354,26 +386,15 @@ function init() {
 
   function addPlayer(position) {
     cells[position].classList.add(player.class)
-    //// innerCells[position].innerHTML = player.sprite
     player.setPosition()
-    //// animateSprite(innerCells[position],3)
   }
 
   function removePlayer(position) {
     cells[position].classList.remove(player.class)
-    //// innerCells[position].innerHTML = ''
-    //// clearInterval(setAnimation)
   }
 
-  //// function removePlayerPrevPosition(prevPosition) {
-  ////   innerCells[position].innerHTML = ''
-  ////   clearInterval(setAnimation)
-  //// }
 
 
-
-  
-  
   function takeItemAndEarnScore(item,scoreId){
     if (outerCells[player.position].classList.contains(item)){
       outerCells[player.position].classList.remove(item)
@@ -417,26 +438,7 @@ function init() {
 
 
 
-  function inbetweenAnimation(){
-  
-    const inbetween = document.createElement('div')
-    inbetween.classList.add('effect_animation_fast')
-    inbetween.innerHTML = `<img src = "assets/${player.motionGif}" ></img>`
-    inbetween.style.top = `${cells[player.position].getBoundingClientRect().y}px`
-    inbetween.style.left = `${cells[player.position].getBoundingClientRect().x}px`
-    inbetween.style.height = `${cells[player.position].getBoundingClientRect().height}px`
-    inbetween.style.width = `${cells[player.position].getBoundingClientRect().width}px`
-    cover.appendChild(inbetween)
-      
-    setTimeout(function(){
-      inbetween.style.top = `${cells[player.position].getBoundingClientRect().y}px`
-      inbetween.style.left = `${cells[player.position].getBoundingClientRect().x}px`
-    },1)
-    setTimeout(function(){
-      cover.removeChild(inbetween)
-    },110)
 
-  }
 
 
   //TODO mejirushi
@@ -446,7 +448,7 @@ function init() {
     removePlayer(player.position)
     turnPlayer(e.key)
     // inbetweenAnimation()
-   
+
 
     switch (e.key) {
       case 'ArrowRight': 
@@ -459,7 +461,7 @@ function init() {
         if (player.verticalPosition > 0 && !isWallAbove(player)) player.position -= width
         break
       case 'ArrowDown': 
-        if (player.verticalPosition < width - 1 && !isWallBelow(player)) player.position += width
+        if (player.verticalPosition < height - 1 && !isWallBelow(player)) player.position += width
         break
       default:
         console.log('invalid command')
@@ -506,45 +508,6 @@ function init() {
   }
 
   
-  // function turnPlayer(keyPressed){
-  //   switch (keyPressed) {
-  //     case 'ArrowRight': 
-  //       player.sprite = '<img src = "assets/moreright.png">'
-  //       break
-  //     case 'ArrowLeft': 
-  //       player.sprite = '<img src = "assets/moreleft.png">'
-  //       break
-  //     case 'ArrowUp': 
-  //       player.sprite = '<img src = "assets/moreup.png">'
-  //       break
-  //     case 'ArrowDown': 
-  //       player.sprite = '<img src = "assets/moredown.png">'
-  //       break
-  //     default:
-  //       console.log('invalid command')
-  //   }
-  // }
-
-  // function completePlayerMotion(keyPressed){
-  //   switch (keyPressed) {
-  //     case 'ArrowRight': 
-  //       player.sprite = '<img src = "assets/rightcomp.png">'
-  //       break
-  //     case 'ArrowLeft': 
-  //       player.sprite = '<img src = "assets/leftcomp.png">'
-  //       break
-  //     case 'ArrowUp': 
-  //       player.sprite = '<img src = "assets/upcomp.png">'
-  //       break
-  //     case 'ArrowDown': 
-  //       player.sprite = '<img src = "assets/downcomp.png">'
-  //       break
-  //     default:
-  //       console.log('invalid command')
-  //   }
-  // }
-
-
   //! used to make walls to develop levels
   function makeWall(e) {
     e.target.classList.add('wall')
@@ -588,9 +551,98 @@ function init() {
 
 
 
-
-
 }
 
 window.addEventListener('DOMContentLoaded', init)
 
+
+
+
+
+//TODO redundant
+// function animateSprite(target,frameNo) {
+  
+//   const LIMIT = frameNo
+//   const frameSize = cells[0].offsetHeight
+//   const speed = 90
+//   let i = 0
+//   let move
+
+//   setAnimation = setInterval(function () {
+
+//     move = '0px ' + -(i * frameSize) + 'px'
+//     //! using target.style overwrites whatever set by css, hence it needs to be redeclared
+//     target.style.margin = move
+//     target.style.height = '100%'
+//     target.style.width = '100%'
+//     if (i === LIMIT) {
+//       i = frameNo
+//     } else {
+//       i++
+//     }
+//   }, speed)
+
+
+// }
+
+
+
+// function turnPlayer(keyPressed){
+//   switch (keyPressed) {
+//     case 'ArrowRight': 
+//       player.sprite = '<img src = "assets/moreright.png">'
+//       break
+//     case 'ArrowLeft': 
+//       player.sprite = '<img src = "assets/moreleft.png">'
+//       break
+//     case 'ArrowUp': 
+//       player.sprite = '<img src = "assets/moreup.png">'
+//       break
+//     case 'ArrowDown': 
+//       player.sprite = '<img src = "assets/moredown.png">'
+//       break
+//     default:
+//       console.log('invalid command')
+//   }
+// }
+
+// function completePlayerMotion(keyPressed){
+//   switch (keyPressed) {
+//     case 'ArrowRight': 
+//       player.sprite = '<img src = "assets/rightcomp.png">'
+//       break
+//     case 'ArrowLeft': 
+//       player.sprite = '<img src = "assets/leftcomp.png">'
+//       break
+//     case 'ArrowUp': 
+//       player.sprite = '<img src = "assets/upcomp.png">'
+//       break
+//     case 'ArrowDown': 
+//       player.sprite = '<img src = "assets/downcomp.png">'
+//       break
+//     default:
+//       console.log('invalid command')
+//   }
+// }
+
+
+// function inbetweenAnimation(){
+  
+//   const inbetween = document.createElement('div')
+//   inbetween.classList.add('effect_animation_fast')
+//   inbetween.innerHTML = `<img src = "assets/${player.motionGif}" ></img>`
+//   inbetween.style.top = `${cells[player.position].getBoundingClientRect().y}px`
+//   inbetween.style.left = `${cells[player.position].getBoundingClientRect().x}px`
+//   inbetween.style.height = `${cells[player.position].getBoundingClientRect().height}px`
+//   inbetween.style.width = `${cells[player.position].getBoundingClientRect().width}px`
+//   cover.appendChild(inbetween)
+      
+//   setTimeout(function(){
+//     inbetween.style.top = `${cells[player.position].getBoundingClientRect().y}px`
+//     inbetween.style.left = `${cells[player.position].getBoundingClientRect().x}px`
+//   },1)
+//   setTimeout(function(){
+//     cover.removeChild(inbetween)
+//   },110)
+
+// }

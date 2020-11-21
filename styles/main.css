@@ -18,16 +18,25 @@ body {
   background-color:transparent;
   height:100%;
   width:100%;
+  /* z-index:-1; */
   z-index:9999;
 }
 
 
-.grid-wrapper {
+
+.grid_outer_wrapper {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color:rgb(16, 13, 54);
+}
+
+.grid_inner_wrapper{
+  width: 650px;
+  height: 500px;
+  border:red solid 1px;
+  overflow:hidden;
 }
 
 .grid {
@@ -37,15 +46,16 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  height: 600px;
-  width: 600px;
+  margin-left:-75px;
+  width: 800px;
+  height: 500px;
 }
 
 .outer_cell {
-  border: 0px solid lightgrey;
+  border: 1px solid lightgrey;
   /* flex-grow: 1; */
-  height: 5%;
-  width: 5%;
+  height: 4%;
+  width: 2.5%;
   overflow: hidden;
   /* display:flex;
   justify-content:center;
@@ -77,7 +87,7 @@ body {
   background-color:rgba(100,10,10,0.8);
 } */
 
-/* obsolete */
+
 .cell.player_down {
   background-color: lightblue;
   /* background-image: url('../assets/down.gif'); */
@@ -102,6 +112,22 @@ body {
   background-image: url('../assets/test_sprite2.svg');
   background-repeat: no-repeat;
   background-size:contain;
+}
+
+.cell.cpu_down {
+  background-color: lightblue;
+}
+
+.cell.cpu_left {
+  background-color: lightcoral;
+}
+
+.cell.cpu_right {
+  background-color: lightseagreen;
+}
+
+.cell.cpu_up {
+  background-color: lightslategray;
 }
 
 
@@ -176,8 +202,8 @@ p.score_wrapper.animate {
 }
 
 .effect_animation_fast > img {
-  margin-top:-30%;
-  margin-left:-30%;
-  height:160%;
-  width:160%;
+  margin-top:-50%;
+  margin-left:-50%;
+  height:200%;
+  width:200%;
 }
