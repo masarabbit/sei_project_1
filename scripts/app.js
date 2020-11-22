@@ -17,6 +17,7 @@ function init() {
   const outerCells = []
   const cells = []
   const innerCells = []
+  const lifeCounters = []
   const defaultMotion = ['right','left','up','down']
   const cpuMotion = defaultMotion
 
@@ -50,6 +51,7 @@ function init() {
   }
 
   const cpuOne = {
+    name: 'cpuOne',
     class: 'cpuOneClass',
     staticGif: 'down.gif',
     motionGif: 'down.gif',
@@ -67,13 +69,81 @@ function init() {
     },
   }
 
+  const cpuTwoDefaultTarget = {
+    position: 1280,
+    horizontalPosition: null,
+    verticalPosition: null,
+    setPosition(){
+      this.horizontalPosition = this.position % width
+      this.verticalPosition = Math.floor(this.position / width)
+    },
+  }
+
+  const cpuTwo = {
+    name: 'cpuTwo',
+    class: 'cpuOneClass',
+    staticGif: 'down.gif',
+    motionGif: 'down.gif',
+    motion: defaultMotion,
+    position: 621,
+    display: document.createElement('div'),
+    target: [cpuTwoDefaultTarget.horizontalPosition,cpuTwoDefaultTarget.verticalPosition],
+    facingDirection: 'down',
+    speed: 200,
+    horizontalPosition: null,
+    verticalPosition: null,
+    setPosition(){
+      this.horizontalPosition = this.position % width
+      this.verticalPosition = Math.floor(this.position / width)
+    },
+  }
+
+  const cpuObjects = [
+    {
+      name: 'cpuOne',
+      class: 'cpuOneClass',
+      staticGif: 'down.gif',
+      motionGif: 'down.gif',
+      motion: defaultMotion,
+      position: 619,
+      display: document.createElement('div'),
+      target: [cpuOneDefaultTarget.horizontalPosition,cpuOneDefaultTarget.verticalPosition],
+      facingDirection: 'down',
+      speed: 200,
+      horizontalPosition: null,
+      verticalPosition: null,
+      setPosition(){
+        this.horizontalPosition = this.position % width
+        this.verticalPosition = Math.floor(this.position / width)
+      },
+    },
+    {
+      name: 'cpuTwo',
+      class: 'cpuOneClass',
+      staticGif: 'down.gif',
+      motionGif: 'down.gif',
+      motion: defaultMotion,
+      position: 621,
+      display: document.createElement('div'),
+      target: [cpuTwoDefaultTarget.horizontalPosition,cpuTwoDefaultTarget.verticalPosition],
+      facingDirection: 'down',
+      speed: 200,
+      horizontalPosition: null,
+      verticalPosition: null,
+      setPosition(){
+        this.horizontalPosition = this.position % width
+        this.verticalPosition = Math.floor(this.position / width)
+      },
+    }
+  ]
+
 
   //* status display
   const scoreDisplay = document.querySelector('.score')
   const scoreDisplayWrapper = document.querySelector('.score_wrapper')
   let score = 0
   const lifeDisplay = document.querySelector('#life')
-  const lifeDisplayWrapper = document.querySelector('.life_wrapper')
+  // const lifeDisplayWrapper = document.querySelector('.life_wrapper')
   
 
   
@@ -106,15 +176,44 @@ function init() {
       innerCells.push(innerCell)
     }
     addPlayer(player.position)
-    addCpu(cpuOne.position,cpuOne.class)
   } 
 
   //* initialise
   createGrid()
   displayTargetImage(player)
-  displayTargetImage(cpuOne)
+  initiateCpus(cpuObjects)  
   displayPlayerLife()
 
+
+  //// function initiateCpu(cpu){
+  ////   displayTargetImage(cpu)
+  ////  setInterval(function(){
+  ////     cpuMovement(cpu)
+  ////   },cpu.speed)
+  ////   addCpu(cpu,cpu.position,cpu.class)
+  //// }
+
+  function initiateCpus(cpuObjects){
+    cpuObjects.forEach(cpu => {
+      displayTargetImage(cpu)
+      setInterval(function(){
+        cpuMovement(cpu)
+      },cpu.speed)
+      addCpu(cpu,cpu.position,cpu.class)
+    })
+  }
+
+
+
+  function checkPlayerAndCpuCollision(){
+    cpuObjects.forEach(cpu => {
+      if (player.position === cpu.position && !player.display.classList.contains('hurt')){
+        console.log('ouch!')
+        playerLoseLife()
+      }
+    })
+  } 
+  
 
   //* reset periodically to in case player resize screen
   function rePositionImage(target){
@@ -122,14 +221,44 @@ function init() {
     target.display.style.left = `${cells[target.position].getBoundingClientRect().x}px`
   }
   
+
+  //* checking for status
   setInterval(function(){
-    rePositionImage(player)
+    rePositionImage(player) // this is to ensure player image stays in right place despite screen resize
+    checkPlayerAndCpuCollision()
     // rePositionImage(cpuOne) // may not be necessary?(cpu moves anyway)
-  },100)
-
-
+  },1)
   
 
+  //TODO mejirushi
+
+  function playerLoseLife(){
+    player.display.classList.add('hurt') // stops motion
+    // console.log(lifeCounters[lifeCounters.length - 1])
+    const currentPlayerPosition = player.position
+    const hurtAnimationDisplay = document.createElement('div')
+    hurtAnimationDisplay.classList.add('effect_animation_fast')
+    hurtAnimationDisplay.innerHTML = '<img src = "assets/hurt.gif" ></img>'
+    hurtAnimationDisplay.style.top = `${cells[player.position].getBoundingClientRect().y}px`
+    hurtAnimationDisplay.style.left = `${cells[player.position].getBoundingClientRect().x}px`
+    hurtAnimationDisplay.style.height = `${cells[player.position].getBoundingClientRect().height}px`
+    hurtAnimationDisplay.style.width = `${cells[player.position].getBoundingClientRect().width}px`
+    cover.appendChild(hurtAnimationDisplay)
+
+    hurtAnimationDisplay.classList.add('enlarge')
+
+    setTimeout(function(){
+      hurtAnimationDisplay.style.top = `${cells[(player.position) % 40].getBoundingClientRect().y}px`
+    },1000)
+    
+    setTimeout(function(){
+      hurtAnimationDisplay.innerHTML = ''
+    },1200)
+    
+    console.log()
+  }
+  
+  
 
   
   // * Make walls
@@ -157,12 +286,12 @@ function init() {
   
 
   function displayPlayerLife(){
-
     for (let i = 0; i < player.life; i++ ){
       const lifeCounter = document.createElement('div')
       lifeCounter.classList.add('life_counter')
       lifeCounter.innerHTML = '<img src = "assets/down.gif" ></img>'
       lifeDisplay.appendChild(lifeCounter)
+      lifeCounters.push(lifeCounter)
     }
   }
 
@@ -198,9 +327,9 @@ function init() {
 
 
 
-  function addCpu(position,classToAdd) {  // * Add cpuOne to grid
+  function addCpu(cpu,position,classToAdd) {  // * Add cpu to grid
     cells[position].classList.add(classToAdd)
-    cpuOne.setPosition()
+    cpu.setPosition()
     //change class to add depending on the direction facing
   }
  
@@ -358,16 +487,14 @@ function init() {
         console.log('cpu invalid command')
     }
   
-    addCpu(cpu.position,cpu.class)
+    addCpu(cpu,cpu.position,cpu.class)
     changeTargetImageAndMoveToNewPosition(cpu)
 
     // //TODO backend
     printPosition()
   }
   
-  setInterval(function(){
-    cpuMovement(cpuOne)
-  },cpuOne.speed)
+ 
 
 
 
@@ -430,8 +557,14 @@ function init() {
 
   // * Move Player
   function handleMovementWithKey(e) {
+
+    if (player.display.classList.contains('hurt')){
+      return
+    }
+
     removePlayer(player.position)
     turnPlayer(e.key)
+
     // inbetweenAnimation()
 
 

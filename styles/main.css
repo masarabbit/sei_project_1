@@ -116,19 +116,42 @@ body {
 }
 
 .cell.cpu_down {
-  background-color: lightblue;
+  background-color: greenyellow;
 }
 
 .cell.cpu_left {
-  background-color: lightcoral;
+  background-color: lightseagreen;
 }
 
 .cell.cpu_right {
-  background-color: lightseagreen;
+  background-color: limegreen;
 }
 
 .cell.cpu_up {
   background-color: lightslategray;
+}
+
+.flicker {
+  animation: flicker 0.5s infinite;
+}
+
+@keyframes flicker {
+  0% {opacity:1}
+  50% {opacity:0}
+  100% {opacity:1}
+}
+
+.hurt {
+  display:none;
+}
+
+.enlarge {
+  animation: enlarge 1s forwards;
+}
+
+@keyframes enlarge {
+  0% {transform: scale(1);}
+  100% {transform: scale(4);}
 }
 
 
