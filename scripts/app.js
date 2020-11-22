@@ -20,6 +20,7 @@ function init() {
   const lifeCounters = []
   const defaultMotion = ['right','left','up','down']
   const cpuMotion = defaultMotion
+  const flickerStateDuration = 3000
 
   
   const player = {
@@ -34,10 +35,10 @@ function init() {
     horizontalPosition: null,
     verticalPosition: null,
     life: 3,
-    setPosition(){
-      this.horizontalPosition = this.position % width
-      this.verticalPosition = Math.floor(this.position / width)
-    },
+    // setPosition(){
+    //   this.horizontalPosition = this.position % width
+    //   this.verticalPosition = Math.floor(this.position / width)
+    // },
   }
 
   const cpuOneDefaultTarget = {
@@ -50,24 +51,24 @@ function init() {
     },
   }
 
-  const cpuOne = {
-    name: 'cpuOne',
-    class: 'cpuOneClass',
-    staticGif: 'down.gif',
-    motionGif: 'down.gif',
-    motion: defaultMotion,
-    position: 619,
-    display: document.createElement('div'),
-    target: [cpuOneDefaultTarget.horizontalPosition,cpuOneDefaultTarget.verticalPosition],
-    facingDirection: 'down',
-    speed: 200,
-    horizontalPosition: null,
-    verticalPosition: null,
-    setPosition(){
-      this.horizontalPosition = this.position % width
-      this.verticalPosition = Math.floor(this.position / width)
-    },
-  }
+  // const cpuOne = {
+  //   name: 'cpuOne',
+  //   class: 'cpuOneClass',
+  //   staticGif: 'down.gif',
+  //   motionGif: 'down.gif',
+  //   motion: defaultMotion,
+  //   position: 619,
+  //   display: document.createElement('div'),
+  //   target: [cpuOneDefaultTarget.horizontalPosition,cpuOneDefaultTarget.verticalPosition],
+  //   facingDirection: 'down',
+  //   speed: 200,
+  //   horizontalPosition: null,
+  //   verticalPosition: null,
+  //   setPosition(){
+  //     this.horizontalPosition = this.position % width
+  //     this.verticalPosition = Math.floor(this.position / width)
+  //   },
+  // }
 
   const cpuTwoDefaultTarget = {
     position: 1280,
@@ -79,24 +80,24 @@ function init() {
     },
   }
 
-  const cpuTwo = {
-    name: 'cpuTwo',
-    class: 'cpuOneClass',
-    staticGif: 'down.gif',
-    motionGif: 'down.gif',
-    motion: defaultMotion,
-    position: 621,
-    display: document.createElement('div'),
-    target: [cpuTwoDefaultTarget.horizontalPosition,cpuTwoDefaultTarget.verticalPosition],
-    facingDirection: 'down',
-    speed: 200,
-    horizontalPosition: null,
-    verticalPosition: null,
-    setPosition(){
-      this.horizontalPosition = this.position % width
-      this.verticalPosition = Math.floor(this.position / width)
-    },
-  }
+  // const cpuTwo = {
+  //   name: 'cpuTwo',
+  //   class: 'cpuOneClass',
+  //   staticGif: 'down.gif',
+  //   motionGif: 'down.gif',
+  //   motion: defaultMotion,
+  //   position: 621,
+  //   display: document.createElement('div'),
+  //   target: [cpuTwoDefaultTarget.horizontalPosition,cpuTwoDefaultTarget.verticalPosition],
+  //   facingDirection: 'down',
+  //   speed: 200,
+  //   horizontalPosition: null,
+  //   verticalPosition: null,
+  //   setPosition(){
+  //     this.horizontalPosition = this.position % width
+  //     this.verticalPosition = Math.floor(this.position / width)
+  //   },
+  // }
 
   const cpuObjects = [
     {
@@ -112,10 +113,10 @@ function init() {
       speed: 200,
       horizontalPosition: null,
       verticalPosition: null,
-      setPosition(){
-        this.horizontalPosition = this.position % width
-        this.verticalPosition = Math.floor(this.position / width)
-      },
+      // setPosition(){
+      //   this.horizontalPosition = this.position % width
+      //   this.verticalPosition = Math.floor(this.position / width)
+      // },
     },
     {
       name: 'cpuTwo',
@@ -130,12 +131,19 @@ function init() {
       speed: 200,
       horizontalPosition: null,
       verticalPosition: null,
-      setPosition(){
-        this.horizontalPosition = this.position % width
-        this.verticalPosition = Math.floor(this.position / width)
-      },
+      // setPosition(){
+      //   this.horizontalPosition = this.position % width
+      //   this.verticalPosition = Math.floor(this.position / width)
+      // },
     }
   ]
+  
+
+  
+  function setActorPosition(actor){                   // resets horizontal and vertical position of cpu or player
+    actor.horizontalPosition = actor.position % width
+    actor.verticalPosition = Math.floor(actor.position / width)
+  }
 
 
   //* status display
@@ -180,7 +188,7 @@ function init() {
 
   //* initialise
   createGrid()
-  displayTargetImage(player)
+  displayActorImage(player)
   initiateCpus(cpuObjects)  
   displayPlayerLife()
 
@@ -195,7 +203,7 @@ function init() {
 
   function initiateCpus(cpuObjects){
     cpuObjects.forEach(cpu => {
-      displayTargetImage(cpu)
+      displayActorImage(cpu)
       setInterval(function(){
         cpuMovement(cpu)
       },cpu.speed)
@@ -207,7 +215,7 @@ function init() {
 
   function checkPlayerAndCpuCollision(){
     cpuObjects.forEach(cpu => {
-      if (player.position === cpu.position && !player.display.classList.contains('hurt')){
+      if (player.position === cpu.position && !player.display.classList.contains('hurt') && !player.display.classList.contains('flicker')){
         console.log('ouch!')
         playerLoseLife()
       }
@@ -231,35 +239,86 @@ function init() {
   
 
   //TODO mejirushi
-
+  
+  let hurtAnimationDisplay = null
   function playerLoseLife(){
-    player.display.classList.add('hurt') // stops motion
-    // console.log(lifeCounters[lifeCounters.length - 1])
-    const currentPlayerPosition = player.position
-    const hurtAnimationDisplay = document.createElement('div')
+    player.display.classList.add('hurt')                        // stops player motion and prevents further playerLoseLife
+   
+    // const currentPlayerPosition = player.position
+    hurtAnimationDisplay = document.createElement('div')  // displays hurt animation
     hurtAnimationDisplay.classList.add('effect_animation_fast')
     hurtAnimationDisplay.innerHTML = '<img src = "assets/hurt.gif" ></img>'
-    hurtAnimationDisplay.style.top = `${cells[player.position].getBoundingClientRect().y}px`
-    hurtAnimationDisplay.style.left = `${cells[player.position].getBoundingClientRect().x}px`
-    hurtAnimationDisplay.style.height = `${cells[player.position].getBoundingClientRect().height}px`
-    hurtAnimationDisplay.style.width = `${cells[player.position].getBoundingClientRect().width}px`
+    const playerCurrentPosition = cells[player.position].getBoundingClientRect()
+    hurtAnimationDisplay.style.top = `${playerCurrentPosition.y}px`        // position animation based on where playerLoseLife triggered 
+    hurtAnimationDisplay.style.left = `${playerCurrentPosition.x}px`
+    hurtAnimationDisplay.style.height = `${playerCurrentPosition.height}px`
+    hurtAnimationDisplay.style.width = `${playerCurrentPosition.width}px`
     cover.appendChild(hurtAnimationDisplay)
 
     hurtAnimationDisplay.classList.add('enlarge')
+    
+    if (player.life > 0){
+      bringBackPlayerToPlay()
+    } else {
+      gameOverEvent()
+    }
+    
+  }
+  
+  function bringBackPlayerToPlay(){
 
     setTimeout(function(){
-      hurtAnimationDisplay.style.top = `${cells[(player.position) % 40].getBoundingClientRect().y}px`
-    },1000)
+      hurtAnimationDisplay.style.top = `${cells[(player.position) % 40].getBoundingClientRect().y}px` // reposition hurt animation to top of screen (same row where playerLoseLife triggered)
+    },800)
     
     setTimeout(function(){
       hurtAnimationDisplay.innerHTML = ''
-    },1200)
-    
-    console.log()
+
+      const lifeDisplayAnimation = document.createElement('div')
+      lifeDisplayAnimation.classList.add('effect_animation_medium')
+      lifeDisplayAnimation.innerHTML = '<img src = "assets/down.gif" ></img>'      
+      const lifeCounterPosition = lifeCounters[lifeCounters.length - 1].getBoundingClientRect()
+      const currentPlayerCell = cells[player.position].getBoundingClientRect()
+      lifeDisplayAnimation.style.top = `${lifeCounterPosition.y}px`
+      lifeDisplayAnimation.style.left = `${lifeCounterPosition.x}px`
+      lifeDisplayAnimation.style.height = `${currentPlayerCell.height}px`
+      lifeDisplayAnimation.style.width = `${currentPlayerCell.width}px`
+      console.log(`${lifeCounterPosition.y}px`)
+      cover.appendChild(lifeDisplayAnimation)
+      
+      setTimeout(function(){
+        lifeDisplay.removeChild(lifeCounters[lifeCounters.length - 1])
+      },100)
+
+      setTimeout(function(){  // move player life image to where the player was
+        lifeDisplayAnimation.style.top = `${currentPlayerCell.y}px`
+        lifeDisplayAnimation.style.left = `${currentPlayerCell.x}px`
+      },200)
+
+      setTimeout(function(){  
+        cover.removeChild(lifeDisplayAnimation)
+        player.life -= 1
+        displayPlayerLife()
+        displayActorImage(player)
+        player.display.classList.remove('hurt') 
+        player.display.classList.add('flicker')    // make player flicker state for a duration
+
+        setTimeout(function(){  
+          player.display.classList.remove('flicker')     
+        },flickerStateDuration) 
+
+      },1000)
+
+    },1000)
   }
   
+  function gameOverEvent(){
+    console.log('game over!')
+    const gameOverText = document.querySelector('.game_over_text')
+    gameOverText.classList.add('display')
+    cover.classList.add('shade')
   
-
+  }
   
   // * Make walls
   // walls defined by adding class to cells, according to what is mentioned in the array
@@ -280,12 +339,13 @@ function init() {
 
   function printPosition(){
     playerPositionDisplay.innerHTML = `${player.position} Horizontal:${player.horizontalPosition} Vertical:${player.verticalPosition}`
-    cpuOnePositionDisplay.innerHTML = `${cpuOne.position} Horizontal:${cpuOne.verticalPosition} Vertical:${cpuOne.verticalPosition} cpu motion: ${cpuMotion} cpu facing ${cpuOne.facingDirection}`
+    cpuOnePositionDisplay.innerHTML = `${cpuObjects[0].position} Horizontal:${cpuObjects[0].verticalPosition} Vertical:${cpuObjects[0].verticalPosition} cpu motion: ${cpuMotion} cpu facing ${cpuObjects[0].facingDirection}`
     wallPositionDisplay.innerHTML = `${cellsWithWalls}`
   }
   
 
   function displayPlayerLife(){
+    lifeDisplay.innerHTML = ''
     for (let i = 0; i < player.life; i++ ){
       const lifeCounter = document.createElement('div')
       lifeCounter.classList.add('life_counter')
@@ -302,26 +362,39 @@ function init() {
 
   //TODO mejirushi
 
-  function displayTargetImage(target){
-    target.display.classList.add('effect_animation_fast')
-    target.display.innerHTML = `<img src = "assets/${target.staticGif}" ></img>`
+  // function displayTargetImage(target){
+  //   target.display.classList.add('effect_animation_fast')
+  //   target.display.innerHTML = `<img src = "assets/${target.staticGif}" ></img>`
+  //   target.display.style.top = `${cells[target.position].getBoundingClientRect().y}px`
+  //   target.display.style.left = `${cells[target.position].getBoundingClientRect().x}px`
+  //   target.display.style.height = `${cells[target.position].getBoundingClientRect().height}px`
+  //   target.display.style.width = `${cells[target.position].getBoundingClientRect().width}px`
 
-    target.display.style.top = `${cells[target.position].getBoundingClientRect().y}px`
-    target.display.style.left = `${cells[target.position].getBoundingClientRect().x}px`
-    target.display.style.height = `${cells[target.position].getBoundingClientRect().height}px`
-    target.display.style.width = `${cells[target.position].getBoundingClientRect().width}px`
+  //   cover.appendChild(target.display)
+      
+  // }
 
-    cover.appendChild(target.display)
+  function displayActorImage(actor){
+    actor.display.classList.add('effect_animation_fast')
+    actor.display.innerHTML = `<img src = "assets/${actor.staticGif}" ></img>`
+
+    const currentActor = cells[actor.position].getBoundingClientRect()
+    actor.display.style.top = `${currentActor.y}px`
+    actor.display.style.left = `${currentActor.x}px`
+    actor.display.style.height = `${currentActor.height}px`
+    actor.display.style.width = `${currentActor.width}px`
+  
+    cover.appendChild(actor.display)
       
   }
 
-  function changeTargetImageAndMoveToNewPosition(target){
-    target.display.innerHTML = `<img src = "assets/${target.motionGif}" ></img>`
-    target.display.style.top = `${cells[target.position].getBoundingClientRect().y}px`
-    target.display.style.left = `${cells[target.position].getBoundingClientRect().x}px`
+  function changeActorImageAndMoveToNewPosition(actor){
+    actor.display.innerHTML = `<img src = "assets/${actor.motionGif}" ></img>`
+    actor.display.style.top = `${cells[actor.position].getBoundingClientRect().y}px`
+    actor.display.style.left = `${cells[actor.position].getBoundingClientRect().x}px`
     
     setTimeout(function(){
-      target.display.innerHTML = `<img src = "assets/${target.staticGif}" ></img>`
+      actor.display.innerHTML = `<img src = "assets/${actor.staticGif}" ></img>`
     },500)
   }
 
@@ -329,8 +402,8 @@ function init() {
 
   function addCpu(cpu,position,classToAdd) {  // * Add cpu to grid
     cells[position].classList.add(classToAdd)
-    cpu.setPosition()
-    //change class to add depending on the direction facing
+    // cpu.setPosition()
+    setActorPosition(cpu)
   }
  
   function removeCpu(position,classToRemove) {  // * Remove cpu from the grid
@@ -488,7 +561,7 @@ function init() {
     }
   
     addCpu(cpu,cpu.position,cpu.class)
-    changeTargetImageAndMoveToNewPosition(cpu)
+    changeActorImageAndMoveToNewPosition(cpu)
 
     // //TODO backend
     printPosition()
@@ -503,7 +576,8 @@ function init() {
 
   function addPlayer(position) {
     cells[position].classList.add(player.class)
-    player.setPosition()
+    // player.setPosition()
+    setActorPosition(player)
   }
 
   function removePlayer(position) {
@@ -513,6 +587,9 @@ function init() {
 
 
   function takeItemAndEarnScore(item,scoreId){
+    if (player.display.classList.contains('flicker')){ // prevents player taking item when in flicker state
+      return
+    }
     if (outerCells[player.position].classList.contains(item)){
       outerCells[player.position].classList.remove(item)
 
@@ -586,7 +663,7 @@ function init() {
     }
     
     takeItemAndEarnScore('item',scoreFromNormalItem) 
-    changeTargetImageAndMoveToNewPosition(player)
+    changeActorImageAndMoveToNewPosition(player)
 
     setTimeout(
       function(){

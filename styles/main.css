@@ -279,3 +279,49 @@ p.score_wrapper.animate {
   height:200%;
   width:200%;
 }
+
+.effect_animation_medium {
+  transition:1s;
+  position:absolute;
+  box-sizing:content-box;
+  height: 30px;
+  width: 30px;
+  /* border: 1px solid red; */
+}
+
+.effect_animation_medium > img {
+  margin-top:-50%;
+  margin-left:-50%;
+  height:200%;
+  width:200%;
+}
+
+.game_over_text_wrapper {
+  height:100%;
+  width:100%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  overflow:hidden;
+  /* border: red 1px solid; */
+}
+
+.game_over_text {
+  font-size: 50px;
+  color:hotpink;
+  text-align:center;
+  /* border: red 1px solid; */
+  text-transform: uppercase;
+  transition:2s;
+  display:block;
+  opacity:0;
+}
+
+.game_over_text.display {
+  font-size: 100px;
+  opacity:1;
+}
+
+.cover.shade {
+  background-color:rgba(51, 197, 255, 0.8)
+}
