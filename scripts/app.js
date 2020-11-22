@@ -32,6 +32,7 @@ function init() {
     facingDirection: 'down',
     horizontalPosition: null,
     verticalPosition: null,
+    life: 3,
     setPosition(){
       this.horizontalPosition = this.position % width
       this.verticalPosition = Math.floor(this.position / width)
@@ -67,10 +68,13 @@ function init() {
   }
 
 
-  //* pageitems
+  //* status display
   const scoreDisplay = document.querySelector('.score')
   const scoreDisplayWrapper = document.querySelector('.score_wrapper')
   let score = 0
+  const lifeDisplay = document.querySelector('#life')
+  const lifeDisplayWrapper = document.querySelector('.life_wrapper')
+  
 
   
   //TODO
@@ -109,6 +113,7 @@ function init() {
   createGrid()
   displayTargetImage(player)
   displayTargetImage(cpuOne)
+  displayPlayerLife()
 
 
   //* reset periodically to in case player resize screen
@@ -150,6 +155,20 @@ function init() {
     wallPositionDisplay.innerHTML = `${cellsWithWalls}`
   }
   
+
+  function displayPlayerLife(){
+
+    for (let i = 0; i < player.life; i++ ){
+      const lifeCounter = document.createElement('div')
+      lifeCounter.classList.add('life_counter')
+      lifeCounter.innerHTML = '<img src = "assets/down.gif" ></img>'
+      lifeDisplay.appendChild(lifeCounter)
+    }
+  }
+
+
+
+
   //* Animation displaying image on page based on movement in the grid
 
   //TODO mejirushi
