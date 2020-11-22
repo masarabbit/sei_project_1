@@ -33,9 +33,9 @@ body {
 }
 
 .grid_inner_wrapper{
-  width: 650px;
-  height: 500px;
-  border:red solid 1px;
+  width: 595px;
+  height: 595px;
+  border:red solid 0px;
   overflow:hidden;
 }
 
@@ -46,15 +46,16 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-left:-75px;
-  width: 800px;
-  height: 500px;
+  margin-top:-8.5%; /* was -12.5% */
+  margin-left:-8.5%;
+  width: 700px;
+  height: 700px;
 }
 
 .outer_cell {
-  border: 1px solid lightgrey;
+  border: 0px solid lightgrey;
   /* flex-grow: 1; */
-  height: 4%;
+  height: 2.5%;
   width: 2.5%;
   overflow: hidden;
   /* display:flex;
