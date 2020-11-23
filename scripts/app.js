@@ -84,20 +84,20 @@ function init() {
     position: 378,
     horizontalPosition: null,
     verticalPosition: null,
-    setPosition(){
-      this.horizontalPosition = this.position % width
-      this.verticalPosition = Math.floor(this.position / width)
-    },
+    // setPosition(){
+    //   this.horizontalPosition = this.position % width
+    //   this.verticalPosition = Math.floor(this.position / width)
+    // },
   }
 
   const cpuTwoDefaultTarget = {
     position: 1280,
     horizontalPosition: null,
     verticalPosition: null,
-    setPosition(){
-      this.horizontalPosition = this.position % width
-      this.verticalPosition = Math.floor(this.position / width)
-    },
+    // setPosition(){
+    //   this.horizontalPosition = this.position % width
+    //   this.verticalPosition = Math.floor(this.position / width)
+    // },
   }
 
 
@@ -204,38 +204,20 @@ function init() {
 
   //* initialise
 
-  
-
-  // function startGame(){
-  //   createGrid()
-  //   displayActorImage(player)
-  //   addPlayer(player.position)
-  //   displayPlayerLife()
-  //   populateCells(cellsWithWalls,'wall')
-  //   populateCells(cellsWithTeleport,'teleport')
-  //   populateCells(cellsWithItems,'item')
-  //   populateCells(cellsWithBigStars,'big_star')
-
-  //   initialiseCpus(cpuObjects)  
-    
-  //   //* checking for status
-  //   setInterval(function(){
-  //     rePositionImage(player) // this is to ensure player image stays in right place despite screen resize
-  //     checkPlayerAndCpuCollision()
-  //     triggerTeleport()
-  //   // rePositionImage(cpuOne) // may not be necessary?(cpu moves anyway)
-  //   },100)
-  
-  // }
-  
-  //! decide what to include in start game (arguably, elements can be created soon as page is loaded. start game could just enable player to move etc.)
-  // startGame()
-
   let constantCheck = null
 
   function triggerGameStart(){
     
     countDown()
+
+    setInterval(()=>{   //* readjusts actor display sizes incase player resizes window
+      reAdjustActorSize(player)
+  
+      cpuObjects.forEach(cpu =>{
+        reAdjustActorSize(cpu)
+      })
+    },1000)
+  
 
     createGrid()
     displayPlayerLife()
@@ -341,7 +323,7 @@ function init() {
     })
   }
   
- 
+
 
   //! somthing could trigger cpu status to change (some kind of timer?)
   //! this could be in start game, or somewhere else.
@@ -415,7 +397,7 @@ function init() {
     },1200)
 
     setTimeout(() =>{
-      // returns cpu to default position, but harmless.
+      // returns cpu to default position, but harmless until hidden class is removed
       removeCpu(cpu.position,cpu.class)
     },5000)
 
@@ -492,7 +474,12 @@ function init() {
 
     actor.knockOutAnimationDisplay.classList.add('enlarge')
   }
-
+  
+  function reAdjustActorSize(actor){
+    const cellSize = cells[0].getBoundingClientRect()
+    actor.display.style.height = `${cellSize.height}px`
+    actor.display.style.width = `${cellSize.width}px`
+  }
 
   function bringBackPlayerToPlay(){
 
@@ -752,6 +739,7 @@ function init() {
     
   }
 
+
   function chaseTarget(cpu){
     if (cpu.horizontalPosition < cpu.target[0]){  //* movement based on target position
       cpu.motion.push('right')
@@ -765,6 +753,7 @@ function init() {
       cpu.motion.push('up')
     }
   }
+
 
   function avoidTarget(cpu){
 
@@ -918,7 +907,6 @@ function init() {
 
   function addPlayer(position) {
     cells[position].classList.add(player.class)
-    // player.setPosition()
     setActorPosition(player)
   }
 
@@ -1099,7 +1087,6 @@ function init() {
           console.log('invalid command')
       }
     } else {
-      //// console.log('triggered')
       switch (keyPressed) {
         case 'ArrowRight': 
           player.class = 'player_right'
@@ -1127,22 +1114,6 @@ function init() {
     }
   }
 
-  
-  //! used to make walls to develop levels
-  function makeWall(e) {
-    e.target.classList.add('wall')
-    cellsWithWalls.push(cells.indexOf(e.target))
-    wallPositionDisplay.innerHTML = `${cellsWithWalls}`
-  }
-
-  function makeItem(e) {
-    e.target.classList.add('item')
-    cellsWithItems.push(cells.indexOf(e.target))
-    itemPositionDisplay.innerHTML = `${cellsWithItems}`
-  }
-  
-
-
   //* events
   document.addEventListener('keyup', handleMovementWithKey)
 
@@ -1169,3 +1140,43 @@ window.addEventListener('DOMContentLoaded', init)
 //   console.log(cpuObjects[0].position) 
 //   console.log(player.position)
 // },1000)
+
+//! used to make walls to develop levels
+// function makeWall(e) {
+//   e.target.classList.add('wall')
+//   cellsWithWalls.push(cells.indexOf(e.target))
+//   wallPositionDisplay.innerHTML = `${cellsWithWalls}`
+// }
+
+// function makeItem(e) {
+//   e.target.classList.add('item')
+//   cellsWithItems.push(cells.indexOf(e.target))
+//   itemPositionDisplay.innerHTML = `${cellsWithItems}`
+// }
+
+  
+
+// function startGame(){
+//   createGrid()
+//   displayActorImage(player)
+//   addPlayer(player.position)
+//   displayPlayerLife()
+//   populateCells(cellsWithWalls,'wall')
+//   populateCells(cellsWithTeleport,'teleport')
+//   populateCells(cellsWithItems,'item')
+//   populateCells(cellsWithBigStars,'big_star')
+
+//   initialiseCpus(cpuObjects)  
+    
+//   //* checking for status
+//   setInterval(function(){
+//     rePositionImage(player) // this is to ensure player image stays in right place despite screen resize
+//     checkPlayerAndCpuCollision()
+//     triggerTeleport()
+//   // rePositionImage(cpuOne) // may not be necessary?(cpu moves anyway)
+//   },100)
+  
+// }
+  
+//! decide what to include in start game (arguably, elements can be created soon as page is loaded. start game could just enable player to move etc.)
+// startGame()

@@ -125,23 +125,39 @@ body {
 }
 
 .grid_inner_wrapper{
-  width: 595px;
-  height: 595px;
+  /* was 595*/
+  /* width: 612px; 
+  height: 612px; */
+  width: 76.5vh;
+  height: 76.5vh;
   border:red solid 0px;
   overflow:hidden;
+  background-color:rgb(145, 248, 255);
+  /* background-image: url('../assets/test_background.png');
+  background-repeat: no-repeat;
+  background-size:contain;
+  align-items: center; */
 }
 
 .grid {
-  background-color:rgb(145, 248, 255);
-  align-items: center;
   /* box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2); */
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top:-8.5%; /* was -12.5% */
-  margin-left:-8.5%;
-  width: 700px;
-  height: 700px;
+  /*margin-top:-8.5%; */
+  /* margin-left:-8.5%; */
+
+  /* margin-top:-54px;
+  margin-left:-54px;
+  width: 720px;
+  height: 720px;  */
+  /* was 700*/
+  
+  margin-top:-6.75vh;
+  margin-left:-6.75vh;
+  width: 90vh;
+  height: 90vh;
+
 }
 
 .outer_cell {
@@ -264,6 +280,7 @@ body {
 
 .wall{
   background-color:rgb(64, 147, 255);
+  /* background-color:transparent; */
 }
 
 .item{
