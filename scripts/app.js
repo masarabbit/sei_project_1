@@ -94,7 +94,7 @@ function init() {
       hurtGif: 'hurt.gif',
       motion: defaultMotion,
       filteredMotion: [],
-      defaultPosition: 27,
+      defaultPosition: 619,
       position: 619,
       display: document.createElement('div'),
       target: [cpuOneDefaultTarget.horizontalPosition,cpuOneDefaultTarget.verticalPosition],
@@ -115,7 +115,7 @@ function init() {
       hurtGif: 'hurt.gif',
       motion: defaultMotion,
       filteredMotion: [],
-      defaultPosition: 27,
+      defaultPosition: 621,
       position: 621,
       display: document.createElement('div'),
       target: [cpuTwoDefaultTarget.horizontalPosition,cpuTwoDefaultTarget.verticalPosition],
@@ -202,7 +202,7 @@ function init() {
     addPlayer(player.position)
     displayPlayerLife()
     populateCells(cellsWithWalls,'wall')
-    // populateCells(cellsWithItems,'item')
+    populateCells(cellsWithItems,'item')
     populateCells(cellsWithBigStars,'big_star')
     
   }
@@ -275,15 +275,17 @@ function init() {
     // rePositionImage(cpuOne) // may not be necessary?(cpu moves anyway)
   },1)
   
-  turnPlayerInvincible()
+  // turnPlayerInvincible()
+
+  //TODO muteki
 
   function turnPlayerInvincible(){
     player.display.classList.add('invincible')
 
-  //   setTimeout(function(){
-  //     player.display.classList.remove('invincible')
-  //     knockOutCpuCounter = 1
-  //   },7000)
+    setTimeout(function(){
+      player.display.classList.remove('invincible')
+      knockOutCpuCounter = 1
+    },7000)
   }
 
 
@@ -582,7 +584,7 @@ function init() {
   }
 
 
-
+  //TODO tekiugoki
 
   function cpuMovementDecision(cpu){
 
@@ -626,13 +628,16 @@ function init() {
       cpu.motion = ['up','right']
     }
     
+    if (player.display.classList.contains('invincible')){ //* run away from player
+      avoidTarget(cpu)
+      return
+    }
 
-    // chaseTarget(cpu)
-    avoidTarget(cpu)
+    chaseTarget(cpu)
+    
   }
 
   function chaseTarget(cpu){
-
     if (cpu.horizontalPosition < cpu.target[0]){  //* movement based on target position
       cpu.motion.push('right')
     } else {
@@ -648,36 +653,37 @@ function init() {
 
   function avoidTarget(cpu){
 
-    //! preventing cpu from taking steps that take them to the player
-    
-    if (cpu.position + 1 === player.position || cpu.position + 2 === player.position || cpu.position + 3 === player.position){
+    //* preventing cpu from taking steps that take them to the player
+    //* also checks if the player is around the corner
+    if (cpu.position + 1 === player.position || cpu.position + 2 === player.position || cpu.position + 3 === player.position || (cpu.position + 1) - width === player.position || (cpu.position + 1) + width === player.position){
       cpu.filteredMotion = cpu.motion.filter(option => {
         return option !== 'right'
       })
       cpu.motion = cpu.filteredMotion
     }
 
-    if (cpu.position - 1 === player.position || cpu.position - 2 === player.position || cpu.position - 3 === player.position){
+    if (cpu.position - 1 === player.position || cpu.position - 2 === player.position || cpu.position - 3 === player.position || (cpu.position - 1) - width === player.position || (cpu.position - 1) + width === player.position){
       cpu.filteredMotion = cpu.motion.filter(option => {
         return option !== 'left'
       })
       cpu.motion = cpu.filteredMotion
     }
 
-    if (cpu.position - width === player.position || cpu.position - (width * 2) === player.position || cpu.position - (width * 3) === player.position){
+    if (cpu.position - width === player.position || cpu.position - (width * 2) === player.position || cpu.position - (width * 3) === player.position || (cpu.position - width) - 1 === player.position || (cpu.position - width) + 1 === player.position ){
       cpu.filteredMotion = cpu.motion.filter(option => {
         return option !== 'up'
       })
       cpu.motion = cpu.filteredMotion
     }
 
-    if (cpu.position + width === player.position || cpu.position + (width * 2) === player.position || cpu.position + (width * 3 ) === player.position ){
+    if (cpu.position + width === player.position || cpu.position + (width * 2) === player.position || cpu.position + (width * 3 ) === player.position || (cpu.position + width) - 1 === player.position || (cpu.position + width) + 1 === player.position){
       cpu.filteredMotion = cpu.motion.filter(option => {
         return option !== 'down'
       })
       cpu.motion = cpu.filteredMotion
     }
 
+    //* motion added to go in the opposite direction of player
     if (cpu.horizontalPosition > cpu.target[0]){  //* movement based on target position
       cpu.motion.push('right')
     } else {
@@ -726,7 +732,7 @@ function init() {
   }
 
 
-  //TODO mejirushi
+  
 
   //! this might be called from object or array if CPUs shared similar function
   //! this may potentially be renamed cpuOneMovement... 
