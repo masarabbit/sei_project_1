@@ -1,11 +1,12 @@
 
 
 //! if you can't click, you need to disable cover
-
-//!something needs to be added to react to user changing viewport size
-
-
 //TODO add alt to images
+
+////something needs to be added to react to user changing viewport size
+
+
+
 
 function init() {
   
@@ -41,6 +42,7 @@ function init() {
   let knockOutCpuCounter = 1
 
   
+  //* actors
   const player = {
     class: 'player_down',
     staticGif: 'down.gif',
@@ -91,22 +93,19 @@ function init() {
       motionGif: 'down.gif',
       hurtGif: 'hurt.gif',
       motion: defaultMotion,
-      defaultPosition: 619,
+      filteredMotion: [],
+      defaultPosition: 27,
       position: 619,
       display: document.createElement('div'),
       target: [cpuOneDefaultTarget.horizontalPosition,cpuOneDefaultTarget.verticalPosition],
       facingDirection: 'down',
-      speed: 200,
+      speed: 100,
       horizontalPosition: null,
       verticalPosition: null,
       motionInterval: null,
       defaultStatus: 'active',
       status: 'active',
       knockOutAnimationDisplay: null,
-      // setPosition(){
-      //   this.horizontalPosition = this.position % width
-      //   this.verticalPosition = Math.floor(this.position / width)
-      // },
     },
     {
       name: 'cpuTwo',
@@ -115,7 +114,8 @@ function init() {
       motionGif: 'down.gif',
       hurtGif: 'hurt.gif',
       motion: defaultMotion,
-      defaultPosition: 621,
+      filteredMotion: [],
+      defaultPosition: 27,
       position: 621,
       display: document.createElement('div'),
       target: [cpuTwoDefaultTarget.horizontalPosition,cpuTwoDefaultTarget.verticalPosition],
@@ -127,10 +127,6 @@ function init() {
       defaultStatus: 'asleep',
       status: 'asleep',
       knockOutAnimationDisplay: null,
-      // setPosition(){
-      //   this.horizontalPosition = this.position % width
-      //   this.verticalPosition = Math.floor(this.position / width)
-      // },
     }
   ]
   
@@ -158,7 +154,6 @@ function init() {
   
 
   //* SETTINGS
-  // const scoreFromNormalItem = 100
 
   const itemObjects = [
     {
@@ -207,7 +202,7 @@ function init() {
     addPlayer(player.position)
     displayPlayerLife()
     populateCells(cellsWithWalls,'wall')
-    populateCells(cellsWithItems,'item')
+    // populateCells(cellsWithItems,'item')
     populateCells(cellsWithBigStars,'big_star')
     
   }
@@ -259,7 +254,6 @@ function init() {
         if (player.position === cpu.position && player.display.classList.contains('invincible') && cpu.status !== 'inactive'){
           knockOutCpu(cpu)
         } else if (player.position === cpu.position && !player.display.classList.contains('invincible') && cpu.status !== 'inactive'){
-          //// console.log('ouch!')
           playerLoseLife()
         }
       })
@@ -281,40 +275,39 @@ function init() {
     // rePositionImage(cpuOne) // may not be necessary?(cpu moves anyway)
   },1)
   
+  turnPlayerInvincible()
+
   function turnPlayerInvincible(){
     player.display.classList.add('invincible')
 
-    setTimeout(function(){
-      player.display.classList.remove('invincible')
-      knockOutCpuCounter = 1
-    },7000)
+  //   setTimeout(function(){
+  //     player.display.classList.remove('invincible')
+  //     knockOutCpuCounter = 1
+  //   },7000)
   }
 
 
-
-
-  
   function knockOutCpu(cpu){
   
     cpu.status = 'inactive'
     displayKnockOutAnimation(cpu)
+    score += 500 * knockOutCpuCounter
+    const scoreEarned = 500 * knockOutCpuCounter
+    knockOutCpuCounter += 1
 
     setTimeout(function(){
-      cpu.knockOutAnimationDisplay.innerHTML = 500 * knockOutCpuCounter
+      cpu.knockOutAnimationDisplay.innerHTML = scoreEarned
     },400)
 
     setTimeout(function(){
       cpu.knockOutAnimationDisplay.style.top = `${scoreDisplay.getBoundingClientRect().y}px`
       cpu.knockOutAnimationDisplay.style.left = `${scoreDisplay.getBoundingClientRect().x}px`
-      
     },800)
 
     setTimeout(function(){
       cover.removeChild(cpu.knockOutAnimationDisplay)
       animateSparkle(cpu)  //* creates a star that floats back to default position
-      score += 500 * knockOutCpuCounter
       scoreDisplay.innerHTML = score
-      knockOutCpuCounter += 1
       scoreDisplayWrapper.classList.add('animate')
     },1000)
 
@@ -357,7 +350,6 @@ function init() {
 
     cover.appendChild(cpu.knockOutAnimationDisplay)
     
-
     setTimeout(function(){
       cpu.knockOutAnimationDisplay.style.top = `${outerCells[cpu.defaultPosition].getBoundingClientRect().y}px`
       cpu.knockOutAnimationDisplay.style.left = `${outerCells[cpu.defaultPosition].getBoundingClientRect().x}px`
@@ -369,8 +361,6 @@ function init() {
   }  
 
 
-  
-  // let knockOutAnimationDisplay = null
   function playerLoseLife(){
 
     displayKnockOutAnimation(player)
@@ -379,19 +369,20 @@ function init() {
       bringBackPlayerToPlay()
     } else {
       gameOverEvent()
-    }
-    
+    }  
   }
   
   function displayKnockOutAnimation(actor){
-    actor.display.classList.add('hidden')                        // stops actor motion and prevents further playerLoseLife
+    actor.display.classList.add('hidden')                     // stops actor motion and prevents further playerLoseLife
 
     actor.knockOutAnimationDisplay = document.createElement('div')  // displays hurt animation
     actor.knockOutAnimationDisplay.classList.add('effect_animation_fast')
     actor.knockOutAnimationDisplay.innerHTML = `<img src = "assets/${actor.hurtGif}" ></img>`
     const actorCurrentPosition = cells[actor.position].getBoundingClientRect()
-    actor.knockOutAnimationDisplay.style.top = `${actorCurrentPosition.y}px`        
-    actor.knockOutAnimationDisplay.style.left = `${actorCurrentPosition.x}px`
+
+    actor.knockOutAnimationDisplay.style.top = `${actorCurrentPosition.y - ((knockOutCpuCounter - 1) * 10)}px`   
+    actor.knockOutAnimationDisplay.style.left = `${actorCurrentPosition.x}px`     
+    // actor.knockOutAnimationDisplay.style.left = `${actorCurrentPosition.x + ((knockOutCpuCounter - 1) * 5)}px`
     actor.knockOutAnimationDisplay.style.height = `${actorCurrentPosition.height}px`
     actor.knockOutAnimationDisplay.style.width = `${actorCurrentPosition.width}px`
     cover.appendChild(actor.knockOutAnimationDisplay)
@@ -496,7 +487,6 @@ function init() {
   
   // * Make walls
   // walls defined by adding class to cells, according to what is mentioned in the array
- 
 
   function populateCells(array,classToAdd){
     for (let i = 0; i < array.length ; i++) {
@@ -507,7 +497,7 @@ function init() {
 
   function printPosition(){
     playerPositionDisplay.innerHTML = `${player.position} Horizontal:${player.horizontalPosition} Vertical:${player.verticalPosition}`
-    cpuOnePositionDisplay.innerHTML = `${cpuObjects[0].position} Horizontal:${cpuObjects[0].verticalPosition} Vertical:${cpuObjects[0].verticalPosition} cpu motion: ${cpuMotion} cpu facing ${cpuObjects[0].facingDirection}`
+    cpuOnePositionDisplay.innerHTML = `${cpuObjects[0].position} Horizontal:${cpuObjects[0].verticalPosition} Vertical:${cpuObjects[0].verticalPosition} cpu motion: ${cpuObjects[0].motion} cpu facing ${cpuObjects[0].facingDirection}`
     wallPositionDisplay.innerHTML = `${cellsWithWalls}`
   }
   
@@ -524,13 +514,14 @@ function init() {
   }
 
 
-
-
   //* Animation displaying image on page based on movement in the grid
 
 
   function displayActorImage(actor){
     actor.display.classList.add('effect_animation_fast')
+    if (actor !== player) {  //* syncing actor's speed with it's speed (only for cpu)
+      actor.display.style.transition = `${actor.speed / 1000}s`
+    }
     actor.display.innerHTML = `<img src = "assets/${actor.staticGif}" ></img>`
 
     const currentActor = cells[actor.position].getBoundingClientRect()
@@ -539,9 +530,9 @@ function init() {
     actor.display.style.height = `${currentActor.height}px`
     actor.display.style.width = `${currentActor.width}px`
   
-    cover.appendChild(actor.display)
-      
+    cover.appendChild(actor.display)    
   }
+
 
   function changeActorImageAndMoveToNewPosition(actor){
     actor.display.innerHTML = `<img src = "assets/${actor.motionGif}" ></img>`
@@ -554,12 +545,12 @@ function init() {
   }
 
 
-
   function addCpu(cpu,position,classToAdd) {  // * Add cpu to grid
     cells[position].classList.add(classToAdd)
     // cpu.setPosition()
     setActorPosition(cpu)
   }
+
 
   function removeCpu(position,classToRemove) {  // * Remove cpu from the grid
     cells[position].classList.remove(classToRemove)
@@ -574,20 +565,20 @@ function init() {
   
 
   //! computer get's error when it hits edge of level
-  function isWallOnRightOf(target){
-    return outerCells[(target.position + 1)].classList.contains('wall')
+  function isWallOnRightOf(actor){
+    return outerCells[(actor.position + 1)].classList.contains('wall')
   }
 
-  function isWallOnLeftOf(target){
-    return outerCells[(target.position - 1)].classList.contains('wall')
+  function isWallOnLeftOf(actor){
+    return outerCells[(actor.position - 1)].classList.contains('wall')
   }
   
-  function isWallAbove(target){
-    return outerCells[(target.position - width)].classList.contains('wall')
+  function isWallAbove(actor){
+    return outerCells[(actor.position - width)].classList.contains('wall')
   }
 
-  function isWallBelow(target){
-    return outerCells[(target.position + width)].classList.contains('wall')
+  function isWallBelow(actor){
+    return outerCells[(actor.position + width)].classList.contains('wall')
   }
 
 
@@ -602,15 +593,12 @@ function init() {
     if (cpu.facingDirection === 'right' && !isWallOnRightOf(cpu)){  // when facing right and nothing in the way
       cpu.motion = ['right','right']
     }
-
     if (cpu.facingDirection === 'left' && !isWallOnLeftOf(cpu)){  // when facing left and nothing in the way
       cpu.motion = ['left','left']
     }
-
     if (cpu.facingDirection === 'down' && !isWallBelow(cpu)){  // when facing down and nothing in the way
       cpu.motion = ['down','down']
     }
-
     if (cpu.facingDirection === 'up' && !isWallAbove(cpu)){  // when facing up and nothing in the way
       cpu.motion = ['up','up']
     }
@@ -627,61 +615,115 @@ function init() {
 
     if (isWallAbove(cpu) && isWallOnRightOf(cpu)){  // when wall at top and right
       cpu.motion = ['down','left']
-    }
-    
+    } 
     if (isWallAbove(cpu) && isWallOnLeftOf(cpu)){  // when wall at top and left
       cpu.motion = ['right','down']
     }
-
     if (isWallBelow(cpu) && isWallOnRightOf(cpu)){  // when wall at bottom and right
       cpu.motion = ['up','left']
     }
-
     if (isWallBelow(cpu) && isWallOnLeftOf(cpu)){   // when wall at bottom and left
       cpu.motion = ['up','right']
     }
+    
+
+    // chaseTarget(cpu)
+    avoidTarget(cpu)
+  }
+
+  function chaseTarget(cpu){
 
     if (cpu.horizontalPosition < cpu.target[0]){  //* movement based on target position
       cpu.motion.push('right')
     } else {
       cpu.motion.push('left')
     }
+
     if (cpu.verticalPosition < cpu.target[1]){
       cpu.motion.push('down')
     } else {
       cpu.motion.push('up')
     }
   }
+
+  function avoidTarget(cpu){
+
+    //! preventing cpu from taking steps that take them to the player
+    
+    if (cpu.position + 1 === player.position || cpu.position + 2 === player.position || cpu.position + 3 === player.position){
+      cpu.filteredMotion = cpu.motion.filter(option => {
+        return option !== 'right'
+      })
+      cpu.motion = cpu.filteredMotion
+    }
+
+    if (cpu.position - 1 === player.position || cpu.position - 2 === player.position || cpu.position - 3 === player.position){
+      cpu.filteredMotion = cpu.motion.filter(option => {
+        return option !== 'left'
+      })
+      cpu.motion = cpu.filteredMotion
+    }
+
+    if (cpu.position - width === player.position || cpu.position - (width * 2) === player.position || cpu.position - (width * 3) === player.position){
+      cpu.filteredMotion = cpu.motion.filter(option => {
+        return option !== 'up'
+      })
+      cpu.motion = cpu.filteredMotion
+    }
+
+    if (cpu.position + width === player.position || cpu.position + (width * 2) === player.position || cpu.position + (width * 3 ) === player.position ){
+      cpu.filteredMotion = cpu.motion.filter(option => {
+        return option !== 'down'
+      })
+      cpu.motion = cpu.filteredMotion
+    }
+
+    if (cpu.horizontalPosition > cpu.target[0]){  //* movement based on target position
+      cpu.motion.push('right')
+    } else {
+      cpu.motion.push('left')
+    }
+
+    if (cpu.verticalPosition > cpu.target[1]){
+      cpu.motion.push('down')
+    } else {
+      cpu.motion.push('up')
+    }
+    
+  }
+
+  setInterval(function(){
+    console.log(cpuObjects[0].position) 
+    console.log(player.position)
+  },1000)
   
 
-  function turnCpu(target,cpuFacingDirection){
+  function turnCpu(cpu,cpuFacingDirection){
     switch (cpuFacingDirection) {
       case 'right': 
-        target.class = 'cpu_right'
-        target.staticGif = 'right.gif'
-        target.motionGif = 'right_roll.gif'
+        cpu.class = 'cpu_right'
+        cpu.staticGif = 'right.gif'
+        cpu.motionGif = 'right_roll.gif'
         break
       case 'left': 
-        target.class = 'cpu_left'
-        target.staticGif = 'left.gif'
-        target.motionGif = 'shift_left.gif'
+        cpu.class = 'cpu_left'
+        cpu.staticGif = 'left.gif'
+        cpu.motionGif = 'shift_left.gif'
         break
       case 'up': 
-        target.class = 'cpu_up'
-        target.staticGif = 'up.gif'
-        target.motionGif = 'up.gif'
+        cpu.class = 'cpu_up'
+        cpu.staticGif = 'up.gif'
+        cpu.motionGif = 'up.gif'
         break
       case 'down': 
-        target.class = 'cpu_down'
-        target.staticGif = 'down.gif'
-        target.motionGif = 'down.gif'
+        cpu.class = 'cpu_down'
+        cpu.staticGif = 'down.gif'
+        cpu.motionGif = 'down.gif'
         break
       default:
         console.log('invalid command')
     }
   }
-
-
 
 
   //TODO mejirushi
@@ -723,10 +765,6 @@ function init() {
   }
   
  
-
-
-
-  
   //* player related motions
 
   function addPlayer(position) {
@@ -738,7 +776,6 @@ function init() {
   function removePlayer(position) {
     cells[position].classList.remove(player.class)
   }
-
 
 
   function takeItemAndEarnScore(itemObjectArray){
@@ -832,13 +869,6 @@ function init() {
   }
 
 
-
-
-
-
-
-
-
   function turnPlayer(keyPressed){
     if (!player.display.classList.contains('invincible')){
       switch (keyPressed) {
@@ -923,9 +953,6 @@ function init() {
   // })
 
 
-
-
-
 }
 
 window.addEventListener('DOMContentLoaded', init)
@@ -935,44 +962,3 @@ window.addEventListener('DOMContentLoaded', init)
 
 
 //TODO redundant
-
-
-
-
-// function turnPlayer(keyPressed){
-//   switch (keyPressed) {
-//     case 'ArrowRight': 
-//       player.sprite = '<img src = "assets/moreright.png">'
-//       break
-//     case 'ArrowLeft': 
-//       player.sprite = '<img src = "assets/moreleft.png">'
-//       break
-//     case 'ArrowUp': 
-//       player.sprite = '<img src = "assets/moreup.png">'
-//       break
-//     case 'ArrowDown': 
-//       player.sprite = '<img src = "assets/moredown.png">'
-//       break
-//     default:
-//       console.log('invalid command')
-//   }
-// }
-
-// function completePlayerMotion(keyPressed){
-//   switch (keyPressed) {
-//     case 'ArrowRight': 
-//       player.sprite = '<img src = "assets/rightcomp.png">'
-//       break
-//     case 'ArrowLeft': 
-//       player.sprite = '<img src = "assets/leftcomp.png">'
-//       break
-//     case 'ArrowUp': 
-//       player.sprite = '<img src = "assets/upcomp.png">'
-//       break
-//     case 'ArrowDown': 
-//       player.sprite = '<img src = "assets/downcomp.png">'
-//       break
-//     default:
-//       console.log('invalid command')
-//   }
-// }

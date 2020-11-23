@@ -132,6 +132,11 @@ body {
   background-color: lightslategray;
 }
 
+
+.cell.vision {
+  background-color: white;
+}
+
 .flicker {
   animation: flicker 0.5s infinite;
 }
