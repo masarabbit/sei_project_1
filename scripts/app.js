@@ -3,7 +3,7 @@
 //! if you can't click, you need to disable cover
 //TODO add alt to images
 
-////something needs to be added to react to user changing viewport size
+
 
 
 
@@ -22,7 +22,9 @@ function init() {
   //! this is exact opposite of cells with Teleport, so may be redundant
   
   // const cellsWithBigStars = [166,195,1404,1435]
+  
 
+  //! provisional settings
   const cellsWithItems = [167,168,169,170,171,172,173,174]
   const cellsWithBigStars = [166]
 
@@ -32,7 +34,16 @@ function init() {
   const cover = document.querySelector('.cover')
   const gameEndCover = document.querySelector('.game_end_cover')
   const playAgainButton = document.querySelector('#play_again')
+  const startButton = document.querySelector('#start')
+  const gameStartWrapper = document.querySelector('.game_start_wrapper')
+  const gameStartCover = document.querySelector('.game_start_cover')
 
+  //* status display
+  const scoreDisplay = document.querySelector('.score')
+  const scoreDisplayWrapper = document.querySelector('.score_wrapper')
+  let score = 0
+  const lifeDisplay = document.querySelector('#life')
+  //// const lifeDisplayWrapper = document.querySelector('.life_wrapper')
 
 
   // * Variables
@@ -67,10 +78,6 @@ function init() {
     defaultLife: 3,
     life: 3,
     knockOutAnimationDisplay: null,
-    // setPosition(){
-    //   this.horizontalPosition = this.position % width
-    //   this.verticalPosition = Math.floor(this.position / width)
-    // },
   }
 
   const cpuOneDefaultTarget = {
@@ -147,13 +154,7 @@ function init() {
   }
 
 
-  //* status display
-  const scoreDisplay = document.querySelector('.score')
-  const scoreDisplayWrapper = document.querySelector('.score_wrapper')
-  let score = 0
-  const lifeDisplay = document.querySelector('#life')
-  // const lifeDisplayWrapper = document.querySelector('.life_wrapper')
-  
+ 
 
   
   //TODO
@@ -205,22 +206,115 @@ function init() {
 
   
 
-  function startGame(){
+  // function startGame(){
+  //   createGrid()
+  //   displayActorImage(player)
+  //   addPlayer(player.position)
+  //   displayPlayerLife()
+  //   populateCells(cellsWithWalls,'wall')
+  //   populateCells(cellsWithTeleport,'teleport')
+  //   populateCells(cellsWithItems,'item')
+  //   populateCells(cellsWithBigStars,'big_star')
+
+  //   initialiseCpus(cpuObjects)  
+    
+  //   //* checking for status
+  //   setInterval(function(){
+  //     rePositionImage(player) // this is to ensure player image stays in right place despite screen resize
+  //     checkPlayerAndCpuCollision()
+  //     triggerTeleport()
+  //   // rePositionImage(cpuOne) // may not be necessary?(cpu moves anyway)
+  //   },100)
+  
+  // }
+  
+  //! decide what to include in start game (arguably, elements can be created soon as page is loaded. start game could just enable player to move etc.)
+  // startGame()
+
+  let constantCheck = null
+
+  function triggerGameStart(){
+    
+    countDown()
+
     createGrid()
-    displayActorImage(player)
-    initialiseCpus(cpuObjects)  
-    addPlayer(player.position)
     displayPlayerLife()
     populateCells(cellsWithWalls,'wall')
     populateCells(cellsWithTeleport,'teleport')
     populateCells(cellsWithItems,'item')
     populateCells(cellsWithBigStars,'big_star')
-    
-  }
-  
-  //! decide what to include in start game (arguably, elements can be created soon as page is loaded. start game could just enable player to move etc.)
-  // startGame()
 
+    setTimeout(() =>{
+      displayActorImage(player)
+      player.display.classList.add('hidden')
+      addPlayer(player.position)
+    },2000) 
+    
+    setTimeout(() =>{
+      player.display.classList.remove('hidden')
+
+      initialiseCpus(cpuObjects)  
+    
+      //* checking for status
+      constantCheck = setInterval(() =>{
+        rePositionImage(player) // this is to ensure player image stays in right place despite screen resize
+        checkPlayerAndCpuCollision()
+        triggerTeleport()
+        // rePositionImage(cpuOne) // may not be necessary?(cpu moves anyway)
+      },100)
+    },2200)
+
+  }
+
+  function countDown(){
+    gameStartWrapper.classList.add('move_down')
+      
+    gameStartCover.classList.remove('display')
+    const countDownCircle = document.createElement('div')
+    countDownCircle.classList.add('countdown_circle')
+
+    setTimeout(() =>{
+      cover.appendChild(countDownCircle)
+      countDownCircle.classList.add('count')
+      countDownCircle.innerHTML = '3'
+    },800)
+
+    setTimeout(() =>{
+      countDownCircle.classList.remove('count')
+    },1000)  
+
+    setTimeout(() =>{
+      countDownCircle.classList.add('count')
+      countDownCircle.innerHTML = '2'
+    },1200)  
+
+    setTimeout(() =>{
+      countDownCircle.classList.remove('count')
+    },1400)  
+
+    setTimeout(() =>{
+      countDownCircle.classList.add('count')
+      countDownCircle.innerHTML = '1'
+    },1600) 
+    
+    setTimeout(() =>{
+      countDownCircle.classList.remove('count')
+    },1800)  
+
+    setTimeout(() =>{
+      countDownCircle.classList.add('count')
+      countDownCircle.classList.add('transparent')
+      countDownCircle.innerHTML = 'go!'
+    },2000) 
+    
+    setTimeout(() =>{
+      cover.removeChild(countDownCircle)
+    },2200)
+  }
+
+
+
+  startButton.addEventListener('click', triggerGameStart)
 
   //// function initiateCpu(cpu){
   ////   displayTargetImage(cpu)
@@ -253,7 +347,7 @@ function init() {
   //! this could be in start game, or somewhere else.
   //! needs to ensure this doesn't trigger when game is already complete
   setTimeout(
-    function(){
+    () =>{
       changeStatusToActive(cpuObjects[1])
     },5000)
 
@@ -278,14 +372,6 @@ function init() {
   }
   
 
-  //* checking for status
-  setInterval(function(){
-    rePositionImage(player) // this is to ensure player image stays in right place despite screen resize
-    checkPlayerAndCpuCollision()
-    triggerTeleport()
-    // rePositionImage(cpuOne) // may not be necessary?(cpu moves anyway)
-  },100)
-  
   // turnPlayerInvincible()
 
   //TODO muteki
@@ -293,7 +379,7 @@ function init() {
   function turnPlayerInvincible(){
     player.display.classList.add('invincible')
 
-    setTimeout(function(){
+    setTimeout(() =>{
       player.display.classList.remove('invincible')
       knockOutCpuCounter = 1
     },7000)
@@ -308,32 +394,32 @@ function init() {
     const scoreEarned = 500 * knockOutCpuCounter
     knockOutCpuCounter += 1
 
-    setTimeout(function(){
+    setTimeout(() =>{
       cpu.knockOutAnimationDisplay.innerHTML = scoreEarned
     },400)
 
-    setTimeout(function(){
+    setTimeout(() =>{
       cpu.knockOutAnimationDisplay.style.top = `${scoreDisplay.getBoundingClientRect().y}px`
       cpu.knockOutAnimationDisplay.style.left = `${scoreDisplay.getBoundingClientRect().x}px`
     },800)
 
-    setTimeout(function(){
+    setTimeout(() =>{
       cover.removeChild(cpu.knockOutAnimationDisplay)
       animateSparkle(cpu)  //* creates a star that floats back to default position
       scoreDisplay.innerHTML = score
       scoreDisplayWrapper.classList.add('animate')
     },1000)
 
-    setTimeout(function(){                     // animate score board
+    setTimeout(() =>{                     // animate score board
       scoreDisplayWrapper.classList.remove('animate')
     },1200)
 
-    setTimeout(function(){
+    setTimeout(() =>{
       // returns cpu to default position, but harmless.
       removeCpu(cpu.position,cpu.class)
     },5000)
 
-    setTimeout(function(){
+    setTimeout(() =>{
       cpu.position = cpu.defaultPosition
 
       addCpu(cpu)
@@ -342,7 +428,7 @@ function init() {
       cpu.display.classList.add('fadein')
     },7000)
 
-    setTimeout(function(){
+    setTimeout(() =>{
       changeStatusToActive(cpu)
       cpu.display.classList.remove('fadein')
     },10000)
@@ -464,39 +550,51 @@ function init() {
   
   }
 
-  // gameOverEvent()
+  //// gameOverEvent()
 
 
   
 
   //TODO mejirushi
   function setUpGame(){
-    // console.log('reset game')
-
+    //// console.log('reset game')
+    constantCheck = null
     cover.innerHTML = ''  // wipe cover to remove actor images
     playAgainButton.classList.remove('display')
     gameEndCover.classList.remove('shade') // hide game over message
-    
-    //! control how enemies start to move?
-    cpuObjects.forEach(cpu =>{  // remove old position before reinitialising
-      removeCpu(cpu.position,cpu.class)
-    })
-    initialiseCpus(cpuObjects) 
-    
+
     score = 0
     itemToCollect = itemTotal
     scoreDisplay.innerHTML = score
     player.life = player.defaultLife   // reset player life total
     displayPlayerLife()
-    removePlayer(player.position)
-    player.position = player.defaultPosition
-    addPlayer(player.position)
-    displayActorImage(player)
-    player.display.classList.remove('hidden')
-    
-    // reposition items
-    populateCells(cellsWithItems,'item')
+
+    populateCells(cellsWithItems,'item')   // reposition items
     populateCells(cellsWithBigStars,'big_star')
+    
+    countDown()
+
+    setTimeout(() =>{
+
+      //! control how enemies start to move?
+      cpuObjects.forEach(cpu =>{  // remove old position before reinitialising
+        removeCpu(cpu.position,cpu.class)
+      })
+      initialiseCpus(cpuObjects) 
+      removePlayer(player.position)
+      player.position = player.defaultPosition
+      addPlayer(player.position)
+      displayActorImage(player)
+      player.display.classList.remove('hidden')
+
+      constantCheck = setInterval(() =>{
+        rePositionImage(player) // this is to ensure player image stays in right place despite screen resize
+        checkPlayerAndCpuCollision()
+        triggerTeleport()
+      // rePositionImage(cpuOne) // may not be necessary?(cpu moves anyway)
+      },100)
+
+    },2200)
 
   }
 
@@ -964,7 +1062,6 @@ function init() {
       takeItemAndEarnScore(itemObject) 
     })
     
-
     changeActorImageAndMoveToNewPosition(player)
 
     setTimeout(
