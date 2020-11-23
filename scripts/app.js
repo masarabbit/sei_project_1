@@ -80,25 +80,17 @@ function init() {
     knockOutAnimationDisplay: null,
   }
 
-  const cpuOneDefaultTarget = {
-    position: 378,
-    horizontalPosition: null,
-    verticalPosition: null,
-    // setPosition(){
-    //   this.horizontalPosition = this.position % width
-    //   this.verticalPosition = Math.floor(this.position / width)
-    // },
-  }
+  // const cpuOneDefaultTarget = {
+  //   position: 378,
+  //   horizontalPosition: null,
+  //   verticalPosition: null,
+  // }
 
-  const cpuTwoDefaultTarget = {
-    position: 1280,
-    horizontalPosition: null,
-    verticalPosition: null,
-    // setPosition(){
-    //   this.horizontalPosition = this.position % width
-    //   this.verticalPosition = Math.floor(this.position / width)
-    // },
-  }
+  // const cpuTwoDefaultTarget = {
+  //   position: 1280,
+  //   horizontalPosition: null,
+  //   verticalPosition: null,
+  // }
 
 
   const cpuObjects = [
@@ -115,15 +107,23 @@ function init() {
       defaultPosition: 619,
       position: 619,
       display: document.createElement('div'),
-      target: [cpuOneDefaultTarget.horizontalPosition,cpuOneDefaultTarget.verticalPosition],
+      defaultTarget: {
+        position: 0,
+        horizontalPosition: null,
+        verticalPosition: null,
+      },
+      target: null,
       facingDirection: 'down',
+      speedRange: [100,200,400],
       speed: 200,
       horizontalPosition: null,
       verticalPosition: null,
       motionInterval: null,
       defaultStatus: 'active',
-      status: 'active',
+      status: 'active',  //* determines if cpu is in motion or not 
       knockOutAnimationDisplay: null,
+      moodTange: ['scatter','aggresive','wander'],    //* determine chase behaviour
+      moodTimer: 10,
     },
     {
       name: 'two',
@@ -136,15 +136,24 @@ function init() {
       defaultPosition: 621,
       position: 621,
       display: document.createElement('div'),
-      target: [cpuTwoDefaultTarget.horizontalPosition,cpuTwoDefaultTarget.verticalPosition],
+      defaultTarget: {
+        position: 39,
+        horizontalPosition: null,
+        verticalPosition: null,
+      },
+      target: null,
       facingDirection: 'down',
+      speedRange: [100,200,400],
       speed: 150,
       horizontalPosition: null,
       verticalPosition: null,
       motionInterval: null,
-      defaultStatus: 'asleep',
-      status: 'asleep',
+      defaultStatus: 'inactive',
+      status: 'inactive',
       knockOutAnimationDisplay: null,
+      moodRange: ['scatter','lazy','wander'],
+      mood: 'lazy',
+      moodTimer: 10,
     }
   ]
   
@@ -154,10 +163,11 @@ function init() {
   }
 
 
- 
 
   
   //TODO
+  // page display
+
   const playerPositionDisplay = document.querySelector('#player_position')
   const cpuOnePositionDisplay = document.querySelector('#cpu_one_position')
   const wallPositionDisplay = document.querySelector('#wall_position')
@@ -192,7 +202,7 @@ function init() {
       cell.setAttribute('id', i)
       outerCell.classList.add('outer_cell')
       cell.classList.add('cell')
-      // cell.innerText = i
+      cell.innerText = i
       outerCell.appendChild(cell)
       grid.appendChild(outerCell)
       cell.appendChild(innerCell)
@@ -246,6 +256,17 @@ function init() {
       },100)
     },2200)
 
+
+    //TODO to be removed later
+    //! somthing could trigger cpu status to change (some kind of timer?)
+    //! this could be in start game, or somewhere else.
+    //! needs to ensure this doesn't trigger when game is already complete
+    setTimeout(
+      () =>{
+        changeStatusToActive(cpuObjects[1])
+      },5000)
+
+
   }
 
   function countDown(){
@@ -294,8 +315,6 @@ function init() {
     },2200)
   }
 
-
-
   startButton.addEventListener('click', triggerGameStart)
 
   //// function initiateCpu(cpu){
@@ -325,13 +344,6 @@ function init() {
   
 
 
-  //! somthing could trigger cpu status to change (some kind of timer?)
-  //! this could be in start game, or somewhere else.
-  //! needs to ensure this doesn't trigger when game is already complete
-  setTimeout(
-    () =>{
-      changeStatusToActive(cpuObjects[1])
-    },5000)
 
 
   function checkPlayerAndCpuCollision(){
@@ -422,6 +434,8 @@ function init() {
     }
   }
 
+
+
   function animateSparkle(cpu){
     cpu.knockOutAnimationDisplay = document.createElement('div')
     cpu.knockOutAnimationDisplay.classList.add('effect_animation_slow')
@@ -480,6 +494,8 @@ function init() {
     actor.display.style.height = `${cellSize.height}px`
     actor.display.style.width = `${cellSize.width}px`
   }
+
+
 
   function bringBackPlayerToPlay(){
 
@@ -542,7 +558,14 @@ function init() {
 
   
 
-  //TODO mejirushi
+  //TODO jyunbi
+
+
+
+  // //! not sure if this is necessary
+  // setActorPosition(cpuOneDefaultTarget)
+  // setActorPosition(cpuTwoDefaultTarget)
+
   function setUpGame(){
     //// console.log('reset game')
     constantCheck = null
@@ -583,9 +606,20 @@ function init() {
 
     },2200)
 
+
+    //TODO to be removed later
+    //! somthing could trigger cpu status to change (some kind of timer?)
+    //! this could be in start game, or somewhere else.
+    //! needs to ensure this doesn't trigger when game is already complete
+    setTimeout(
+      () =>{
+        changeStatusToActive(cpuObjects[1])
+      },5000)
+
+
   }
 
-  playAgainButton.addEventListener('click',setUpGame)
+  
 
 
   
@@ -626,13 +660,17 @@ function init() {
     if (actor !== player) {  //* syncing actor's speed with it's speed (only for cpu)
       actor.display.style.transition = `${actor.speed / 1000}s`
     }
+    if (actor !== player && actor.speed <= 300) { //* ensure transition is atleast 0.3 however slow 
+      actor.display.style.transition = '0.3s' 
+    }
+
     actor.display.innerHTML = `<img src = "assets/${actor.staticGif}" ></img>`
 
     const currentActor = cells[actor.position].getBoundingClientRect()
     actor.display.style.top = `${currentActor.y}px`
     actor.display.style.left = `${currentActor.x}px`
-    actor.display.style.height = `${currentActor.height}px`
-    actor.display.style.width = `${currentActor.width}px`
+    actor.display.style.height = `${cells[0].getBoundingClientRect().height}px`
+    actor.display.style.width = `${cells[0].getBoundingClientRect().width}px`
   
     cover.appendChild(actor.display)    
   }
@@ -659,12 +697,16 @@ function init() {
   function removeCpu(position,classToRemove) {  // * Remove cpu from the grid
     cells[position].classList.remove(classToRemove)
   }
-
+  
+  
 
   function cpuDetermineTarget(cpu){
+    
+    setActorPosition(cpu.defaultTarget)
+    cpu.target = [cpu.defaultTarget.horizontalPosition,cpu.defaultTarget.verticalPosition]
     // cpuOneDefaultTarget.setPosition()
     // cpu.target = [cpuOneDefaultTarget.horizontalPosition,cpuOneDefaultTarget.verticalPosition]
-    cpu.target = [player.horizontalPosition,player.verticalPosition]
+    // cpu.target = [player.horizontalPosition,player.verticalPosition]
   } 
   
 
@@ -734,8 +776,10 @@ function init() {
       avoidTarget(cpu)
       return
     }
+    
 
-    chaseTarget(cpu)
+    //TODO this bit to be ignored in wandering mode
+    chaseTarget(cpu)  
     
   }
 
@@ -1116,6 +1160,9 @@ function init() {
 
   //* events
   document.addEventListener('keyup', handleMovementWithKey)
+
+
+  playAgainButton.addEventListener('click',setUpGame)
 
   cells.forEach(cell => {
     // cell.addEventListener('click', makeWall)
