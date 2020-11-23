@@ -30,7 +30,7 @@ function init() {
   //* page elements
   const grid = document.querySelector('.grid')
   const cover = document.querySelector('.cover')
-  const gameOverCover = document.querySelector('.game_over_cover')
+  const gameEndCover = document.querySelector('.game_end_cover')
   const playAgainButton = document.querySelector('#play_again')
 
 
@@ -219,7 +219,7 @@ function init() {
   }
   
   //! decide what to include in start game (arguably, elements can be created soon as page is loaded. start game could just enable player to move etc.)
-  startGame()
+  // startGame()
 
 
   //// function initiateCpu(cpu){
@@ -254,12 +254,8 @@ function init() {
   //! needs to ensure this doesn't trigger when game is already complete
   setTimeout(
     function(){
-      if (itemToCollect > 0){
-        cpuObjects[1].status = 'active'
-      }
+      changeStatusToActive(cpuObjects[1])
     },5000)
-
-
 
 
   function checkPlayerAndCpuCollision(){
@@ -347,11 +343,15 @@ function init() {
     },7000)
 
     setTimeout(function(){
-      cpu.status = 'active'
+      changeStatusToActive(cpu)
       cpu.display.classList.remove('fadein')
     },10000)
+  }
 
-
+  function changeStatusToActive(cpu){
+    if (itemToCollect > 0){  //* this added to ensure cpus do not recover when game is already complete
+      cpu.status = 'active'
+    }
   }
 
   function animateSparkle(cpu){
@@ -456,11 +456,11 @@ function init() {
   
   function gameOverEvent(){
     console.log('game over!')
-    const gameOverText = document.querySelector('.game_over_text')
+    const gameOverText = document.querySelector('.game_end_text')
     playAgainButton.classList.add('display')
     gameOverText.innerHTML = 'game over!!'
     gameOverText.classList.add('display')
-    gameOverCover.classList.add('shade')
+    gameEndCover.classList.add('shade')
   
   }
 
@@ -475,7 +475,7 @@ function init() {
 
     cover.innerHTML = ''  // wipe cover to remove actor images
     playAgainButton.classList.remove('display')
-    gameOverCover.classList.remove('shade') // hide game over message
+    gameEndCover.classList.remove('shade') // hide game over message
     
     //! control how enemies start to move?
     cpuObjects.forEach(cpu =>{  // remove old position before reinitialising
@@ -880,11 +880,11 @@ function init() {
       // cpu.display.classList.add('hidden')
       cpu.status = 'inactive'
     })
-    const gameCompletionText = document.querySelector('.game_over_text')
+    const gameCompletionText = document.querySelector('.game_end_text')
     playAgainButton.classList.add('display')
     gameCompletionText.innerHTML = 'complete!!'
     gameCompletionText.classList.add('display')
-    gameOverCover.classList.add('shade')
+    gameEndCover.classList.add('shade')
 
   }
   
