@@ -15,13 +15,16 @@ function init() {
 
   
 
-  const cellsWithItems = [167,168,169,170,171,172,173,174,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,206,209,214,219,227,235,246,249,254,259,267,275,286,289,294,299,307,315,326,329,334,339,347,355,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,395,404,412,416,423,427,431,435,444,452,456,463,467,471,472,473,474,475,484,492,493,494,495,496,497,498,499,500,501,502,503,504,505,506,507,511,524,532,547,551,564,565,566,567,568,569,572,587,591,592,593,594,595,609,612,627,635,649,652,667,675,689,692,707,715,724,725,726,727,728,729,730,731,732,733,734,735,736,737,744,745,746,747,748,749,750,751,752,753,754,755,764,769,777,784,787,804,809,817,824,827,844,847,848,849,850,851,852,853,854,855,856,857,858,859,860,861,862,863,864,865,866,867,884,887,892,895,901,904,907,910,911,912,913,914,915,924,927,932,935,941,944,947,950,955,964,965,966,967,968,969,970,971,972,975,976,977,978,981,984,987,990,995,1004,1010,1018,1021,1024,1027,1030,1035,1044,1050,1058,1061,1062,1063,1064,1067,1070,1075,1084,1087,1088,1089,1090,1091,1092,1093,1094,1095,1096,1097,1098,1107,1110,1115,1124,1127,1130,1133,1138,1147,1148,1149,1150,1151,1152,1153,1154,1155,1164,1165,1166,1167,1170,1173,1178,1179,1180,1181,1182,1183,1184,1189,1192,1204,1210,1213,1220,1224,1229,1232,1244,1250,1253,1260,1264,1265,1266,1267,1268,1269,1270,1271,1272,1273,1274,1275,1284,1287,1288,1289,1290,1293,1300,1306,1309,1312,1315,1324,1327,1330,1333,1334,1335,1336,1337,1340,1346,1349,1352,1355,1364,1367,1370,1377,1380,1386,1389,1392,1395,1405,1406,1407,1408,1409,1410,1417,1418,1419,1420,1421,1422,1423,1424,1425,1426,1427,1428,1429,1432,1433,1434]
+  // const cellsWithItems = [167,168,169,170,171,172,173,174,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,206,209,214,219,227,235,246,249,254,259,267,275,286,289,294,299,307,315,326,329,334,339,347,355,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,395,404,412,416,423,427,431,435,444,452,456,463,467,471,472,473,474,475,484,492,493,494,495,496,497,498,499,500,501,502,503,504,505,506,507,511,524,532,547,551,564,565,566,567,568,569,572,587,591,592,593,594,595,609,612,627,635,649,652,667,675,689,692,707,715,724,725,726,727,728,729,730,731,732,733,734,735,736,737,744,745,746,747,748,749,750,751,752,753,754,755,764,769,777,784,787,804,809,817,824,827,844,847,848,849,850,851,852,853,854,855,856,857,858,859,860,861,862,863,864,865,866,867,884,887,892,895,901,904,907,910,911,912,913,914,915,924,927,932,935,941,944,947,950,955,964,965,966,967,968,969,970,971,972,975,976,977,978,981,984,987,990,995,1004,1010,1018,1021,1024,1027,1030,1035,1044,1050,1058,1061,1062,1063,1064,1067,1070,1075,1084,1087,1088,1089,1090,1091,1092,1093,1094,1095,1096,1097,1098,1107,1110,1115,1124,1127,1130,1133,1138,1147,1148,1149,1150,1151,1152,1153,1154,1155,1164,1165,1166,1167,1170,1173,1178,1179,1180,1181,1182,1183,1184,1189,1192,1204,1210,1213,1220,1224,1229,1232,1244,1250,1253,1260,1264,1265,1266,1267,1268,1269,1270,1271,1272,1273,1274,1275,1284,1287,1288,1289,1290,1293,1300,1306,1309,1312,1315,1324,1327,1330,1333,1334,1335,1336,1337,1340,1346,1349,1352,1355,1364,1367,1370,1377,1380,1386,1389,1392,1395,1405,1406,1407,1408,1409,1410,1417,1418,1419,1420,1421,1422,1423,1424,1425,1426,1427,1428,1429,1432,1433,1434]
 
   const cellsWithTeleport = [67,721,758,1547]
   const cellsWithTeleportExit = [1507,757,722,107]
   //! this is exact opposite of cells with Teleport, so may be redundant
   
-  const cellsWithBigStars = [166,195,1404,1435]
+  // const cellsWithBigStars = [166,195,1404,1435]
+
+  const cellsWithItems = [167,168,169,170,171,172,173,174]
+  const cellsWithBigStars = [166]
 
 
   //* page elements
@@ -42,7 +45,9 @@ function init() {
   const lifeCounters = []
   const defaultMotion = ['right','left','up','down']
   const flickerStateDuration = 3000
+  const itemTotal = cellsWithItems.length + cellsWithBigStars.length
   let knockOutCpuCounter = 1
+  let itemToCollect = itemTotal
 
   
   //* actors
@@ -246,9 +251,12 @@ function init() {
 
   //! somthing could trigger cpu status to change (some kind of timer?)
   //! this could be in start game, or somewhere else.
+  //! needs to ensure this doesn't trigger when game is already complete
   setTimeout(
     function(){
-      cpuObjects[1].status = 'active'
+      if (itemToCollect > 0){
+        cpuObjects[1].status = 'active'
+      }
     },5000)
 
 
@@ -450,6 +458,7 @@ function init() {
     console.log('game over!')
     const gameOverText = document.querySelector('.game_over_text')
     playAgainButton.classList.add('display')
+    gameOverText.innerHTML = 'game over!!'
     gameOverText.classList.add('display')
     gameOverCover.classList.add('shade')
   
@@ -475,6 +484,7 @@ function init() {
     initialiseCpus(cpuObjects) 
     
     score = 0
+    itemToCollect = itemTotal
     scoreDisplay.innerHTML = score
     player.life = player.defaultLife   // reset player life total
     displayPlayerLife()
@@ -486,6 +496,7 @@ function init() {
     
     // reposition items
     populateCells(cellsWithItems,'item')
+    populateCells(cellsWithBigStars,'big_star')
 
   }
 
@@ -504,7 +515,7 @@ function init() {
 
 
   function printPosition(){
-    playerPositionDisplay.innerHTML = `${player.position} Horizontal:${player.horizontalPosition} Vertical:${player.verticalPosition}`
+    playerPositionDisplay.innerHTML = `${player.position} Horizontal:${player.horizontalPosition} Vertical:${player.verticalPosition} item left:${itemToCollect}`
     cpuOnePositionDisplay.innerHTML = `${cpuObjects[0].position} Horizontal:${cpuObjects[0].verticalPosition} Vertical:${cpuObjects[0].verticalPosition} cpu motion: ${cpuObjects[0].motion} cpu facing ${cpuObjects[0].facingDirection}`
     wallPositionDisplay.innerHTML = `${cellsWithWalls}`
   }
@@ -770,6 +781,10 @@ function init() {
   //* Move cpu
   function cpuMovement(cpu) {
 
+    if (cpu.status === 'inactive'){
+      return
+    }
+
     removeCpu(cpu.position,cpu.class) 
     cpuMovementDecision(cpu)
     const motionIndex =  Math.floor(Math.random() * cpu.motion.length)
@@ -843,9 +858,14 @@ function init() {
 
       setTimeout(function(){
         cover.removeChild(itemTaken)
+        itemToCollect -= 1
         score += itemObjectArray.score
         scoreDisplay.innerHTML = score
         scoreDisplayWrapper.classList.add('animate')
+        if (itemToCollect < 1){
+          gameCompletionEvent()
+          return
+        }
       },1000)
 
       setTimeout(function(){                                 // animate score board
@@ -853,6 +873,19 @@ function init() {
       },1200)
 
     }
+  }
+
+  function gameCompletionEvent(){  
+    cpuObjects.forEach(cpu => {
+      // cpu.display.classList.add('hidden')
+      cpu.status = 'inactive'
+    })
+    const gameCompletionText = document.querySelector('.game_over_text')
+    playAgainButton.classList.add('display')
+    gameCompletionText.innerHTML = 'complete!!'
+    gameCompletionText.classList.add('display')
+    gameOverCover.classList.add('shade')
+
   }
   
   //TODO shunkan ido

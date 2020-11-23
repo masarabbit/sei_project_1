@@ -19,7 +19,7 @@ body {
   height:100%;
   width:100%;
   /* z-index:-1; */
-  z-index:9999;
+  z-index:999;
 }
 
 
@@ -216,7 +216,7 @@ body {
   height:80px;
   width:100%;
   padding:20px;
-  z-index: 200;
+  z-index: 99999;
   border:lightblue 1px solid;
   display:flex;
   justify-content: space-evenly; 
@@ -346,7 +346,7 @@ p.score_wrapper.animate {
 
 
 .game_over_cover {
-  z-index:99999;
+  z-index:9999;
   display:flex;
   justify-content: center;
   align-items: center;
