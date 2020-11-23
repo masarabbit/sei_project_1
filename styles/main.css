@@ -156,6 +156,16 @@ body {
   100% {opacity:1}
 }
 
+.fadeinfast{
+  animation: fadeinfast 0.5s forwards;
+}
+
+@keyframes fadeinfast {
+  0% {opacity:0}
+  100% {opacity:1}
+}
+
+
 .hidden {
   /* display:none; */  
   opacity:0;
