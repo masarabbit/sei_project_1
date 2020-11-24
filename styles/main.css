@@ -72,7 +72,16 @@ body {
   justify-content: space-evenly;
   align-items: space-evenly;
   flex-direction:column;
+  animation: float 3s ease infinite;
 }
+
+@keyframes float {
+  0% {transform: translateY(0);}
+  50% {transform: translateY(-10px);}
+  100% {transform: translateY(0);}
+}
+
+
 
 .game_start_wrapper.move_down {
   animation: move_down 1.2s forwards;
@@ -283,6 +292,11 @@ body {
   /* background-color:transparent; */
 }
 
+.boundary{
+  background-color:rgb(195, 64, 255);
+  /* background-color:transparent; */
+}
+
 .item{
   background-image: url('../assets/item.gif');
   background-repeat: no-repeat;
@@ -291,6 +305,12 @@ body {
 
 .big_star{
   background-image: url('../assets/big_star.gif');
+  background-repeat: no-repeat;
+  background-size:contain;
+}
+
+.blue_star{
+  background-image: url('../assets/blue_star.gif');
   background-repeat: no-repeat;
   background-size:contain;
 }
