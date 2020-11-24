@@ -31,8 +31,8 @@ function init() {
       class: 'item',
       image: 'item',
       additionalEffect: 'nothing',
-      // cellsWithItem: [167,168,169,170,171,172,173,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,206,209,214,219,227,235,246,249,254,259,267,275,286,289,294,299,307,315,326,329,334,339,347,355,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,395,404,412,415,423,426,427,431,435,444,452,455,463,466,467,471,472,473,474,475,484,492,495,496,497,501,502,504,505,506,507,511,524,532,535,538,541,545,551,564,565,566,567,568,569,572,575,578,581,585,591,592,593,594,595,609,612,613,614,615,616,617,618,619,620,621,622,623,624,625,626,627,635,649,654,666,667,675,689,694,706,707,715,724,725,726,727,728,730,731,732,733,734,746,747,748,749,750,751,752,753,754,755,764,774,786,787,792,804,814,826,827,832,844,848,849,850,851,852,853,854,855,856,857,858,859,860,861,862,863,864,865,866,867,872,884,887,892,895,901,904,907,910,911,912,913,914,924,927,932,935,941,944,947,950,955,964,965,966,967,968,969,970,971,972,975,976,977,981,984,987,990,995,1004,1010,1018,1021,1024,1027,1030,1035,1044,1050,1058,1061,1062,1063,1064,1067,1070,1075,1084,1087,1088,1089,1090,1091,1092,1093,1094,1095,1096,1097,1098,1107,1110,1115,1124,1127,1130,1133,1138,1147,1148,1149,1150,1151,1152,1153,1154,1164,1165,1166,1167,1170,1173,1178,1179,1180,1181,1182,1183,1184,1189,1192,1204,1210,1213,1220,1224,1229,1232,1244,1250,1253,1260,1264,1265,1266,1267,1268,1269,1270,1271,1272,1273,1274,1275,1284,1288,1289,1290,1293,1300,1306,1309,1312,1315,1324,1327,1330,1334,1335,1336,1337,1340,1346,1349,1352,1355,1364,1367,1370,1377,1380,1386,1389,1392,1395,1405,1406,1407,1408,1409,1410,1417,1418,1419,1420,1421,1422,1423,1424,1425,1426,1427,1428,1429,1432,1433,1434]
-      cellsWithItem: [167,168,169,170,171,172,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,206,209,214,219]
+      cellsWithItem: [167,168,169,170,171,172,173,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,206,209,214,219,227,235,246,249,254,259,267,275,286,289,294,299,307,315,326,329,334,339,347,355,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,395,404,412,415,423,426,427,431,435,444,452,455,463,466,467,471,472,473,474,475,484,492,495,496,497,501,502,504,505,506,507,511,524,532,535,538,541,545,551,564,565,566,567,568,569,572,575,578,581,585,591,592,593,594,595,609,612,613,614,615,616,617,618,619,620,621,622,623,624,625,626,627,635,649,654,666,667,675,689,694,706,707,715,724,725,726,727,728,730,731,732,733,734,746,747,748,749,750,751,752,753,754,755,764,774,786,787,792,804,814,826,827,832,844,848,849,850,851,852,853,854,855,856,857,858,859,860,861,862,863,864,865,866,867,872,884,887,892,895,901,904,907,910,911,912,913,914,924,927,932,935,941,944,947,950,955,964,965,966,967,968,969,970,971,972,975,976,977,981,984,987,990,995,1004,1010,1018,1021,1024,1027,1030,1035,1044,1050,1058,1061,1062,1063,1064,1067,1070,1075,1084,1087,1088,1089,1090,1091,1092,1093,1094,1095,1096,1097,1098,1107,1110,1115,1124,1127,1130,1133,1138,1147,1148,1149,1150,1151,1152,1153,1154,1164,1165,1166,1167,1170,1173,1178,1179,1180,1181,1182,1183,1184,1189,1192,1204,1210,1213,1220,1224,1229,1232,1244,1250,1253,1260,1264,1265,1266,1267,1268,1269,1270,1271,1272,1273,1274,1275,1284,1288,1289,1290,1293,1300,1306,1309,1312,1315,1324,1327,1330,1334,1335,1336,1337,1340,1346,1349,1352,1355,1364,1367,1370,1377,1380,1386,1389,1392,1395,1405,1406,1407,1408,1409,1410,1417,1418,1419,1420,1421,1422,1423,1424,1425,1426,1427,1428,1429,1432,1433,1434]
+      // cellsWithItem: [167,168,169,170,171,172,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,206,209,214,219]
     },
     {
       itemName: 'big star',
@@ -40,8 +40,8 @@ function init() {
       class: 'big_star',
       image: 'big_star',
       additionalEffect: 'invincibility',
-      // cellsWithItem: [166,195,1404,1435]
-      cellsWithItem: [166]
+      cellsWithItem: [166,195,1404,1435]
+      // cellsWithItem: [166]
     },
     {
       itemName: 'blue star',
@@ -49,8 +49,8 @@ function init() {
       class: 'blue_star',
       image: 'blue_star',
       additionalEffect: 'nothing',
-      // cellsWithItem: [174,179,498,503,847,915,978,1155,1287,1333]
-      cellsWithItem: [173,174,179]
+      cellsWithItem: [174,179,498,503,847,915,978,1155,1287,1333]
+      // cellsWithItem: [173,174,179]
     }
   ]
 
@@ -70,7 +70,7 @@ function init() {
   const scoreDisplayWrapper = document.querySelector('.score_wrapper')
   let score = 0
   const lifeDisplay = document.querySelector('#life')
-  //// const lifeDisplayWrapper = document.querySelector('.life_wrapper')
+
   
 
   // * Variables
@@ -123,8 +123,6 @@ function init() {
       staticGif: 'sleep.gif', 
       motionGif: 'down.gif',
       knockOutGif: 'hurt.gif',
-      // staticGifOption: [],
-      // motionGifOption: [],
       motion: defaultMotion,
       filteredMotion: [],
       defaultPosition: 737,
@@ -137,7 +135,7 @@ function init() {
       },
       target: null,
       facingDirection: 'down',
-      speedRange: [100,200,400],
+      speedRange: [100,200,300],
       speed: 200,
       horizontalPosition: null,
       verticalPosition: null,
@@ -145,7 +143,7 @@ function init() {
       defaultStatus: 'inactive',
       status: 'inactive',  //* determines if cpu is in motion or not 
       knockOutAnimationDisplay: null,
-      moodRange: ['scatter','aggresive','wander'],    //* determine chase behaviour
+      moodRange: ['scatter','aggressive_A','aggressive_B','aggressive_C','wander_A','wander_B','aggressive_D'],    //* determine chase behaviour
       mood: 'scatter',
       moodTimer: 0,
     },
@@ -167,7 +165,7 @@ function init() {
       },
       target: null,
       facingDirection: 'down',
-      speedRange: [100,200,400],
+      speedRange: [150,200,300],
       speed: 150,
       horizontalPosition: null,
       verticalPosition: null,
@@ -175,8 +173,8 @@ function init() {
       defaultStatus: 'inactive',
       status: 'inactive',
       knockOutAnimationDisplay: null,
-      moodRange: ['scatter','lazy','wander'],
-      mood: 'lazy',
+      moodRange: ['scatter_A','scatter_B','cunning_A','cunning_B','wander'],
+      mood: 'wander',
       moodTimer: 0,
     },
     {
@@ -197,7 +195,7 @@ function init() {
       },
       target: null,
       facingDirection: 'down',
-      speedRange: [100,200,400],
+      speedRange: [100,200,300],
       speed: 150,
       horizontalPosition: null,
       verticalPosition: null,
@@ -205,8 +203,8 @@ function init() {
       defaultStatus: 'inactive',
       status: 'inactive',
       knockOutAnimationDisplay: null,
-      moodRange: ['scatter','lazy','wander'],
-      mood: 'lazy',
+      moodRange: ['scatterA','scatterB','wanderA','wander_B','scatterC','aggressive'],
+      mood: 'wander',
       moodTimer: 0,
     },
     {
@@ -227,7 +225,7 @@ function init() {
       },
       target: null,
       facingDirection: 'down',
-      speedRange: [100,200,400],
+      speedRange: [100,200,200],
       speed: 150,
       horizontalPosition: null,
       verticalPosition: null,
@@ -235,8 +233,8 @@ function init() {
       defaultStatus: 'inactive',
       status: 'inactive',
       knockOutAnimationDisplay: null,
-      moodRange: ['scatter','lazy','wander'],
-      mood: 'lazy',
+      moodRange: ['scatter_A','wander_A','scatter_B','wander_B','aggressive'],
+      mood: 'wander',
       moodTimer: 0,
     }
   ]
@@ -252,11 +250,12 @@ function init() {
       if (cpu.status !== 'inactive'){
         cpu.moodTimer += 1
       }
-      if (cpu.moodTimer > 10){
+      if (cpu.moodTimer > 5){
         cpu.moodTimer = 0
       }
-      if (cpu.moodTimer === 10){
+      if (cpu.moodTimer === 5){
         switchMood(cpu)
+        resetCpuSpeed(cpu)
       }
     })
   }
@@ -271,6 +270,37 @@ function init() {
     }
     
   }
+
+  function resetCpuSpeed(cpu){
+    clearInterval(cpu.motionInterval)     
+    
+    if (player.display.classList.contains('invincible')){
+      cpu.speed = 200
+    } else {
+      switch (cpu.mood.split('_')[0]) {
+        case 'scatter': 
+          cpu.speed = cpu.speedRange[1]
+          break
+        case 'aggressive' || 'cunning': 
+          cpu.speed = cpu.speedRange[0]
+          break
+        case 'wander': 
+          cpu.speed = cpu.speedRange[2]
+          break
+        default:
+          cpu.speed = 200
+      }  
+    }
+
+    displayActorImage(cpu)
+    cpu.motionInterval = setInterval(
+      function(){ 
+        if (cpu.status === 'active'){
+          cpuMovement(cpu)
+        }
+      },cpu.speed)
+  }
+
 
 
   //TODO cpu control
@@ -301,6 +331,14 @@ function init() {
           changeStatusToActive(cpuObjects[2])
         }
       },1000)
+    }
+
+    if (cpuObjects[1].status === 'active' || cpuObjects[2].status === 'active'){
+      setTimeout(()=>{
+        if (!cpuObjects[3].display.classList.contains('hidden')){
+          changeStatusToActive(cpuObjects[3])
+        }
+      },2000)
     }
   }
 
@@ -384,7 +422,6 @@ function init() {
       checkPlayerAndCpuCollision()
       controlCpuActivation()
       triggerTeleport()
-      // rePositionImage(cpuOne) // may not be necessary?(cpu moves anyway)
     },10)
 
     moodInterval = setInterval(()=>{
@@ -445,8 +482,6 @@ function init() {
     },2200)
   }
   
- 
-
 
   //! triggering each cpu's motion could be a separate function?
   function initialiseCpus(cpuObjects){
@@ -501,7 +536,6 @@ function init() {
   }
   
 
-  // turnPlayerInvincible()
 
   //TODO muteki
 
@@ -510,10 +544,29 @@ function init() {
 
     setTimeout(() =>{
       player.display.classList.remove('invincible')
+      switch (player.facingDirection) {
+        case 'left': 
+          player.staticGif = 'left.gif'
+          break
+        case 'right': 
+          player.staticGif = 'right.gif'
+          break  
+        case 'up': 
+          player.staticGif = 'up.gif'
+          break  
+        case 'down': 
+          player.staticGif = 'down.gif'
+          break   
+        default: 
+          player.staticGif = 'down.gif'
+      }
+      player.display.innerHTML = `<img src = "assets/${player.staticGif}" ></img>` 
       knockOutCpuCounter = 1
       // to pause this, I would need to, have alternative way to count invincibility.
     },7000)
   }
+
+
 
 
   function knockOutCpu(cpu){
@@ -610,7 +663,7 @@ function init() {
   }
   
   function displayKnockOutAnimation(actor){
-    actor.display.classList.add('hidden')                     // stops actor motion and prevents further playerLoseLife
+    actor.display.classList.add('hidden')     // stops actor and prevents further playerLoseLife
 
     actor.knockOutAnimationDisplay = document.createElement('div')  // displays hurt animation
     actor.knockOutAnimationDisplay.classList.add('effect_animation_fast')
@@ -619,7 +672,7 @@ function init() {
 
     actor.knockOutAnimationDisplay.style.top = `${actorCurrentPosition.y - ((knockOutCpuCounter - 1) * 10)}px`   
     actor.knockOutAnimationDisplay.style.left = `${actorCurrentPosition.x}px`     
-    // actor.knockOutAnimationDisplay.style.left = `${actorCurrentPosition.x + ((knockOutCpuCounter - 1) * 5)}px`
+
     actor.knockOutAnimationDisplay.style.height = `${cells[0].getBoundingClientRect().height}px`
     actor.knockOutAnimationDisplay.style.width = `${cells[0].getBoundingClientRect().width}px` 
     cover.appendChild(actor.knockOutAnimationDisplay)
@@ -691,7 +744,7 @@ function init() {
   
   }
 
-  //// gameOverEvent()
+
 
 
   
@@ -716,7 +769,6 @@ function init() {
 
 
   function resetGame(){
-    //// console.log('reset game')
     // clearInterval(constantCheck)
     cover.innerHTML = ''  // wipe cover to remove actor images
     playAgainButton.classList.remove('display')
@@ -743,7 +795,7 @@ function init() {
       removePlayer(player.position)
       player.position = player.defaultPosition
       addPlayer(player.position)
-      //// displayActorImage(player)
+
       resetStaticGifAndDisplayActors()
       player.display.classList.remove('hidden')
 
@@ -772,7 +824,7 @@ function init() {
     // cpuOnePositionDisplay.innerHTML = `${cpuObjects[0].position} Horizontal:${cpuObjects[0].verticalPosition} Vertical:${cpuObjects[0].verticalPosition} cpu motion: ${cpuObjects[0].motion} cpu facing ${cpuObjects[0].facingDirection}`
     // wallPositionDisplay.innerHTML = `${cellsWithWalls}`
 
-    cpuOnePositionDisplay.innerHTML = `cpuOne status:${cpuObjects[0].status} / cpuOne mood:${cpuObjects[0].mood} / cpuOne moodTimer:${cpuObjects[0].moodTimer} / cpuOne target:${cpuObjects[0].target} cpuOne speed:${cpuObjects[0].speed}`
+    cpuOnePositionDisplay.innerHTML = `cpuOne status:${cpuObjects[0].status} / cpuOne mood:${cpuObjects[0].mood.split('_')[0]} / cpuOne moodTimer:${cpuObjects[0].moodTimer} / cpuOne target:${cpuObjects[0].target} cpuOne speed:${cpuObjects[0].speed}`
 
     cpuTwoPositionDisplay.innerHTML = `cpuTwo status:${cpuObjects[1].status} / cpuTwo mood:${cpuObjects[1].mood} / cpuTwo moodTimer:${cpuObjects[1].moodTimer} / cpuTwo target:${cpuObjects[1].target} cpuTwo speed:${cpuObjects[1].speed}`
   }
@@ -798,7 +850,7 @@ function init() {
     if (actor !== player) {  //* syncing actor's speed with it's speed (only for cpu)
       actor.display.style.transition = `${actor.speed / 1000}s`
     }
-    if (actor !== player && actor.speed <= 300) { //* ensure transition is atleast 0.3 however slow 
+    if (actor !== player && actor.speed >= 300) { //* ensure transition is atleast 0.3 however slow 
       actor.display.style.transition = '0.3s' 
     }
 
@@ -827,7 +879,6 @@ function init() {
 
   function addCpu(cpu) {  // * Add cpu to grid
     cells[cpu.position].classList.add(cpu.class)
-    // cpu.setPosition()
     setActorPosition(cpu)
   }
 
@@ -836,16 +887,42 @@ function init() {
     cells[position].classList.remove(classToRemove)
   }
   
-  
 
   function cpuDetermineTarget(cpu){
     
-    setActorPosition(cpu.defaultTarget)
-    cpu.target = [cpu.defaultTarget.horizontalPosition,cpu.defaultTarget.verticalPosition]
-    // cpuOneDefaultTarget.setPosition()
-    // cpu.target = [cpuOneDefaultTarget.horizontalPosition,cpuOneDefaultTarget.verticalPosition]
-    // cpu.target = [player.horizontalPosition,player.verticalPosition]
-  } 
+
+    if (cpu.mood.split('_')[0] === 'scatter'){  
+      setActorPosition(cpu.defaultTarget)
+      cpu.target = [cpu.defaultTarget.horizontalPosition,cpu.defaultTarget.verticalPosition]
+      // console.log(`${cpu.name} mode scatter`)
+    }
+    
+    if (cpu.mood.split('_')[0] === 'aggressive'){
+      cpu.target = [player.horizontalPosition,player.verticalPosition]
+    }
+
+    if (cpu.mood.split('_')[0] === 'cunning'){  
+      switch (player.facingDirection) {
+        case 'left': 
+          cpu.defaultTarget = player.position - 4
+          break
+        case 'right': 
+          cpu.defaultTarget = player.position + 4
+          break  
+        case 'up': 
+          cpu.defaultTarget = player.position - (width * 4)
+          break  
+        case 'down': 
+          cpu.defaultTarget = player.position + (width * 4)
+          break   
+        default: 
+          cpu.defaultTarget = player.position
+      }
+      setActorPosition(cpu.defaultTarget)
+      cpu.target = [cpu.defaultTarget.horizontalPosition,cpu.defaultTarget.verticalPosition]
+
+    } 
+  }
   
 
   //! computer get's error when it hits edge of level
@@ -864,6 +941,7 @@ function init() {
   function isElementBelow(actor,ele){
     return outerCells[(actor.position + width)].classList.contains(ele)
   }
+  
 
 
   //TODO tekiugoki
@@ -872,19 +950,22 @@ function init() {
 
     cpuDetermineTarget(cpu)
     
-    //!new logic to be put in here to make it chase or run away from player
 
     if (cpu.facingDirection === 'right' && !isElementOnRightOf(cpu,'wall')){  // when facing right and nothing in the way
-      cpu.motion = ['right','right']
+      cpu.motion = ['right']
     }
     if (cpu.facingDirection === 'left' && !isElementOnLeftOf(cpu,'wall')){  // when facing left and nothing in the way
-      cpu.motion = ['left','left']
+      cpu.motion = ['left']
     }
     if (cpu.facingDirection === 'down' && !isElementBelow(cpu,'wall')){  // when facing down and nothing in the way
-      cpu.motion = ['down','down']
+      cpu.motion = ['down']
     }
     if (cpu.facingDirection === 'up' && !isElementAbove(cpu,'wall')){  // when facing up and nothing in the way
-      cpu.motion = ['up','up']
+      cpu.motion = ['up']
+    }
+
+    if (cpu.facingDirection === 'down' && isElementBelow(cpu,'boundary')){  // when facing down and boundary is below
+      cpu.motion = ['left','right']
     }
     
     //* when facing right or left and wall is on facing direction
@@ -912,13 +993,14 @@ function init() {
     
     if (player.display.classList.contains('invincible')){ //* run away from player
       avoidTarget(cpu)
+      resetCpuSpeed(cpu)
       return
     }
     
 
-    //TODO this bit to be ignored in wandering mode
-    chaseTarget(cpu)  
-    
+    if (!cpu.mood.split('_')[0] === 'wander'){
+      chaseTarget(cpu)  
+    }
   }
 
 
@@ -969,14 +1051,15 @@ function init() {
       cpu.motion = cpu.filteredMotion
     }
 
+
     //* motion added to go in the opposite direction of player
-    if (cpu.horizontalPosition > cpu.target[0]){  //* movement based on target position
+    if (cpu.horizontalPosition > player.horizontalPosition){  //* movement based on target position
       cpu.motion.push('right')
     } else {
       cpu.motion.push('left')
     }
 
-    if (cpu.verticalPosition > cpu.target[1]){
+    if (cpu.verticalPosition > player.verticalPosition){
       cpu.motion.push('down')
     } else {
       cpu.motion.push('up')
@@ -988,56 +1071,15 @@ function init() {
   
 
   function turnCpu(cpu,cpuFacingDirection){
+    cpu.class = `cpu_${cpuFacingDirection}`
     if (!player.display.classList.contains('invincible')){
-      switch (cpuFacingDirection) {
-        case 'right': 
-          cpu.class = 'cpu_right'
-          cpu.staticGif = `${cpu.name}_right.gif`
-          cpu.motionGif = `${cpu.name}_right.gif`
-          break
-        case 'left': 
-          cpu.class = 'cpu_left'
-          cpu.staticGif = `${cpu.name}_left.gif`
-          cpu.motionGif = `${cpu.name}_left.gif`
-          break
-        case 'up': 
-          cpu.class = 'cpu_up'
-          cpu.staticGif = `${cpu.name}_up.gif`
-          cpu.motionGif = `${cpu.name}_up.gif`
-          break
-        case 'down': 
-          cpu.class = 'cpu_down'
-          cpu.staticGif = `${cpu.name}_down.gif`
-          cpu.motionGif = `${cpu.name}_down.gif`
-          break
-        default:
-          console.log('invalid command')
-      }
+      cpu.staticGif = `${cpu.name}_${cpuFacingDirection}.gif`
+      cpu.motionGif = `${cpu.name}_${cpuFacingDirection}.gif`
+  
     } else {
-      switch (cpuFacingDirection) {
-        case 'right': 
-          cpu.class = 'cpu_right'
-          cpu.staticGif = 'flee_right.gif'
-          cpu.motionGif = 'flee_right.gif'
-          break
-        case 'left': 
-          cpu.class = 'cpu_left'
-          cpu.staticGif = 'flee_left.gif'
-          cpu.motionGif = 'flee_left.gif'
-          break
-        case 'up': 
-          cpu.class = 'cpu_up'
-          cpu.staticGif = 'flee_up.gif'
-          cpu.motionGif = 'flee_up.gif'
-          break
-        case 'down': 
-          cpu.class = 'cpu_down'
-          cpu.staticGif = 'flee_down.gif'
-          cpu.motionGif = 'flee_down.gif'
-          break
-        default:
-          console.log('invalid command')
-      }
+      cpu.staticGif = `flee_${cpuFacingDirection}.gif`
+      cpu.motionGif = `flee_${cpuFacingDirection}.gif`
+    
     }
   }
 
@@ -1245,56 +1287,21 @@ function init() {
 
 
   function turnPlayer(keyPressed){
+    const directionString = keyPressed.replace('Arrow','').toLowerCase()
+    player.facingDirection = directionString
+    // console.log(player.facingDirection)
+    player.class = `player_${directionString}`
+
     if (!player.display.classList.contains('invincible')){
-      switch (keyPressed) {
-        case 'ArrowRight': 
-          player.class = 'player_right'
-          player.staticGif = 'right.gif'
-          player.motionGif = 'right_roll.gif'
-          break
-        case 'ArrowLeft': 
-          player.class = 'player_left'
-          player.staticGif = 'left.gif'
-          player.motionGif = 'shift_left.gif'
-          break
-        case 'ArrowUp': 
-          player.class = 'player_up'
-          player.staticGif = 'up.gif'
-          player.motionGif = 'up.gif'
-          break
-        case 'ArrowDown': 
-          player.class = 'player_down'
-          player.staticGif = 'down.gif'
-          player.motionGif = 'down.gif'
-          break
-        default:
-          console.log('invalid command')
-      }
+      
+      player.staticGif = `${directionString}.gif`
+      player.motionGif = `${directionString}.gif`
+
     } else {
-      switch (keyPressed) {
-        case 'ArrowRight': 
-          player.class = 'player_right'
-          player.staticGif = 'invi_right.gif'
-          player.motionGif = 'invi_right.gif'
-          break
-        case 'ArrowLeft': 
-          player.class = 'player_left'
-          player.staticGif = 'invi_left.gif'
-          player.motionGif = 'invi_left.gif'
-          break
-        case 'ArrowUp': 
-          player.class = 'player_up'
-          player.staticGif = 'invi_up.gif'
-          player.motionGif = 'invi_up.gif'
-          break
-        case 'ArrowDown': 
-          player.class = 'player_down'
-          player.staticGif = 'invi_down.gif'
-          player.motionGif = 'invi_down.gif'
-          break
-        default:
-          console.log('invalid command')
-      }
+
+      player.staticGif = `invi_${directionString}.gif`
+      player.motionGif = `invi_${directionString}.gif`
+      
     }
   }
 
@@ -1304,14 +1311,6 @@ function init() {
   startButton.addEventListener('click', triggerGameStart)
   playAgainButton.addEventListener('click',resetGame)
 
-  // cells.forEach(cell => {
-  //   // cell.addEventListener('click', makeWall)
-  //   cell.addEventListener('click', makeItem)
-  // })
-
-  // cells.forEach(cell => {
-  //   cell.addEventListener('dblclick', removeWall)
-  // })
 
 
 }

@@ -300,6 +300,8 @@ body {
   /* background-color:transparent; */
 }
 
+
+
 .item{
   background-image: url('../assets/item.gif');
   background-repeat: no-repeat;
@@ -533,6 +535,11 @@ button.display:hover{
   margin:4px; 
   background-color:white; 
   color:hotpink;
+}
+
+
+.marker{
+  background-color:rgb(53, 236, 16);
 }
 
 /* .invincible {
