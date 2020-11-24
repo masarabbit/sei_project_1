@@ -119,7 +119,7 @@ function init() {
     {
       name: 'one',
       // class: 'cpuOneClass',
-      staticGif: 'down.gif',  //* set this to image of cppu sleeping? in which case it needs to be reset?
+      staticGif: 'down.gif', 
       motionGif: 'down.gif',
       knockOutGif: 'hurt.gif',
       // staticGifOption: [],
@@ -151,7 +151,7 @@ function init() {
     {
       name: 'two',
       // class: 'cpuOneClass',
-      staticGif: 'down.gif',
+      staticGif: 'sleep.gif',
       motionGif: 'down.gif',
       knockOutGif: 'hurt.gif',
       motion: defaultMotion,
@@ -181,13 +181,43 @@ function init() {
     {
       name: 'three',
       // class: 'cpuOneClass',
-      staticGif: 'down.gif',
+      staticGif: 'sleep.gif',
       motionGif: 'down.gif',
       knockOutGif: 'hurt.gif',
       motion: defaultMotion,
       filteredMotion: [],
       defaultPosition: 739,
       position: 739,
+      display: document.createElement('div'),
+      defaultTarget: {
+        position: player.position,
+        horizontalPosition: null,
+        verticalPosition: null,
+      },
+      target: null,
+      facingDirection: 'down',
+      speedRange: [100,200,400],
+      speed: 150,
+      horizontalPosition: null,
+      verticalPosition: null,
+      motionInterval: null,
+      defaultStatus: 'inactive',
+      status: 'inactive',
+      knockOutAnimationDisplay: null,
+      moodRange: ['scatter','lazy','wander'],
+      mood: 'lazy',
+      moodTimer: 10,
+    },
+    {
+      name: 'four',
+      // class: 'cpuOneClass',
+      staticGif: 'sleep.gif',
+      motionGif: 'down.gif',
+      knockOutGif: 'hurt.gif',
+      motion: defaultMotion,
+      filteredMotion: [],
+      defaultPosition: 741,
+      position: 741,
       display: document.createElement('div'),
       defaultTarget: {
         position: player.position,
@@ -609,7 +639,15 @@ function init() {
 
   //TODO jyunbi
 
-
+  
+  function resetStaticGifAndDisplayActors(){
+    player.staticGif = 'down.gif'
+    displayActorImage(player)
+    cpuObjects.forEach(cpu=>{
+      cpu.staticGif = 'sleep.gif'
+      displayActorImage(cpu)
+    })
+  }
 
   // //! not sure if this is necessary
   // setActorPosition(cpuOneDefaultTarget)
@@ -621,7 +659,6 @@ function init() {
     cover.innerHTML = ''  // wipe cover to remove actor images
     playAgainButton.classList.remove('display')
     gameEndCover.classList.remove('shade') // hide game over message
-
     score = 0
     itemToCollect = itemTotal
     scoreDisplay.innerHTML = score
@@ -642,7 +679,8 @@ function init() {
       removePlayer(player.position)
       player.position = player.defaultPosition
       addPlayer(player.position)
-      displayActorImage(player)
+      //// displayActorImage(player)
+      resetStaticGifAndDisplayActors()
       player.display.classList.remove('hidden')
 
       constantCheckAction()
