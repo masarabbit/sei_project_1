@@ -200,9 +200,10 @@ body {
   width: 100%;
 }
 
-/* for development */
-.cell.player_down {
+/* for development, to be changed to*/
+/* .cell.player_down {
   background-color: lightblue;
+  
 }
 
 .cell.player_left {
@@ -215,7 +216,7 @@ body {
 
 .cell.player_up {
   background-color: lightslategray;
-}
+} */
 
 .cell.cpuOneClass {
   background-image: url('../assets/test_sprite2.svg');

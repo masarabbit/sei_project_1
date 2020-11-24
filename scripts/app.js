@@ -29,7 +29,7 @@ function init() {
       class: 'item',
       image: 'item',
       additionalEffect: 'nothing',
-      cellsWithItem: [167,168,169,170]
+      cellsWithItem: [167,168,169,170,171,172,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,206,209,214,219]
     },
     {
       itemName: 'big star',
@@ -100,7 +100,7 @@ function init() {
     name: 'cat blob',
     staticGif: 'down.gif',
     motionGif: 'down.gif',
-    hurtGif: 'hurt.gif',
+    knockOutGif: 'hurt.gif',
     defaultPosition: 729,
     position: 729,
     display: document.createElement('div'),
@@ -117,9 +117,9 @@ function init() {
     {
       name: 'one',
       // class: 'cpuOneClass',
-      staticGif: 'down.gif',
+      staticGif: 'down.gif',  //* set this to image of cppu sleeping? in which case it needs to be reset?
       motionGif: 'down.gif',
-      hurtGif: 'hurt.gif',
+      knockOutGif: 'hurt.gif',
       // staticGifOption: [],
       // motionGifOption: [],
       motion: defaultMotion,
@@ -151,7 +151,7 @@ function init() {
       // class: 'cpuOneClass',
       staticGif: 'down.gif',
       motionGif: 'down.gif',
-      hurtGif: 'hurt.gif',
+      knockOutGif: 'hurt.gif',
       motion: defaultMotion,
       filteredMotion: [],
       defaultPosition: 743,
@@ -159,6 +159,36 @@ function init() {
       display: document.createElement('div'),
       defaultTarget: {
         position: 39,
+        horizontalPosition: null,
+        verticalPosition: null,
+      },
+      target: null,
+      facingDirection: 'down',
+      speedRange: [100,200,400],
+      speed: 150,
+      horizontalPosition: null,
+      verticalPosition: null,
+      motionInterval: null,
+      defaultStatus: 'inactive',
+      status: 'inactive',
+      knockOutAnimationDisplay: null,
+      moodRange: ['scatter','lazy','wander'],
+      mood: 'lazy',
+      moodTimer: 10,
+    },
+    {
+      name: 'three',
+      // class: 'cpuOneClass',
+      staticGif: 'down.gif',
+      motionGif: 'down.gif',
+      knockOutGif: 'hurt.gif',
+      motion: defaultMotion,
+      filteredMotion: [],
+      defaultPosition: 739,
+      position: 739,
+      display: document.createElement('div'),
+      defaultTarget: {
+        position: player.position,
         horizontalPosition: null,
         verticalPosition: null,
       },
@@ -192,8 +222,18 @@ function init() {
   function controlCpuActivation(){
 
     if (itemToCollect === itemTotal - 20 && !cpuObjects[1].display.classList.contains('hidden')){
-      changeStatusToActive(cpuObjects[1])
+      setTimeout(()=>{
+        changeStatusToActive(cpuObjects[1])
+      },1000)
     }
+
+    if (blueStarCollected > 1 && !cpuObjects[2].display.classList.contains('hidden')){ 
+      setTimeout(()=>{
+        changeStatusToActive(cpuObjects[2])
+      },1000) 
+    }
+
+
 
   }
 
@@ -283,7 +323,7 @@ function init() {
     blueStarCollected = 0
   }
 
-  function countDown(){
+  function countDown(){  // count down circle animation when game starts aand resets
     gameStartWrapper.classList.add('move_down')
       
     gameStartCover.classList.remove('display')
@@ -387,7 +427,7 @@ function init() {
   function knockOutCpu(cpu){
   
     cpu.status = 'inactive'
-    displayKnockOutAnimation(cpu)
+    displayKnockOutAnimation(cpu) 
     score += 500 * knockOutCpuCounter
     const scoreEarned = 500 * knockOutCpuCounter
     knockOutCpuCounter += 1
@@ -432,6 +472,8 @@ function init() {
     },10000)
   }
 
+
+
   function changeStatusToActive(cpu){
     if (itemToCollect > 0){  //* this added to ensure cpus do not recover when game is already complete
       cpu.status = 'active'
@@ -439,8 +481,8 @@ function init() {
   }
 
 
-
-  function animateSparkle(cpu){
+  
+  function animateSparkle(cpu){  //this is the sparkle that appears when cpu is defeated
     cpu.knockOutAnimationDisplay = document.createElement('div')
     cpu.knockOutAnimationDisplay.classList.add('effect_animation_slow')
     cpu.knockOutAnimationDisplay.innerHTML = '<img src = "assets/sparkle.gif" ></img>'      
@@ -480,7 +522,7 @@ function init() {
 
     actor.knockOutAnimationDisplay = document.createElement('div')  // displays hurt animation
     actor.knockOutAnimationDisplay.classList.add('effect_animation_fast')
-    actor.knockOutAnimationDisplay.innerHTML = `<img src = "assets/${actor.hurtGif}" ></img>`
+    actor.knockOutAnimationDisplay.innerHTML = `<img src = "assets/${actor.knockOutGif}" ></img>`
     const actorCurrentPosition = cells[actor.position].getBoundingClientRect()
 
     actor.knockOutAnimationDisplay.style.top = `${actorCurrentPosition.y - ((knockOutCpuCounter - 1) * 10)}px`   
@@ -973,24 +1015,22 @@ function init() {
       setTimeout(function(){
         itemTaken.style.top = `${scoreDisplay.getBoundingClientRect().y}px`
         itemTaken.style.left = `${scoreDisplay.getBoundingClientRect().x}px`
-        // itemTaken.style.top = '0'
-        // itemTaken.style.left = '100%'
+        itemToCollect -= 1  //* moved this to make game judge faster?
       },100)
 
       setTimeout(function(){
         cover.removeChild(itemTaken)
-        itemToCollect -= 1
         score += itemObjectArray.score
         scoreDisplay.innerHTML = score
-        scoreDisplayWrapper.classList.add('animate')
+        scoreDisplayWrapper.classList.toggle('animate')
         if (itemToCollect < 1){
           gameCompletionEvent()
           return
         }
       },1000)
 
-      setTimeout(function(){                                 // animate score board
-        scoreDisplayWrapper.classList.remove('animate')
+      setTimeout(function(){ // animate score board
+        scoreDisplayWrapper.classList.toggle('animate')
       },1200)
 
     }
