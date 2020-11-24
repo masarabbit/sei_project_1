@@ -218,11 +218,13 @@ body {
   background-color: lightslategray;
 } */
 
-.cell.cpuOneClass {
+
+/*!! may be come necessart in the future*/
+/* .cell.cpuOneClass {
   background-image: url('../assets/test_sprite2.svg');
   background-repeat: no-repeat;
   background-size:contain;
-}
+} */
 
 .cell.cpu_down {
   background-color: greenyellow;

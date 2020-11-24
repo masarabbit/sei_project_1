@@ -17,6 +17,8 @@ function init() {
 
   const cellsWithTeleport = [67,721,758,1547]
   const cellsWithTeleportExit = [1507,757,722,107]
+  const cellsWithBoundary = [657,658,659,660,661,662,663]
+ 
   //! this is exact opposite of cells with Teleport, so may be redundant
   
 
@@ -289,6 +291,7 @@ function init() {
     displayPlayerLife()
     populateCells(cellsWithWalls,'wall')
     populateCells(cellsWithTeleport,'teleport')
+    populateCells(cellsWithBoundary,'boundary')
     populateItems()
 
     setTimeout(() =>{
@@ -744,20 +747,20 @@ function init() {
   
 
   //! computer get's error when it hits edge of level
-  function isWallOnRightOf(actor){
-    return outerCells[(actor.position + 1)].classList.contains('wall')
+  function isElementOnRightOf(actor,ele){
+    return outerCells[(actor.position + 1)].classList.contains(ele)
   }
 
-  function isWallOnLeftOf(actor){
-    return outerCells[(actor.position - 1)].classList.contains('wall')
+  function isElementOnLeftOf(actor,ele){
+    return outerCells[(actor.position - 1)].classList.contains(ele)
   }
   
-  function isWallAbove(actor){
-    return outerCells[(actor.position - width)].classList.contains('wall')
+  function isElementAbove(actor,ele){
+    return outerCells[(actor.position - width)].classList.contains(ele)
   }
 
-  function isWallBelow(actor){
-    return outerCells[(actor.position + width)].classList.contains('wall')
+  function isElementBelow(actor,ele){
+    return outerCells[(actor.position + width)].classList.contains(ele)
   }
 
 
@@ -769,39 +772,39 @@ function init() {
     
     //!new logic to be put in here to make it chase or run away from player
 
-    if (cpu.facingDirection === 'right' && !isWallOnRightOf(cpu)){  // when facing right and nothing in the way
+    if (cpu.facingDirection === 'right' && !isElementOnRightOf(cpu,'wall')){  // when facing right and nothing in the way
       cpu.motion = ['right','right']
     }
-    if (cpu.facingDirection === 'left' && !isWallOnLeftOf(cpu)){  // when facing left and nothing in the way
+    if (cpu.facingDirection === 'left' && !isElementOnLeftOf(cpu,'wall')){  // when facing left and nothing in the way
       cpu.motion = ['left','left']
     }
-    if (cpu.facingDirection === 'down' && !isWallBelow(cpu)){  // when facing down and nothing in the way
+    if (cpu.facingDirection === 'down' && !isElementBelow(cpu,'wall')){  // when facing down and nothing in the way
       cpu.motion = ['down','down']
     }
-    if (cpu.facingDirection === 'up' && !isWallAbove(cpu)){  // when facing up and nothing in the way
+    if (cpu.facingDirection === 'up' && !isElementAbove(cpu,'wall')){  // when facing up and nothing in the way
       cpu.motion = ['up','up']
     }
     
     //* when facing right or left and wall is on facing direction
-    if ((cpu.facingDirection === 'right' && isWallOnRightOf(cpu)) || (cpu.facingDirection === 'left' && isWallOnLeftOf(cpu))){
+    if ((cpu.facingDirection === 'right' && isElementOnRightOf(cpu,'wall')) || (cpu.facingDirection === 'left' && isElementOnLeftOf(cpu,'wall'))){
       cpu.motion = ['up','down']
     }
 
     //* when facing down or up and wall is on facing direction
-    if ((cpu.facingDirection === 'down' && isWallBelow(cpu)) || (cpu.facingDirection === 'up' && isWallAbove(cpu))){
+    if ((cpu.facingDirection === 'down' && isElementBelow(cpu,'wall')) || (cpu.facingDirection === 'up' && isElementAbove(cpu,'wall'))){
       cpu.motion = ['left','right']
     }
 
-    if (isWallAbove(cpu) && isWallOnRightOf(cpu)){  // when wall at top and right
+    if (isElementAbove(cpu,'wall') && isElementOnRightOf(cpu,'wall')){  // when wall at top and right
       cpu.motion = ['down','left']
     } 
-    if (isWallAbove(cpu) && isWallOnLeftOf(cpu)){  // when wall at top and left
+    if (isElementAbove(cpu,'wall') && isElementOnLeftOf(cpu,'wall')){  // when wall at top and left
       cpu.motion = ['right','down']
     }
-    if (isWallBelow(cpu) && isWallOnRightOf(cpu)){  // when wall at bottom and right
+    if (isElementBelow(cpu,'wall') && isElementOnRightOf(cpu,'wall')){  // when wall at bottom and right
       cpu.motion = ['up','left']
     }
-    if (isWallBelow(cpu) && isWallOnLeftOf(cpu)){   // when wall at bottom and left
+    if (isElementBelow(cpu,'wall') && isElementOnLeftOf(cpu,'wall')){   // when wall at bottom and left
       cpu.motion = ['up','right']
     }
     
@@ -957,16 +960,16 @@ function init() {
     
     switch (cpu.motion[motionIndex]) {
       case 'right':
-        if (cpu.horizontalPosition < width - 1 && !isWallOnRightOf(cpu)) cpu.position++ 
+        if (cpu.horizontalPosition < width - 1 && !isElementOnRightOf(cpu,'wall')) cpu.position++ 
         break
       case 'left': 
-        if (cpu.horizontalPosition > 0 && !isWallOnLeftOf(cpu)) cpu.position--
+        if (cpu.horizontalPosition > 0 && !isElementOnLeftOf(cpu,'wall')) cpu.position--
         break
       case 'up': 
-        if (cpu.verticalPosition > 0 && !isWallAbove(cpu)) cpu.position -= width
+        if (cpu.verticalPosition > 0 && !isElementAbove(cpu,'wall')) cpu.position -= width
         break
       case 'down':
-        if (cpu.verticalPosition < height - 1 && !isWallBelow(cpu)) cpu.position += width
+        if (cpu.verticalPosition < height - 1 && !isElementBelow(cpu,'wall') && !isElementBelow(cpu,'boundary')) cpu.position += width
         break
       default:
         console.log('cpu invalid command')
@@ -1088,7 +1091,7 @@ function init() {
     })
   }
 
-  //TODO mejirushi
+  //TODO player
 
   // * Move Player
   function handleMovementWithKey(e) {
@@ -1102,16 +1105,16 @@ function init() {
 
     switch (e.key) {
       case 'ArrowRight': 
-        if (player.horizontalPosition < width - 1 && !isWallOnRightOf(player)) player.position++
+        if (player.horizontalPosition < width - 1 && !isElementOnRightOf(player,'wall')) player.position++
         break
       case 'ArrowLeft': 
-        if (player.horizontalPosition > 0 && !isWallOnLeftOf(player)) player.position--
+        if (player.horizontalPosition > 0 && !isElementOnLeftOf(player,'wall')) player.position--
         break
       case 'ArrowUp': 
-        if (player.verticalPosition > 0 && !isWallAbove(player)) player.position -= width
+        if (player.verticalPosition > 0 && !isElementAbove(player,'wall')) player.position -= width
         break
       case 'ArrowDown': 
-        if (player.verticalPosition < height - 1 && !isWallBelow(player)) player.position += width
+        if (player.verticalPosition < height - 1 && !isElementBelow(player,'wall') && !isElementBelow(player,'boundary')) player.position += width
         break
       default:
         console.log('invalid command')
@@ -1214,6 +1217,22 @@ function init() {
 window.addEventListener('DOMContentLoaded', init)
 
 
+
+// function isWallOnRightOf(actor){
+//   return outerCells[(actor.position + 1)].classList.contains('wall')
+// }
+
+// function isWallOnLeftOf(actor){
+//   return outerCells[(actor.position - 1)].classList.contains('wall')
+// }
+
+// function isWallAbove(actor){
+//   return outerCells[(actor.position - width)].classList.contains('wall')
+// }
+
+// function isWallBelow(actor){
+//   return outerCells[(actor.position + width)].classList.contains('wall')
+// }
 
 
 
