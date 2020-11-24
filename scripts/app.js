@@ -119,7 +119,7 @@ function init() {
     {
       name: 'one',
       // class: 'cpuOneClass',
-      staticGif: 'down.gif', 
+      staticGif: 'sleep.gif', 
       motionGif: 'down.gif',
       knockOutGif: 'hurt.gif',
       // staticGifOption: [],
@@ -141,12 +141,12 @@ function init() {
       horizontalPosition: null,
       verticalPosition: null,
       motionInterval: null,
-      defaultStatus: 'active',
-      status: 'active',  //* determines if cpu is in motion or not 
+      defaultStatus: 'inactive',
+      status: 'inactive',  //* determines if cpu is in motion or not 
       knockOutAnimationDisplay: null,
       moodRange: ['scatter','aggresive','wander'],    //* determine chase behaviour
       mood: 'scatter',
-      moodTimer: 10,
+      moodTimer: 0,
     },
     {
       name: 'two',
@@ -176,7 +176,7 @@ function init() {
       knockOutAnimationDisplay: null,
       moodRange: ['scatter','lazy','wander'],
       mood: 'lazy',
-      moodTimer: 10,
+      moodTimer: 0,
     },
     {
       name: 'three',
@@ -206,7 +206,7 @@ function init() {
       knockOutAnimationDisplay: null,
       moodRange: ['scatter','lazy','wander'],
       mood: 'lazy',
-      moodTimer: 10,
+      moodTimer: 0,
     },
     {
       name: 'four',
@@ -236,7 +236,7 @@ function init() {
       knockOutAnimationDisplay: null,
       moodRange: ['scatter','lazy','wander'],
       mood: 'lazy',
-      moodTimer: 10,
+      moodTimer: 0,
     }
   ]
   
@@ -244,7 +244,32 @@ function init() {
     actor.horizontalPosition = actor.position % width
     actor.verticalPosition = Math.floor(actor.position / width)
   }
+  
+  //* determine cpu's mood depending on counter
+  function moodTimerCount(){
+    cpuObjects.forEach(cpu =>{
+      if (cpu.status !== 'inactive'){
+        cpu.moodTimer += 1
+      }
+      if (cpu.moodTimer > 10){
+        cpu.moodTimer = 0
+      }
+      if (cpu.moodTimer === 10){
+        switchMood(cpu)
+      }
+    })
+  }
+  
+  
+  function switchMood(cpu){
 
+    if (cpu.moodRange.indexOf(cpu.mood) === cpu.moodRange.length - 1){
+      cpu.mood = cpu.moodRange[0]
+    } else {
+      cpu.mood = cpu.moodRange[cpu.moodRange.indexOf(cpu.mood) + 1]
+    }
+    
+  }
 
 
   //TODO cpu control
@@ -252,21 +277,30 @@ function init() {
   //! needs to ensure this doesn't trigger when game is already complete
 
   function controlCpuActivation(){
-
-    if (itemToCollect === itemTotal - 20 && !cpuObjects[1].display.classList.contains('hidden')){
+    
+    if (itemToCollect > 0){
       setTimeout(()=>{
-        changeStatusToActive(cpuObjects[1])
+        if (!cpuObjects[0].display.classList.contains('hidden')){
+          changeStatusToActive(cpuObjects[0])
+        }
       },1000)
     }
 
-    if (blueStarCollected > 1 && !cpuObjects[2].display.classList.contains('hidden')){ 
+    if (itemToCollect === itemTotal - 20){
       setTimeout(()=>{
-        changeStatusToActive(cpuObjects[2])
-      },1000) 
+        if (!cpuObjects[1].display.classList.contains('hidden')){
+          changeStatusToActive(cpuObjects[1])
+        }
+      },1000)
     }
 
-
-
+    if (blueStarCollected > 1){ 
+      setTimeout(()=>{
+        if (!cpuObjects[2].display.classList.contains('hidden')){
+          changeStatusToActive(cpuObjects[2])
+        }
+      },1000)
+    }
   }
 
   
@@ -304,6 +338,9 @@ function init() {
   //* initialise
 
   let constantCheck = null
+  let moodInterval = null
+
+
 
   function triggerGameStart(){
     
@@ -333,12 +370,13 @@ function init() {
     setTimeout(() =>{
       player.display.classList.remove('hidden')
       initialiseCpus(cpuObjects)  
-      constantCheckAction()
+      constantActions()
     },2200)
 
   }
 
-  function constantCheckAction(){
+  function constantActions(){
+
     //* checking for status
     constantCheck = setInterval(() =>{
       rePositionImage(player) // this is to ensure player image stays in right place despite screen resize
@@ -346,7 +384,11 @@ function init() {
       controlCpuActivation()
       triggerTeleport()
       // rePositionImage(cpuOne) // may not be necessary?(cpu moves anyway)
-    },100)
+    },10)
+
+    moodInterval = setInterval(()=>{
+      moodTimerCount()
+    },1000)
   }
 
   function populateItems(){
@@ -401,6 +443,9 @@ function init() {
       cover.removeChild(countDownCircle)
     },2200)
   }
+  
+ 
+
 
   //! triggering each cpu's motion could be a separate function?
   function initialiseCpus(cpuObjects){
@@ -408,6 +453,7 @@ function init() {
       cpu.position = cpu.defaultPosition 
       cpu.status = cpu.defaultStatus
       clearInterval(cpu.motionInterval)
+      
       displayActorImage(cpu)
       cpu.motionInterval = setInterval(
         function(){ 
@@ -500,15 +546,15 @@ function init() {
     },7000)
 
     setTimeout(() =>{
-      changeStatusToActive(cpu)
       cpu.display.classList.remove('fadein')
+      changeStatusToActive(cpu)
     },10000)
   }
 
 
 
   function changeStatusToActive(cpu){
-    if (itemToCollect > 0){  //* this added to ensure cpus do not recover when game is already complete
+    if (itemToCollect > 0 && !cpu.display.classList.contains('fadein')){  //* this added to ensure cpus do not recover when game is already complete, and also prevents controlCpu's activate actions.
       cpu.status = 'active'
     }
   }
@@ -583,7 +629,7 @@ function init() {
     },800)
     
     setTimeout(function(){
-      player.knockOutAnimationDisplay.innerHTML = ''
+      cover.removeChild(player.knockOutAnimationDisplay) //* fixed to ensure the knockOutAnimation is removed
 
       const lifeDisplayAnimation = document.createElement('div')
       lifeDisplayAnimation.classList.add('effect_animation_medium')
@@ -653,13 +699,18 @@ function init() {
   // setActorPosition(cpuOneDefaultTarget)
   // setActorPosition(cpuTwoDefaultTarget)
 
+
+
+
   function resetGame(){
     //// console.log('reset game')
-    constantCheck = null
+    // clearInterval(constantCheck)
     cover.innerHTML = ''  // wipe cover to remove actor images
     playAgainButton.classList.remove('display')
     gameEndCover.classList.remove('shade') // hide game over message
     score = 0
+    clearInterval(moodInterval)
+    clearInterval(constantCheck)
     itemToCollect = itemTotal
     scoreDisplay.innerHTML = score
     player.life = player.defaultLife   // reset player life total
@@ -683,7 +734,7 @@ function init() {
       resetStaticGifAndDisplayActors()
       player.display.classList.remove('hidden')
 
-      constantCheckAction()
+      constantActions()
 
     },2200)
 
@@ -708,9 +759,9 @@ function init() {
     // cpuOnePositionDisplay.innerHTML = `${cpuObjects[0].position} Horizontal:${cpuObjects[0].verticalPosition} Vertical:${cpuObjects[0].verticalPosition} cpu motion: ${cpuObjects[0].motion} cpu facing ${cpuObjects[0].facingDirection}`
     // wallPositionDisplay.innerHTML = `${cellsWithWalls}`
 
-    cpuOnePositionDisplay.innerHTML = `cpuOne status:${cpuObjects[0].status} / cpuOne mood:${cpuObjects[0].mood} / cpuOne target:${cpuObjects[0].target} cpuOne speed:${cpuObjects[0].speed}`
+    cpuOnePositionDisplay.innerHTML = `cpuOne status:${cpuObjects[0].status} / cpuOne mood:${cpuObjects[0].mood} / cpuOne moodTimer:${cpuObjects[0].moodTimer} / cpuOne target:${cpuObjects[0].target} cpuOne speed:${cpuObjects[0].speed}`
 
-    cpuTwoPositionDisplay.innerHTML = `cpuTwo status:${cpuObjects[1].status} / cpuTwo mood:${cpuObjects[1].mood} / cpuTwo target:${cpuObjects[1].target} cpuTwo speed:${cpuObjects[1].speed}`
+    cpuTwoPositionDisplay.innerHTML = `cpuTwo status:${cpuObjects[1].status} / cpuTwo mood:${cpuObjects[1].mood} / cpuTwo moodTimer:${cpuObjects[1].moodTimer} / cpuTwo target:${cpuObjects[1].target} cpuTwo speed:${cpuObjects[1].speed}`
   }
   
 
