@@ -31,6 +31,7 @@ function init() {
       class: 'item',
       image: 'item',
       additionalEffect: 'nothing',
+      // cellsWithItem: [167,168,169,170,171,172,173,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,206,209,214,219,227,235,246,249,254,259,267,275,286,289,294,299,307,315,326,329,334,339,347,355,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,380,381,382,383,384,385,386,387,388,389,390,391,395,404,412,415,423,426,427,431,435,444,452,455,463,466,467,471,472,473,474,475,484,492,495,496,497,501,502,504,505,506,507,511,524,532,535,538,541,545,551,564,565,566,567,568,569,572,575,578,581,585,591,592,593,594,595,609,612,613,614,615,616,617,618,619,620,621,622,623,624,625,626,627,635,649,654,666,667,675,689,694,706,707,715,724,725,726,727,728,730,731,732,733,734,746,747,748,749,750,751,752,753,754,755,764,774,786,787,792,804,814,826,827,832,844,848,849,850,851,852,853,854,855,856,857,858,859,860,861,862,863,864,865,866,867,872,884,887,892,895,901,904,907,910,911,912,913,914,924,927,932,935,941,944,947,950,955,964,965,966,967,968,969,970,971,972,975,976,977,981,984,987,990,995,1004,1010,1018,1021,1024,1027,1030,1035,1044,1050,1058,1061,1062,1063,1064,1067,1070,1075,1084,1087,1088,1089,1090,1091,1092,1093,1094,1095,1096,1097,1098,1107,1110,1115,1124,1127,1130,1133,1138,1147,1148,1149,1150,1151,1152,1153,1154,1164,1165,1166,1167,1170,1173,1178,1179,1180,1181,1182,1183,1184,1189,1192,1204,1210,1213,1220,1224,1229,1232,1244,1250,1253,1260,1264,1265,1266,1267,1268,1269,1270,1271,1272,1273,1274,1275,1284,1288,1289,1290,1293,1300,1306,1309,1312,1315,1324,1327,1330,1334,1335,1336,1337,1340,1346,1349,1352,1355,1364,1367,1370,1377,1380,1386,1389,1392,1395,1405,1406,1407,1408,1409,1410,1417,1418,1419,1420,1421,1422,1423,1424,1425,1426,1427,1428,1429,1432,1433,1434]
       cellsWithItem: [167,168,169,170,171,172,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,206,209,214,219]
     },
     {
@@ -39,8 +40,8 @@ function init() {
       class: 'big_star',
       image: 'big_star',
       additionalEffect: 'invincibility',
+      // cellsWithItem: [166,195,1404,1435]
       cellsWithItem: [166]
-      // [166,195,1404,1435]
     },
     {
       itemName: 'blue star',
@@ -48,8 +49,8 @@ function init() {
       class: 'blue_star',
       image: 'blue_star',
       additionalEffect: 'nothing',
+      // cellsWithItem: [174,179,498,503,847,915,978,1155,1287,1333]
       cellsWithItem: [173,174,179]
-      // [174,179,498,503,847,915,978,1155,1287,1333]
     }
   ]
 
@@ -379,7 +380,7 @@ function init() {
 
     //* checking for status
     constantCheck = setInterval(() =>{
-      rePositionImage(player) // this is to ensure player image stays in right place despite screen resize
+      rePositionAllActorImages() // this is to ensure player image stays in right place despite screen resize
       checkPlayerAndCpuCollision()
       controlCpuActivation()
       triggerTeleport()
@@ -487,6 +488,17 @@ function init() {
     target.display.style.top = `${cells[target.position].getBoundingClientRect().y}px`
     target.display.style.left = `${cells[target.position].getBoundingClientRect().x}px`
   }
+
+  function rePositionAllActorImages(){
+    rePositionImage(player)
+
+    cpuObjects.forEach(cpu =>{
+      if (cpu.status === 'inactive') {
+        cpu.display.style.top = `${cells[cpu.position].getBoundingClientRect().y}px`
+        cpu.display.style.left = `${cells[cpu.position].getBoundingClientRect().x}px`
+      }
+    })
+  }
   
 
   // turnPlayerInvincible()
@@ -499,6 +511,7 @@ function init() {
     setTimeout(() =>{
       player.display.classList.remove('invincible')
       knockOutCpuCounter = 1
+      // to pause this, I would need to, have alternative way to count invincibility.
     },7000)
   }
 

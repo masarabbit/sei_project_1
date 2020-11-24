@@ -165,7 +165,7 @@ body {
   margin-top:-6.75vh;
   margin-left:-6.75vh;
   width: 90vh;
-  height: 90vh;  /* this could be added to media query) */
+  height: 90vh;  /*! this could be added to media query, should be based on width for smart phones anyway so maybe apply this to screen narrower than whatever the page is set?) */
 
 }
 
@@ -345,7 +345,7 @@ body {
 }
 
 .score_outer_wrapper {
-  width:230px;
+  width:400px;
   /* border: red 1px solid; */
   display:flex;
   justify-content: center;
@@ -357,7 +357,7 @@ p.score_wrapper {
   margin-block-start: 0em;
   margin-block-end: 0em;
   display:inline;
-  width:200px;
+  width:230px;
   transition:1s;
   text-align: center;
 }
@@ -367,7 +367,7 @@ span.score{
 }
 
 p.score_wrapper.animate {
-  width:230px;
+  width:300px;
   font-size:40px;
 }
 
