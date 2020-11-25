@@ -9,7 +9,7 @@
 body {
   height: 100vh;
   margin: 0;
-  background-color:rgb(23, 22, 82);
+  background-color:rgb(104, 101, 101);
   font-family:sans-serif;
   color:rgb(136, 217, 255);
   font-size:10px;
@@ -22,7 +22,7 @@ body {
   height:100%;
   width:100%;
   z-index:-1;
-  z-index:999;
+  /* z-index:999; */
 
   display: flex;
   justify-content: center;
@@ -64,7 +64,7 @@ body {
 }
 .game_start_cover.display {
   z-index:99999;
-  background-color:rgba(11, 26, 70, 1);
+  background-color:rgb(14, 248, 104);
 }
 
 .game_start_wrapper {
@@ -144,7 +144,7 @@ body {
   height: 76.5vh;
   border:red solid 0px;
   overflow:hidden;
-  background-color:rgb(153, 252, 247);
+  background-color:rgb(255, 255, 255);
   /* background-image: url('../assets/test_background.png');
   background-repeat: no-repeat;
   background-size:contain;
@@ -173,7 +173,7 @@ body {
 }
 
 .outer_cell {
-  border: 0px solid lightgrey;
+  border: 1px solid lightgrey;
   /* flex-grow: 1; */
   height: 2.5%;
   width: 2.5%;
@@ -204,7 +204,7 @@ body {
 }
 
 /* for development, to be changed to*/
-/* .cell.player_down {
+.cell.player_down {
   background-color: lightblue;
   
 }
@@ -219,7 +219,7 @@ body {
 
 .cell.player_up {
   background-color: lightslategray;
-} */
+}
 
 
 /*!! may be come necessart in the future*/
@@ -475,7 +475,7 @@ p.score_wrapper.animate {
 /* game over */
 
 .game_end_cover {
-  z-index:9999;
+  /* z-index:9999; */
   display:flex;
   justify-content: center;
   align-items: center;
