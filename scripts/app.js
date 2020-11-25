@@ -18,6 +18,7 @@ function init() {
   const cellsWithTeleport = [67,721,758,1547]
   const cellsWithTeleportExit = [1507,757,722,107]
   const cellsWithBoundary = [657,658,659,660,661,662,663]
+  const cellsWithMarkers = [368,378,613,504,626,851,865,913,1148,1427,1181,1092,1330,1204]
  
   //! this is exact opposite of cells with Teleport, so may be redundant
   
@@ -189,7 +190,7 @@ function init() {
       position: 739,
       display: document.createElement('div'),
       defaultTarget: {
-        position: player.position,
+        position: 1560,
         horizontalPosition: null,
         verticalPosition: null,
       },
@@ -203,7 +204,7 @@ function init() {
       defaultStatus: 'inactive',
       status: 'inactive',
       knockOutAnimationDisplay: null,
-      moodRange: ['scatterA','scatterB','wanderA','wander_B','scatterC','aggressive'],
+      moodRange: ['scatterA','scatterB','wanderA','aggressive_A','wander_B','scatterC','aggressive_B'],
       mood: 'wander',
       moodTimer: 0,
     },
@@ -219,7 +220,7 @@ function init() {
       position: 741,
       display: document.createElement('div'),
       defaultTarget: {
-        position: player.position,
+        position: 1599,
         horizontalPosition: null,
         verticalPosition: null,
       },
@@ -233,8 +234,8 @@ function init() {
       defaultStatus: 'inactive',
       status: 'inactive',
       knockOutAnimationDisplay: null,
-      moodRange: ['scatter_A','wander_A','scatter_B','wander_B','aggressive'],
-      mood: 'wander',
+      moodRange: ['scatter_A','wander_A','scatter_B','wander_B','aggressive_A','aggressive_B','cunning_A','cunning_B'],
+      mood: 'cunning',
       moodTimer: 0,
     }
   ]
@@ -398,6 +399,7 @@ function init() {
     populateCells(cellsWithWalls,'wall')
     populateCells(cellsWithTeleport,'teleport')
     populateCells(cellsWithBoundary,'boundary')
+    populateCells(cellsWithMarkers,'marker')
     populateItems()
 
     setTimeout(() =>{
@@ -950,6 +952,7 @@ function init() {
 
     cpuDetermineTarget(cpu)
     
+    //!  markers added for experiment, take out later
 
     if (cpu.facingDirection === 'right' && !isElementOnRightOf(cpu,'wall')){  // when facing right and nothing in the way
       cpu.motion = ['right']
@@ -966,6 +969,18 @@ function init() {
 
     if (cpu.facingDirection === 'down' && isElementBelow(cpu,'boundary')){  // when facing down and boundary is below
       cpu.motion = ['left','right']
+    }
+
+    if (cpu.facingDirection === 'left' && isElementOnLeftOf(cpu,'marker')){ 
+      cpu.motion = ['right','up','down']
+    }
+
+    if (cpu.facingDirection === 'right' && isElementOnRightOf(cpu,'marker')){ 
+      cpu.motion = ['left','up','down']
+    }
+
+    if (cpu.facingDirection === 'down' && isElementBelow(cpu,'marker')){ 
+      cpu.motion = ['right','left','up']
     }
     
     //* when facing right or left and wall is on facing direction
@@ -1007,13 +1022,17 @@ function init() {
   function chaseTarget(cpu){
     if (cpu.horizontalPosition < cpu.target[0]){  //* movement based on target position
       cpu.motion.push('right')
+      cpu.motion.push('right')
     } else {
+      cpu.motion.push('left')
       cpu.motion.push('left')
     }
 
     if (cpu.verticalPosition < cpu.target[1]){
       cpu.motion.push('down')
+      cpu.motion.push('down')
     } else {
+      cpu.motion.push('up')
       cpu.motion.push('up')
     }
   }
