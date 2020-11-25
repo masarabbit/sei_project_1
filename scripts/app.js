@@ -546,29 +546,28 @@ function init() {
 
     setTimeout(() =>{
       player.display.classList.remove('invincible')
-      switch (player.facingDirection) {
-        case 'left': 
-          player.staticGif = 'left.gif'
-          break
-        case 'right': 
-          player.staticGif = 'right.gif'
-          break  
-        case 'up': 
-          player.staticGif = 'up.gif'
-          break  
-        case 'down': 
-          player.staticGif = 'down.gif'
-          break   
-        default: 
-          player.staticGif = 'down.gif'
-      }
+      player.staticGif = `${player.facingDirection}.gif`
+      // switch (player.facingDirection) {
+      //   case 'left': 
+      //     player.staticGif = 'left.gif'
+      //     break
+      //   case 'right': 
+      //     player.staticGif = 'right.gif'
+      //     break  
+      //   case 'up': 
+      //     player.staticGif = 'up.gif'
+      //     break  
+      //   case 'down': 
+      //     player.staticGif = 'down.gif'
+      //     break   
+      //   default: 
+      //     player.staticGif = 'down.gif'
+      // }
       player.display.innerHTML = `<img src = "assets/${player.staticGif}" ></img>` 
       knockOutCpuCounter = 1
       // to pause this, I would need to, have alternative way to count invincibility.
     },7000)
   }
-
-
 
 
   function knockOutCpu(cpu){
@@ -601,7 +600,8 @@ function init() {
 
     setTimeout(() =>{
       // returns cpu to default position, but harmless until hidden class is removed
-      removeCpu(cpu.position,cpu.class)
+      // removeCpu(cpu.position,cpu.class)
+      removeActor(cpu)
     },5000)
 
     setTimeout(() =>{
@@ -763,15 +763,9 @@ function init() {
     })
   }
 
-  // //! not sure if this is necessary
-  // setActorPosition(cpuOneDefaultTarget)
-  // setActorPosition(cpuTwoDefaultTarget)
-
-
-
+  
 
   function resetGame(){
-    // clearInterval(constantCheck)
     cover.innerHTML = ''  // wipe cover to remove actor images
     playAgainButton.classList.remove('display')
     gameEndCover.classList.remove('shade') // hide game over message
@@ -791,10 +785,12 @@ function init() {
 
       //! control how enemies start to move?
       cpuObjects.forEach(cpu =>{  // remove old position before reinitialising
-        removeCpu(cpu.position,cpu.class)
+        // removeCpu(cpu.position,cpu.class)
+        removeActor(cpu)
       })
       initialiseCpus(cpuObjects) 
-      removePlayer(player.position)
+      // removePlayer(player.position)
+      removeActor(player)
       player.position = player.defaultPosition
       addPlayer(player.position)
 
@@ -885,9 +881,11 @@ function init() {
   }
 
 
-  function removeCpu(position,classToRemove) {  // * Remove cpu from the grid
-    cells[position].classList.remove(classToRemove)
+  function removeActor(actor) {
+    cells[actor.position].classList.remove(actor.class)
   }
+
+
   
 
   function cpuDetermineTarget(cpu){
@@ -928,6 +926,7 @@ function init() {
   
 
   //! computer get's error when it hits edge of level
+  //! more specific thant isElementInFacingDirection
   function isElementOnRightOf(actor,ele){
     return outerCells[(actor.position + 1)].classList.contains(ele)
   }
@@ -943,7 +942,21 @@ function init() {
   function isElementBelow(actor,ele){
     return outerCells[(actor.position + width)].classList.contains(ele)
   }
-  
+
+  function isElementInFacingDirection(actor,ele){
+    switch (actor.facingDirection){
+      case 'right':
+        return outerCells[(actor.position + 1)].classList.contains(ele)
+      case 'left': 
+        return outerCells[(actor.position - 1)].classList.contains(ele)
+      case 'up': 
+        return outerCells[(actor.position - width)].classList.contains(ele)
+      case 'down':   
+        return outerCells[(actor.position + width)].classList.contains(ele)
+      default:
+        console.log('invalid command')
+    }
+  }
 
 
   //TODO tekiugoki
@@ -952,59 +965,61 @@ function init() {
 
     cpuDetermineTarget(cpu)
     
-    //!  markers added for experiment, take out later
+  
 
-    if (cpu.facingDirection === 'right' && !isElementOnRightOf(cpu,'wall')){  // when facing right and nothing in the way
+    if (cpu.facingDirection === 'right' && !isElementInFacingDirection(cpu,'wall')){
       cpu.motion = ['right']
     }
-    if (cpu.facingDirection === 'left' && !isElementOnLeftOf(cpu,'wall')){  // when facing left and nothing in the way
+    if (cpu.facingDirection === 'left' && !isElementInFacingDirection(cpu,'wall')){ 
       cpu.motion = ['left']
     }
-    if (cpu.facingDirection === 'down' && !isElementBelow(cpu,'wall')){  // when facing down and nothing in the way
+    if (cpu.facingDirection === 'down' && !isElementInFacingDirection(cpu,'wall')){
       cpu.motion = ['down']
     }
-    if (cpu.facingDirection === 'up' && !isElementAbove(cpu,'wall')){  // when facing up and nothing in the way
+    if (cpu.facingDirection === 'up' && !isElementInFacingDirection(cpu,'wall')){
       cpu.motion = ['up']
     }
 
-    if (cpu.facingDirection === 'down' && isElementBelow(cpu,'boundary')){  // when facing down and boundary is below
+    if (cpu.facingDirection === 'down' && isElementInFacingDirection(cpu,'boundary')){  // when facing down and boundary is below
       cpu.motion = ['left','right']
     }
-
-    if (cpu.facingDirection === 'left' && isElementOnLeftOf(cpu,'marker')){ 
+    
+    //!  markers added for experiment, take out later  
+    if (cpu.facingDirection === 'left' && isElementInFacingDirection(cpu,'marker')){ 
       cpu.motion = ['right','up','down']
     }
 
-    if (cpu.facingDirection === 'right' && isElementOnRightOf(cpu,'marker')){ 
+    if (cpu.facingDirection === 'right' && isElementInFacingDirection(cpu,'marker')){ 
       cpu.motion = ['left','up','down']
     }
 
-    if (cpu.facingDirection === 'down' && isElementBelow(cpu,'marker')){ 
+    if (cpu.facingDirection === 'down' && isElementInFacingDirection(cpu,'marker')){ 
       cpu.motion = ['right','left','up']
     }
     
     //* when facing right or left and wall is on facing direction
-    if ((cpu.facingDirection === 'right' && isElementOnRightOf(cpu,'wall')) || (cpu.facingDirection === 'left' && isElementOnLeftOf(cpu,'wall'))){
+    if ((cpu.facingDirection === 'right' && isElementInFacingDirection(cpu,'wall')) || (cpu.facingDirection === 'left' && isElementInFacingDirection(cpu,'wall'))){
       cpu.motion = ['up','down']
     }
 
     //* when facing down or up and wall is on facing direction
-    if ((cpu.facingDirection === 'down' && isElementBelow(cpu,'wall')) || (cpu.facingDirection === 'up' && isElementAbove(cpu,'wall'))){
+    if ((cpu.facingDirection === 'down' && isElementInFacingDirection(cpu,'wall')) || (cpu.facingDirection === 'up' && isElementInFacingDirection(cpu,'wall'))){
       cpu.motion = ['left','right']
     }
-
-    if (isElementAbove(cpu,'wall') && isElementOnRightOf(cpu,'wall')){  // when wall at top and right
-      cpu.motion = ['down','left']
-    } 
-    if (isElementAbove(cpu,'wall') && isElementOnLeftOf(cpu,'wall')){  // when wall at top and left
-      cpu.motion = ['right','down']
-    }
-    if (isElementBelow(cpu,'wall') && isElementOnRightOf(cpu,'wall')){  // when wall at bottom and right
-      cpu.motion = ['up','left']
-    }
-    if (isElementBelow(cpu,'wall') && isElementOnLeftOf(cpu,'wall')){   // when wall at bottom and left
-      cpu.motion = ['up','right']
-    }
+    
+    //! below possibly not necessary, but maybe useful when running away from player?
+    // if (isElementAbove(cpu,'wall') && isElementOnRightOf(cpu,'wall')){  // when wall at top and right
+    //   cpu.motion = ['down','left']
+    // } 
+    // if (isElementAbove(cpu,'wall') && isElementOnLeftOf(cpu,'wall')){  // when wall at top and left
+    //   cpu.motion = ['right','down']
+    // }
+    // if (isElementBelow(cpu,'wall') && isElementOnRightOf(cpu,'wall')){  // when wall at bottom and right
+    //   cpu.motion = ['up','left']
+    // }
+    // if (isElementBelow(cpu,'wall') && isElementOnLeftOf(cpu,'wall')){   // when wall at bottom and left
+    //   cpu.motion = ['up','right']
+    // }
     
     if (player.display.classList.contains('invincible')){ //* run away from player
       avoidTarget(cpu)
@@ -1115,7 +1130,8 @@ function init() {
       return
     }
 
-    removeCpu(cpu.position,cpu.class) 
+    // removeCpu(cpu.position,cpu.class) 
+    removeActor(cpu)
     cpuMovementDecision(cpu)
     const motionIndex =  Math.floor(Math.random() * cpu.motion.length)
     cpu.facingDirection = cpu.motion[motionIndex]
@@ -1153,9 +1169,7 @@ function init() {
     setActorPosition(player)
   }
 
-  function removePlayer(position) {
-    cells[position].classList.remove(player.class)
-  }
+ 
 
 
   function takeItemAndEarnScore(itemObjectArray){
@@ -1263,21 +1277,22 @@ function init() {
       return
     }
 
-    removePlayer(player.position)
+    // removePlayer(player.position)
+    removeActor(player)
     turnPlayer(e.key)
 
     switch (e.key) {
       case 'ArrowRight': 
-        if (player.horizontalPosition < width - 1 && !isElementOnRightOf(player,'wall')) player.position++
+        if (player.horizontalPosition < width - 1 && !isElementInFacingDirection(player,'wall')) player.position++
         break
       case 'ArrowLeft': 
-        if (player.horizontalPosition > 0 && !isElementOnLeftOf(player,'wall')) player.position--
+        if (player.horizontalPosition > 0 && !isElementInFacingDirection(player,'wall')) player.position--
         break
       case 'ArrowUp': 
-        if (player.verticalPosition > 0 && !isElementAbove(player,'wall')) player.position -= width
+        if (player.verticalPosition > 0 && !isElementInFacingDirection(player,'wall')) player.position -= width
         break
       case 'ArrowDown': 
-        if (player.verticalPosition < height - 1 && !isElementBelow(player,'wall') && !isElementBelow(player,'boundary')) player.position += width
+        if (player.verticalPosition < height - 1 && !isElementInFacingDirection(player,'wall') && !isElementInFacingDirection(player,'boundary')) player.position += width
         break
       default:
         console.log('invalid command')
@@ -1306,13 +1321,15 @@ function init() {
 
 
   function turnPlayer(keyPressed){
+    //! prevents player image disappearing when wrong key is pressed.
+    if (keyPressed !== 'ArrowLeft' && keyPressed !== 'ArrowRight' && keyPressed !== 'ArrowUp' && keyPressed !== 'ArrowDown'){
+      return
+    }
     const directionString = keyPressed.replace('Arrow','').toLowerCase()
     player.facingDirection = directionString
-    // console.log(player.facingDirection)
     player.class = `player_${directionString}`
 
-    if (!player.display.classList.contains('invincible')){
-      
+    if (!player.display.classList.contains('invincible')){ 
       player.staticGif = `${directionString}.gif`
       player.motionGif = `${directionString}.gif`
 
@@ -1337,6 +1354,28 @@ function init() {
 window.addEventListener('DOMContentLoaded', init)
 
 
+//TODO switch template
+// switch (key) {
+//   case 'right':
+//     if (cpu.horizontalPosition < width - 1 && !isElementOnRightOf(cpu,'wall')) cpu.position++ 
+//     break
+//   case 'left': 
+//     if (cpu.horizontalPosition > 0 && !isElementOnLeftOf(cpu,'wall')) cpu.position--
+//     break
+//   default:
+//     console.log('cpu invalid command')
+// }
+
+
+
+// function removePlayer(position) {
+//   cells[position].classList.remove(player.class)
+// }
+
+
+// function removeCpu(position,classToRemove) {  // * Remove cpu from the grid
+//   cells[position].classList.remove(classToRemove)
+// }
 
 // function isWallOnRightOf(actor){
 //   return outerCells[(actor.position + 1)].classList.contains('wall')
