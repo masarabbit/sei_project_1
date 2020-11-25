@@ -10,7 +10,7 @@ body {
   height: 100vh;
   margin: 0;
   background-color:rgb(23, 22, 82);
-  font-family:sans-serif;
+  font-family: 'Quicksand', sans-serif;
   color:rgb(136, 217, 255);
   font-size:10px;
 }
@@ -144,11 +144,12 @@ body {
   height: 76.5vh;
   border:red solid 0px;
   overflow:hidden;
-  background-color:rgb(153, 252, 247);
-  /* background-image: url('../assets/test_background.png');
+  /* background-color:rgb(153, 252, 247); */
+  background-image: url('../assets/map.svg');
   background-repeat: no-repeat;
   background-size:contain;
-  align-items: center; */
+  align-items: center;
+  border-radius:10px;
 }
 
 .grid {
@@ -294,8 +295,8 @@ body {
 
 
 .wall{
-  background-color:rgb(64, 147, 255);
-  /* background-color:transparent; */
+  /* background-color:rgb(64, 147, 255); */
+  background-color:transparent;
 }
 
 .boundary{
