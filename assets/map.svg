@@ -10,7 +10,7 @@
 </g>
 <g id="Layer_1_xA0_Image_1_" display="none">
 	
-		<image display="inline" overflow="visible" width="768" height="768" id="Layer_1_xA0_Image" xlink:href="A9483D41273F98FC.png"  transform="matrix(0.9966 0 0 0.9966 0 0)">
+		<image display="inline" overflow="visible" width="768" height="768" id="Layer_1_xA0_Image" xlink:href="A9483D41273F98FD.png"  transform="matrix(0.9966 0 0 0.9966 0 0)">
 	</image>
 </g>
 <g id="Layer_3">
@@ -2688,7 +2688,7 @@
 		</g>
 		<g>
 			<g>
-				<path fill="#3FAAB2" d="M456.2,22.3v-6.946h-24.158v24.158h6.946C439.55,30.254,446.943,22.862,456.2,22.3z"/>
+				<path fill="#3FAAB2" d="M456.106,22.112v-6.946h-24.158v24.158h6.946C439.456,30.067,446.849,22.674,456.106,22.112z"/>
 			</g>
 		</g>
 		<g>
@@ -3184,7 +3184,7 @@
 		</g>
 		<g>
 			<g>
-				<path fill="#4627C9" d="M456.2,11.299V4.353h-24.158v24.158h6.946C439.55,19.254,446.943,11.861,456.2,11.299z"/>
+				<path fill="#4627C9" d="M456.013,11.111V4.165h-24.158v24.158h6.946C439.363,19.066,446.755,11.673,456.013,11.111z"/>
 			</g>
 		</g>
 		<g>
@@ -3515,8 +3515,7 @@
 	<circle display="inline" fill="#0B0B42" cx="722.936" cy="-185.355" r="28.135"/>
 	<circle display="inline" fill="#0B0B42" cx="556.042" cy="-195.512" r="32.288"/>
 </g>
-<g id="border_copy" display="none">
-	<path display="inline" fill="#FFFFFF" d="M765.354,765.354H0V0h765.354V765.354z M918.618-153.264H-153.264V918.618H918.618
-		V-153.264z"/>
+<g id="border_copy">
+	<path fill="#171652" d="M765.354,765.354H0V0h765.354V765.354z M918.618-153.264H-153.264V918.618H918.618V-153.264z"/>
 </g>
 </svg>

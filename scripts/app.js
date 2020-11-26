@@ -32,6 +32,7 @@ function init() {
       score: 100,
       class: 'item',
       image: 'item',
+      sound: 'meow.wav',
       additionalEffect: 'nothing',
       cellsWithItem: [129,147,169]
       //  cellsWithItem: [129,147,169,172,173,174,175,176,177,178,179,183,184,185,186,187,188,189,190,191,192,193,209,212,220,223,226,228,229,230,232,233,245,246,247,248,249,252,260,261,262,263,266,267,268,269,273,284,285,287,288,289,290,291,292,293,294,295,298,299,300,301,302,303,306,313,324,328,329,330,331,332,335,338,343,346,353,364,368,369,370,371,372,375,378,383,386,387,388,389,393,404,408,409,412,415,418,423,426,429,430,431,432,433,444,448,449,452,455,458,463,466,469,470,471,472,473,483,485,486,487,488,489,490,491,492,495,497,498,499,500,501,502,503,504,505,507,508,509,510,511,512,513,514,515,516,524,527,528,529,530,531,532,533,534,535,536,537,542,543,544,545,546,547,550,553,554,555,564,567,568,569,570,571,572,575,576,577,582,583,584,585,586,587,590,593,594,595,604,607,609,612,615,623,626,627,630,635,644,647,648,649,652,655,663,666,667,670,675,684,687,688,689,692,693,694,696,697,698,702,703,706,707,710,713,714,715,724,725,726,727,728,729,738,741,746,747,750,753,755,768,769,778,781,786,787,790,793,794,795,808,809,810,811,812,813,814,815,816,817,818,819,820,821,822,823,824,825,826,827,828,829,830,831,832,833,834,835,844,845,846,847,848,850,851,863,866,867,870,871,872,884,887,891,903,906,907,910,912,924,927,931,932,933,934,939,940,941,942,943,944,945,946,947,950,951,952,953,954,955,964,967,975,978,987,992,995,1004,1007,1015,1018,1027,1032,1035,1043,1044,1045,1046,1047,1048,1049,1050,1051,1052,1053,1054,1055,1058,1059,1060,1061,1062,1063,1064,1065,1066,1067,1068,1069,1070,1071,1072,1073,1074,1075,1076,1086,1089,1092,1094,1095,1098,1104,1111,1112,1114,1115,1126,1129,1132,1133,1134,1135,1136,1137,1138,1144,1151,1155,1166,1169,1172,1175,1176,1178,1184,1191,1195,1206,1209,1210,1211,1212,1215,1216,1217,1218,1219,1220,1221,1222,1223,1224,1225,1226,1227,1228,1229,1230,1231,1235,1246,1249,1260,1264,1267,1271,1275,1286,1289,1300,1304,1307,1311,1315,1324,1325,1326,1327,1328,1329,1330,1331,1332,1333,1334,1335,1336,1337,1338,1339,1340,1341,1342,1343,1344,1347,1351,1355,1364,1366,1369,1370,1371,1384,1387,1391,1395,1404,1405,1406,1410,1411,1424,1425,1426,1427,1428,1429,1430,1432,1433,1434,1449,1467]
@@ -41,6 +42,7 @@ function init() {
       score: 1000,
       class: 'big_star',
       image: 'big_star',
+      sound: 'meow.wav',
       additionalEffect: 'invincibility',
       cellsWithItem: [244,227]
       // cellsWithItem: [244,227,1093,1365,1435]
@@ -50,6 +52,7 @@ function init() {
       score: 500,
       class: 'blue_star',
       image: 'blue_star',
+      sound: 'meow.wav',
       additionalEffect: 'nothing',
       cellsWithItem: [179,180]
       // cellsWithItem: [180,231,286,484,496,506,608,695,701,754,849,911,935,938,1113,1177,1409,1431]
@@ -68,13 +71,15 @@ function init() {
   const gameStartWrapper = document.querySelector('.game_start_wrapper')
   const gameStartCover = document.querySelector('.game_start_cover')
   const playerAudio = document.querySelector('#player_audio')
-  const computerAudio = document.querySelector('#computer_audio')
+  const cpuAudio = document.querySelector('#cpu_audio')
+  const soundControl = document.querySelector('.sound_control')
 
   //* status display
   const scoreDisplay = document.querySelector('.score')
   const scoreDisplayWrapper = document.querySelector('.score_wrapper')
   let score = 0
   let gameStatus = 'play'  //!for pause setting.
+  let gameSound = 'on'
   let invincibilityTimer = 0
   let flickerTimer = 0
   const lifeDisplay = document.querySelector('#life')
@@ -615,7 +620,7 @@ function init() {
 
   function turnPlayerInvincible(){
     player.display.classList.add('invincible')
-    clearInterval(invincibilityInterval) 
+    clearInterval(invincibilityInterval) //* clears any old interval
 
     invincibilityInterval = setInterval(
       function(){
@@ -741,10 +746,44 @@ function init() {
       cpu.knockOutAnimationDisplay = null
     },8000)
   }  
+  
+
+  //* play sound
+
+  
+  
+  function toggleMute(){
+    if (gameSound === 'on') {
+      gameSound = 'off'
+      soundControl.innerHTML = 'sound: OFF'
+    } else {
+      gameSound = 'on'
+      soundControl.innerHTML = 'sound: ON'
+    }
+    soundControl.classList.toggle('off')
+  }
+
+  function playSoundEffect(sound){
+    if (gameSound === 'on'){
+      playerAudio.src = `./assets/${sound}`
+      playerAudio.play()
+    }
+  }
+  
+  function playCpuSoundEffect(sound){
+    if (gameSound === 'on'){
+      cpuAudio.src = `./assets/${sound}`
+      cpuAudio.play()
+    }
+  }
+
+
 
 
   function playerLoseLife(){
-
+    
+    
+    playSoundEffect('meow_knockOut.wav')
     displayKnockOutAnimation(player)
     
     if (player.life > 0){
@@ -1305,23 +1344,25 @@ function init() {
     setActorPosition(player)
   }
 
- 
+  
 
 
-  function takeItemAndEarnScore(itemObjectArray){
+  function takeItemAndEarnScore(itemObject){
     if (player.display.classList.contains('flicker')){ // prevents player taking item when in flicker state
       return
     }
     
-    if (outerCells[player.position].classList.contains(itemObjectArray.class)){
-      outerCells[player.position].classList.remove(itemObjectArray.class)
-
+    if (outerCells[player.position].classList.contains(itemObject.class)){
+      outerCells[player.position].classList.remove(itemObject.class)
+      
+      playSoundEffect(itemObject.sound)
+      
       //animate items when taken
       const currentPlayerPosition = outerCells[player.position].getBoundingClientRect()
       
       const itemTaken = document.createElement('div')
       itemTaken.classList.add('effect_animation')
-      itemTaken.innerHTML = `<img src = "assets/${itemObjectArray.image}.gif" ></img>`
+      itemTaken.innerHTML = `<img src = "assets/${itemObject.image}.gif" ></img>`
       itemTaken.style.top = `${currentPlayerPosition.y}px`
       itemTaken.style.left = `${currentPlayerPosition.x}px`
       itemTaken.style.height = `${currentPlayerPosition.height}px`
@@ -1336,7 +1377,7 @@ function init() {
 
       setTimeout(function(){
         cover.removeChild(itemTaken)
-        score += itemObjectArray.score
+        score += itemObject.score
         scoreDisplay.innerHTML = score
         scoreDisplayWrapper.classList.toggle('animate')
         if (itemToCollect < 1){
@@ -1505,6 +1546,7 @@ function init() {
 
   startButton.addEventListener('click', triggerGameStart)
   playAgainButton.addEventListener('click',resetGame)
+  soundControl.addEventListener('click', toggleMute)
 
  
 
