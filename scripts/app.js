@@ -42,16 +42,16 @@ function init() {
       class: 'big_star',
       image: 'big_star',
       additionalEffect: 'invincibility',
-      cellsWithItem: [227]
+      cellsWithItem: [244,227]
       // cellsWithItem: [244,227,1093,1365,1435]
     },
-    {
+    { 
       itemName: 'blue star',
       score: 500,
       class: 'blue_star',
       image: 'blue_star',
       additionalEffect: 'nothing',
-      cellsWithItem: [180]
+      cellsWithItem: [179,180]
       // cellsWithItem: [180,231,286,484,496,506,608,695,701,754,849,911,935,938,1113,1177,1409,1431]
     }
   ]
@@ -67,6 +67,8 @@ function init() {
   const startButton = document.querySelector('#start')
   const gameStartWrapper = document.querySelector('.game_start_wrapper')
   const gameStartCover = document.querySelector('.game_start_cover')
+  const playerAudio = document.querySelector('#player_audio')
+  const computerAudio = document.querySelector('#computer_audio')
 
   //* status display
   const scoreDisplay = document.querySelector('.score')
@@ -89,8 +91,8 @@ function init() {
   const lifeCounters = []
   const defaultMotion = ['right','left','up','down']
   let flickerInterval = null
-  const flickerStateDuration = 3000
-  const invincibilityDuration = 10000
+  const flickerStateDuration = 3
+  const invincibilityDuration = 10
   let invincibilityInterval = null
   const knockOutScore = 1000
 
@@ -130,7 +132,7 @@ function init() {
   const cpuObjects = [
     {
       name: 'one',
-      // class: 'cpuOneClass',
+      class: 'cpuClass',
       staticGif: 'sleep.gif', 
       motionGif: 'one_down.gif',
       knockOutGif: 'hurt.gif',
@@ -162,7 +164,7 @@ function init() {
     },
     {
       name: 'two',
-      // class: 'cpuOneClass',
+      class: 'cpuClass',
       staticGif: 'sleep.gif',
       motionGif: 'two_down.gif',
       knockOutGif: 'hurt.gif',
@@ -194,7 +196,7 @@ function init() {
     },
     {
       name: 'three',
-      // class: 'cpuOneClass',
+      class: 'cpuClass',
       staticGif: 'sleep.gif',
       motionGif: 'three_down.gif',
       knockOutGif: 'hurt.gif',
@@ -226,7 +228,7 @@ function init() {
     },
     {
       name: 'four',
-      // class: 'cpuOneClass',
+      class: 'cpuClass',
       staticGif: 'sleep.gif',
       motionGif: 'four_down.gif',
       knockOutGif: 'hurt.gif',
@@ -258,7 +260,7 @@ function init() {
     },
     {
       name: 'five',
-      // class: 'cpuOneClass',
+      class: 'cpuClass',
       staticGif: 'sleep.gif',
       motionGif: 'five_down.gif',
       knockOutGif: 'hurt.gif',
@@ -409,7 +411,7 @@ function init() {
   const cpuOnePositionDisplay = document.querySelector('#cpu_one_position')
   const cpuTwoPositionDisplay = document.querySelector('#cpu_two_position')
   const wallPositionDisplay = document.querySelector('#wall_position')
-  const itemPositionDisplay = document.querySelector('#item_position')
+  // const itemPositionDisplay = document.querySelector('#item_position')
 
 
 
@@ -419,17 +421,13 @@ function init() {
     for (let i = 0; i < cellCount; i++) {
       const outerCell = document.createElement('div')
       const cell = document.createElement('div')
-      // const innerCell = document.createElement('div')
       cell.setAttribute('id', i)
       outerCell.classList.add('outer_cell')
       cell.classList.add('cell')
-      // cell.innerText = i
       outerCell.appendChild(cell)
       grid.appendChild(outerCell)
-      // cell.appendChild(innerCell)
       outerCells.push(outerCell)
       cells.push(cell)
-      // innerCells.push(innerCell)
     }
   } 
 
@@ -509,7 +507,7 @@ function init() {
     blueStarCollected = 0
   }
 
-  function countDown(){  // count down circle animation when game starts aand resets
+  function countDown(){  // count down circle animation when game starts and resets
     gameStartWrapper.classList.add('move_down')
       
     gameStartCover.classList.remove('display')
@@ -562,6 +560,7 @@ function init() {
     cpuObjects.forEach(cpu => {
       cpu.position = cpu.defaultPosition 
       cpu.status = cpu.defaultStatus
+      cpu.display.className = 'cpuClass' //removes any class aquired in previous play
       clearInterval(cpu.motionInterval)
       
       displayActorImage(cpu)
@@ -616,13 +615,14 @@ function init() {
 
   function turnPlayerInvincible(){
     player.display.classList.add('invincible')
-    
+    clearInterval(invincibilityInterval) 
+
     invincibilityInterval = setInterval(
       function(){
         if (gameStatus === 'pause'){
           return
         }
-        if (invincibilityTimer < 7){
+        if (invincibilityTimer < invincibilityDuration){
           invincibilityTimer += 1
           console.log(`counting invincibility Timer${invincibilityTimer}`)
         } else {
@@ -630,6 +630,7 @@ function init() {
           player.staticGif = `${player.facingDirection}.gif`  // change back to normal appearance
           player.display.innerHTML = `<img src = "assets/${player.staticGif}" ></img>` 
           knockOutCpuCounter = 1
+          invincibilityTimer = 0
           clearInterval(invincibilityInterval) 
         }
       },1000)
@@ -680,10 +681,31 @@ function init() {
       cpu.display.classList.add('fadein')
     },7000)
 
-    setTimeout(() =>{
-      cpu.display.classList.remove('fadein')
-      changeStatusToActive(cpu)
-    },10000) //* this bit could be paused?
+    // setTimeout(() =>{
+    //   cpu.display.classList.remove('fadein')
+    //   changeStatusToActive(cpu)
+    // },10000) //* this bit could be paused?
+
+    cpu.recoveryInterval = setInterval(
+      function(){
+        if (gameEndCover.classList.contains('shade')){
+          clearInterval(cpu.recoveryInterval) 
+        }
+        if (gameStatus === 'pause'){
+          return
+        }
+        if (cpu.recoveryTimer < 10){
+          cpu.recoveryTimer += 1
+          console.log(`${cpu.name}recovery:${cpu.recoveryTimer}`)
+        } else {
+          cpu.display.classList.remove('fadein')
+          changeStatusToActive(cpu)
+          cpu.recoveryTimer = 0
+          clearInterval(cpu.recoveryInterval) 
+        }
+      },1000)
+
+
   }
 
 
@@ -716,6 +738,7 @@ function init() {
     
     setTimeout(function(){
       cover.removeChild(cpu.knockOutAnimationDisplay)
+      cpu.knockOutAnimationDisplay = null
     },8000)
   }  
 
@@ -733,6 +756,13 @@ function init() {
   
   function displayKnockOutAnimation(actor){
     actor.display.classList.add('hidden')     // stops actor and prevents further playerLoseLife
+
+    // //TODO checking
+    if (actor.knockOutAnimationDisplay !== null){
+      cover.removeChild(actor.knockOutAnimationDisplay)
+      actor.knockOutAnimationDisplay = null
+    }
+  
 
     actor.knockOutAnimationDisplay = document.createElement('div')  // displays hurt animation
     actor.knockOutAnimationDisplay.classList.add('effect_animation_fast')
@@ -765,6 +795,7 @@ function init() {
     
     setTimeout(function(){
       cover.removeChild(player.knockOutAnimationDisplay) //* fixed to ensure the knockOutAnimation is removed
+      player.knockOutAnimationDisplay = null
 
       const lifeDisplayAnimation = document.createElement('div')
       lifeDisplayAnimation.classList.add('effect_animation_medium')
@@ -794,9 +825,24 @@ function init() {
         player.display.classList.remove('hidden') 
         player.display.classList.add('flicker')    // make player flicker state for a duration
 
-        setTimeout(function(){  
-          player.display.classList.remove('flicker')     
-        },flickerStateDuration)  
+        // setTimeout(function(){  
+        //   player.display.classList.remove('flicker')     
+        // },flickerStateDuration)  
+
+        flickerInterval = setInterval(
+          function(){
+            if (gameStatus === 'pause'){
+              return
+            }
+            if (flickerTimer < flickerStateDuration){
+              flickerTimer += 1
+              console.log(`counting flicker Timer${flickerTimer}`)
+            } else {
+              flickerTimer = 0
+              player.display.classList.remove('flicker')    
+              clearInterval(flickerInterval) 
+            }
+          },1000)
 
       },1000)
 
@@ -845,11 +891,15 @@ function init() {
     clearInterval(moodInterval)
     clearInterval(constantCheck)
     clearInterval(constantCheckDespitePause)
-    clearInterval(invincibilityInterval)
-    clearInterval(flickerInterval)
+   
 
+    clearInterval(invincibilityInterval)     //*remove various class attached in prior play
+    clearInterval(flickerInterval)
     invincibilityTimer = 0
     flickerTimer = 0
+    player.display.className = player.class
+
+
     itemToCollect = itemTotal
     scoreDisplay.innerHTML = score
     player.life = player.defaultLife   // reset player life total
@@ -865,10 +915,11 @@ function init() {
       cpuObjects.forEach(cpu =>{  // remove old position before reinitialising
         removeActor(cpu)
         cpu.moodTimer = 0
-        cpu.recoveryTimer = 0
         clearInterval(cpu.recoveryInterval)
+        cpu.recoveryTimer = 0
       })
       initialiseCpus(cpuObjects) 
+
       removeActor(player)
       player.position = player.defaultPosition
       addPlayer(player.position)
