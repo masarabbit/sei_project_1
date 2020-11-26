@@ -81,10 +81,13 @@ function init() {
   const cellCount = width * height
   const outerCells = []
   const cells = []
-  const innerCells = []
+  // const innerCells = []
   const lifeCounters = []
   const defaultMotion = ['right','left','up','down']
   const flickerStateDuration = 3000
+  const invincibilityDuration = 10000
+  const knockOutScore = 1000
+
   let itemTotal = 0
   let knockOutCpuCounter = 1
   // let itemCollected = 0
@@ -123,7 +126,7 @@ function init() {
       name: 'one',
       // class: 'cpuOneClass',
       staticGif: 'sleep.gif', 
-      motionGif: 'down.gif',
+      motionGif: 'one_down.gif',
       knockOutGif: 'hurt.gif',
       motion: defaultMotion,
       filteredMotion: [],
@@ -153,7 +156,7 @@ function init() {
       name: 'two',
       // class: 'cpuOneClass',
       staticGif: 'sleep.gif',
-      motionGif: 'down.gif',
+      motionGif: 'two_down.gif',
       knockOutGif: 'hurt.gif',
       motion: defaultMotion,
       filteredMotion: [],
@@ -183,7 +186,7 @@ function init() {
       name: 'three',
       // class: 'cpuOneClass',
       staticGif: 'sleep.gif',
-      motionGif: 'down.gif',
+      motionGif: 'three_down.gif',
       knockOutGif: 'hurt.gif',
       motion: defaultMotion,
       filteredMotion: [],
@@ -213,7 +216,7 @@ function init() {
       name: 'four',
       // class: 'cpuOneClass',
       staticGif: 'sleep.gif',
-      motionGif: 'down.gif',
+      motionGif: 'four_down.gif',
       knockOutGif: 'hurt.gif',
       motion: defaultMotion,
       filteredMotion: [],
@@ -236,6 +239,36 @@ function init() {
       status: 'inactive',
       knockOutAnimationDisplay: null,
       moodRange: ['scatter_A','wander_A','scatter_B','wander_B','aggressive_A','aggressive_B','cunning_A','cunning_B'],
+      mood: 'cunning',
+      moodTimer: 0,
+    },
+    {
+      name: 'five',
+      // class: 'cpuOneClass',
+      staticGif: 'sleep.gif',
+      motionGif: 'five_down.gif',
+      knockOutGif: 'hurt.gif',
+      motion: defaultMotion,
+      filteredMotion: [],
+      defaultPosition: 421,
+      position: 421,
+      display: document.createElement('div'),
+      defaultTarget: {
+        position: 1599,
+        horizontalPosition: null,
+        verticalPosition: null,
+      },
+      target: null,
+      facingDirection: 'down',
+      speedRange: [100,200,200],
+      speed: 100,
+      horizontalPosition: null,
+      verticalPosition: null,
+      motionInterval: null,
+      defaultStatus: 'inactive',
+      status: 'inactive',
+      knockOutAnimationDisplay: null,
+      moodRange: ['wander_A','wander_B','wander_C','aggressive_A','cunning_A','wander_D'],
       mood: 'cunning',
       moodTimer: 0,
     }
@@ -341,6 +374,14 @@ function init() {
           changeStatusToActive(cpuObjects[3])
         }
       },2000)
+    }
+
+    if (itemToCollect === itemTotal - 225){
+      setTimeout(()=>{
+        if (!cpuObjects[4].display.classList.contains('hidden')){
+          changeStatusToActive(cpuObjects[4])
+        }
+      },1000)
     }
   }
 
@@ -572,8 +613,8 @@ function init() {
   
     cpu.status = 'inactive'
     displayKnockOutAnimation(cpu) 
-    score += 500 * knockOutCpuCounter
-    const scoreEarned = 500 * knockOutCpuCounter
+    score += knockOutScore * knockOutCpuCounter
+    const scoreEarned = knockOutScore * knockOutCpuCounter
     knockOutCpuCounter += 1
 
     setTimeout(() =>{
