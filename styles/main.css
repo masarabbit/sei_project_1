@@ -15,7 +15,7 @@ body {
   font-size:10px;
 }
 
-.cover,.game_end_cover,.game_start_cover {
+.cover,.game_end_cover,.game_start_cover,.pause_cover {
   position:fixed;
   top:0px;
   background-color:transparent;
@@ -63,7 +63,7 @@ body {
   transition:3s;
 }
 .game_start_cover.display {
-  z-index:99999;
+  z-index:999999;
   background-color:rgba(11, 26, 70, 1);
 }
 
@@ -510,6 +510,27 @@ p.score_wrapper.animate {
 .game_end_cover.shade {
   background-color:rgba(12, 37, 107, 0.7);
   opacity:1;
+}
+
+.pause_cover {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition:1s;
+  opacity:0;
+}
+
+.pause_cover.pause{
+  background-color:rgba(248, 157, 241, 0.63);
+  z-index:99999;
+  opacity:1;
+}
+
+.pause_cover > p {
+  color:white;
+  text-align:center;
+  font-size:30px;
 }
 
 button {

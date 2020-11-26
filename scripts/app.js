@@ -33,7 +33,8 @@ function init() {
       class: 'item',
       image: 'item',
       additionalEffect: 'nothing',
-      cellsWithItem: [129,147,169,172,173,174,175,176,177,178,179,183,184,185,186,187,188,189,190,191,192,193,209,212,220,223,226,228,229,230,232,233,245,246,247,248,249,252,260,261,262,263,266,267,268,269,273,284,285,287,288,289,290,291,292,293,294,295,298,299,300,301,302,303,306,313,324,328,329,330,331,332,335,338,343,346,353,364,368,369,370,371,372,375,378,383,386,387,388,389,393,404,408,409,412,415,418,423,426,429,430,431,432,433,444,448,449,452,455,458,463,466,469,470,471,472,473,483,485,486,487,488,489,490,491,492,495,497,498,499,500,501,502,503,504,505,507,508,509,510,511,512,513,514,515,516,524,527,528,529,530,531,532,533,534,535,536,537,542,543,544,545,546,547,550,553,554,555,564,567,568,569,570,571,572,575,576,577,582,583,584,585,586,587,590,593,594,595,604,607,609,612,615,623,626,627,630,635,644,647,648,649,652,655,663,666,667,670,675,684,687,688,689,692,693,694,696,697,698,702,703,706,707,710,713,714,715,724,725,726,727,728,729,738,741,746,747,750,753,755,768,769,778,781,786,787,790,793,794,795,808,809,810,811,812,813,814,815,816,817,818,819,820,821,822,823,824,825,826,827,828,829,830,831,832,833,834,835,844,845,846,847,848,850,851,863,866,867,870,871,872,884,887,891,903,906,907,910,912,924,927,931,932,933,934,939,940,941,942,943,944,945,946,947,950,951,952,953,954,955,964,967,975,978,987,992,995,1004,1007,1015,1018,1027,1032,1035,1043,1044,1045,1046,1047,1048,1049,1050,1051,1052,1053,1054,1055,1058,1059,1060,1061,1062,1063,1064,1065,1066,1067,1068,1069,1070,1071,1072,1073,1074,1075,1076,1086,1089,1092,1094,1095,1098,1104,1111,1112,1114,1115,1126,1129,1132,1133,1134,1135,1136,1137,1138,1144,1151,1155,1166,1169,1172,1175,1176,1178,1184,1191,1195,1206,1209,1210,1211,1212,1215,1216,1217,1218,1219,1220,1221,1222,1223,1224,1225,1226,1227,1228,1229,1230,1231,1235,1246,1249,1260,1264,1267,1271,1275,1286,1289,1300,1304,1307,1311,1315,1324,1325,1326,1327,1328,1329,1330,1331,1332,1333,1334,1335,1336,1337,1338,1339,1340,1341,1342,1343,1344,1347,1351,1355,1364,1366,1369,1370,1371,1384,1387,1391,1395,1404,1405,1406,1410,1411,1424,1425,1426,1427,1428,1429,1430,1432,1433,1434,1449,1467]
+      cellsWithItem: [129,147,169]
+      //  cellsWithItem: [129,147,169,172,173,174,175,176,177,178,179,183,184,185,186,187,188,189,190,191,192,193,209,212,220,223,226,228,229,230,232,233,245,246,247,248,249,252,260,261,262,263,266,267,268,269,273,284,285,287,288,289,290,291,292,293,294,295,298,299,300,301,302,303,306,313,324,328,329,330,331,332,335,338,343,346,353,364,368,369,370,371,372,375,378,383,386,387,388,389,393,404,408,409,412,415,418,423,426,429,430,431,432,433,444,448,449,452,455,458,463,466,469,470,471,472,473,483,485,486,487,488,489,490,491,492,495,497,498,499,500,501,502,503,504,505,507,508,509,510,511,512,513,514,515,516,524,527,528,529,530,531,532,533,534,535,536,537,542,543,544,545,546,547,550,553,554,555,564,567,568,569,570,571,572,575,576,577,582,583,584,585,586,587,590,593,594,595,604,607,609,612,615,623,626,627,630,635,644,647,648,649,652,655,663,666,667,670,675,684,687,688,689,692,693,694,696,697,698,702,703,706,707,710,713,714,715,724,725,726,727,728,729,738,741,746,747,750,753,755,768,769,778,781,786,787,790,793,794,795,808,809,810,811,812,813,814,815,816,817,818,819,820,821,822,823,824,825,826,827,828,829,830,831,832,833,834,835,844,845,846,847,848,850,851,863,866,867,870,871,872,884,887,891,903,906,907,910,912,924,927,931,932,933,934,939,940,941,942,943,944,945,946,947,950,951,952,953,954,955,964,967,975,978,987,992,995,1004,1007,1015,1018,1027,1032,1035,1043,1044,1045,1046,1047,1048,1049,1050,1051,1052,1053,1054,1055,1058,1059,1060,1061,1062,1063,1064,1065,1066,1067,1068,1069,1070,1071,1072,1073,1074,1075,1076,1086,1089,1092,1094,1095,1098,1104,1111,1112,1114,1115,1126,1129,1132,1133,1134,1135,1136,1137,1138,1144,1151,1155,1166,1169,1172,1175,1176,1178,1184,1191,1195,1206,1209,1210,1211,1212,1215,1216,1217,1218,1219,1220,1221,1222,1223,1224,1225,1226,1227,1228,1229,1230,1231,1235,1246,1249,1260,1264,1267,1271,1275,1286,1289,1300,1304,1307,1311,1315,1324,1325,1326,1327,1328,1329,1330,1331,1332,1333,1334,1335,1336,1337,1338,1339,1340,1341,1342,1343,1344,1347,1351,1355,1364,1366,1369,1370,1371,1384,1387,1391,1395,1404,1405,1406,1410,1411,1424,1425,1426,1427,1428,1429,1430,1432,1433,1434,1449,1467]
     },
     {
       itemName: 'big star',
@@ -41,8 +42,8 @@ function init() {
       class: 'big_star',
       image: 'big_star',
       additionalEffect: 'invincibility',
-      cellsWithItem: [244,227,1093,1365,1435]
-      // cellsWithItem: [166]
+      cellsWithItem: [227]
+      // cellsWithItem: [244,227,1093,1365,1435]
     },
     {
       itemName: 'blue star',
@@ -50,8 +51,8 @@ function init() {
       class: 'blue_star',
       image: 'blue_star',
       additionalEffect: 'nothing',
-      cellsWithItem: [180,231,286,484,496,506,608,695,701,754,849,911,935,938,1113,1177,1409,1431]
-      // cellsWithItem: [173,174,179]
+      cellsWithItem: [180]
+      // cellsWithItem: [180,231,286,484,496,506,608,695,701,754,849,911,935,938,1113,1177,1409,1431]
     }
   ]
 
@@ -61,6 +62,7 @@ function init() {
   const grid = document.querySelector('.grid')
   const cover = document.querySelector('.cover')
   const gameEndCover = document.querySelector('.game_end_cover')
+  const pauseCover = document.querySelector('.pause_cover')
   const playAgainButton = document.querySelector('#play_again')
   const startButton = document.querySelector('#start')
   const gameStartWrapper = document.querySelector('.game_start_wrapper')
@@ -70,7 +72,9 @@ function init() {
   const scoreDisplay = document.querySelector('.score')
   const scoreDisplayWrapper = document.querySelector('.score_wrapper')
   let score = 0
-  const gameStatus = 'play'  //!for pause setting.
+  let gameStatus = 'play'  //!for pause setting.
+  let invincibilityTimer = 0
+  let flickerTimer = 0
   const lifeDisplay = document.querySelector('#life')
 
   
@@ -84,8 +88,10 @@ function init() {
   // const innerCells = []
   const lifeCounters = []
   const defaultMotion = ['right','left','up','down']
+  let flickerInterval = null
   const flickerStateDuration = 3000
   const invincibilityDuration = 10000
+  let invincibilityInterval = null
   const knockOutScore = 1000
 
   let itemTotal = 0
@@ -151,6 +157,8 @@ function init() {
       moodRange: ['scatter','aggressive_A','aggressive_B','aggressive_C','wander_A','wander_B','aggressive_D'],    //* determine chase behaviour
       mood: 'scatter',
       moodTimer: 0,
+      recoveryInterval: null,
+      recoveryTimer: 0,
     },
     {
       name: 'two',
@@ -181,6 +189,8 @@ function init() {
       moodRange: ['scatter_A','scatter_B','cunning_A','cunning_B','wander'],
       mood: 'wander',
       moodTimer: 0,
+      recoveryInterval: null,
+      recoveryTimer: 0,
     },
     {
       name: 'three',
@@ -211,6 +221,8 @@ function init() {
       moodRange: ['scatterA','scatterB','wanderA','aggressive_A','wander_B','scatterC','aggressive_B'],
       mood: 'wander',
       moodTimer: 0,
+      recoveryInterval: null,
+      recoveryTimer: 0,
     },
     {
       name: 'four',
@@ -241,6 +253,8 @@ function init() {
       moodRange: ['scatter_A','wander_A','scatter_B','wander_B','aggressive_A','aggressive_B','cunning_A','cunning_B'],
       mood: 'cunning',
       moodTimer: 0,
+      recoveryInterval: null,
+      recoveryTimer: 0,
     },
     {
       name: 'five',
@@ -271,6 +285,8 @@ function init() {
       moodRange: ['wander_A','wander_B','wander_C','aggressive_A','cunning_A','wander_D'],
       mood: 'cunning',
       moodTimer: 0,
+      recoveryInterval: null,
+      recoveryTimer: 0,
     }
   ]
   
@@ -420,12 +436,16 @@ function init() {
   //* initialise
 
   let constantCheck = null
+  let constantCheckDespitePause = null
   let moodInterval = null
 
 
 
   function triggerGameStart(){
-    
+    if (!gameStartCover.classList.contains('display')){   // prevents start button being pressed again once game is already in play
+      return
+    }
+
     countDown()
 
     setInterval(()=>{   //* readjusts actor display sizes incase player resizes window
@@ -437,18 +457,6 @@ function init() {
     },1000)
   
     createGrid()
-
-    //TODO remove later
-    // outerCells.forEach(cell => {
-    //   cell.addEventListener('click', makeWall)
-    // })
-    
-    // outerCells.forEach(cell => {
-    //   cell.addEventListener('dblclick', removeWall
-    // })
-
-    //TODO remove later
-
 
     displayPlayerLife()
     populateCells(cellsWithWalls,'wall')
@@ -472,17 +480,25 @@ function init() {
   }
 
   function constantActions(){
-
+    
     //* checking for status
+
+    constantCheckDespitePause = setInterval(() =>{
+      rePositionAllActorImages() // this is to ensure player image stays in right place 
+    },10)
+    
     constantCheck = setInterval(() =>{
-      rePositionAllActorImages() // this is to ensure player image stays in right place despite screen resize
-      checkPlayerAndCpuCollision()
-      controlCpuActivation()
-      triggerTeleport()
+      if (gameStatus === 'play'){ 
+        checkPlayerAndCpuCollision()
+        controlCpuActivation()
+        triggerTeleport()
+      }
     },10)
 
     moodInterval = setInterval(()=>{
-      moodTimerCount()
+      if (gameStatus === 'play'){
+        moodTimerCount()
+      }
     },1000)
   }
 
@@ -537,6 +553,7 @@ function init() {
     setTimeout(() =>{
       cover.removeChild(countDownCircle)
     },2200)
+
   }
   
 
@@ -550,7 +567,7 @@ function init() {
       displayActorImage(cpu)
       cpu.motionInterval = setInterval(
         function(){ 
-          if (cpu.status === 'active'){
+          if (cpu.status === 'active' && gameStatus === 'play'){
             cpuMovement(cpu)
           }
         },cpu.speed)
@@ -585,7 +602,7 @@ function init() {
     rePositionImage(player)
 
     cpuObjects.forEach(cpu =>{
-      if (cpu.status === 'inactive') {
+      if (cpu.status === 'inactive' || gameStatus === 'pause') {
         cpu.display.style.top = `${cells[cpu.position].getBoundingClientRect().y}px`
         cpu.display.style.left = `${cells[cpu.position].getBoundingClientRect().x}px`
       }
@@ -595,17 +612,28 @@ function init() {
 
 
   //TODO muteki
+  
 
   function turnPlayerInvincible(){
     player.display.classList.add('invincible')
+    
+    invincibilityInterval = setInterval(
+      function(){
+        if (gameStatus === 'pause'){
+          return
+        }
+        if (invincibilityTimer < 7){
+          invincibilityTimer += 1
+          console.log(`counting invincibility Timer${invincibilityTimer}`)
+        } else {
+          player.display.classList.remove('invincible')
+          player.staticGif = `${player.facingDirection}.gif`  // change back to normal appearance
+          player.display.innerHTML = `<img src = "assets/${player.staticGif}" ></img>` 
+          knockOutCpuCounter = 1
+          clearInterval(invincibilityInterval) 
+        }
+      },1000)
 
-    setTimeout(() =>{
-      player.display.classList.remove('invincible')
-      player.staticGif = `${player.facingDirection}.gif`  // change back to normal appearance
-      player.display.innerHTML = `<img src = "assets/${player.staticGif}" ></img>` 
-      knockOutCpuCounter = 1
-      // to pause this, I would need to, have alternative way to count invincibility.
-    },7000)
   }
 
 
@@ -655,7 +683,7 @@ function init() {
     setTimeout(() =>{
       cpu.display.classList.remove('fadein')
       changeStatusToActive(cpu)
-    },10000)
+    },10000) //* this bit could be paused?
   }
 
 
@@ -768,7 +796,7 @@ function init() {
 
         setTimeout(function(){  
           player.display.classList.remove('flicker')     
-        },flickerStateDuration) 
+        },flickerStateDuration)  
 
       },1000)
 
@@ -776,6 +804,8 @@ function init() {
   }
   
   function gameOverEvent(){
+    gameStatus = 'play'
+    pauseCover.classList.remove('pause')
     console.log('game over!')
     const gameOverText = document.querySelector('.game_end_text')
     playAgainButton.classList.add('display')
@@ -792,7 +822,6 @@ function init() {
 
   //TODO jyunbi
 
-  
   function resetStaticGifAndDisplayActors(){
     player.staticGif = 'down.gif'
     displayActorImage(player)
@@ -803,14 +832,24 @@ function init() {
   }
 
   
-
+  //* reset all timers, including cpu 
   function resetGame(){
+    if ( itemToCollect > 0) {  // prevents unwanted resets when reset button is accidentally pressed by space bar
+      return
+    }
+
     cover.innerHTML = ''  // wipe cover to remove actor images
     playAgainButton.classList.remove('display')
     gameEndCover.classList.remove('shade') // hide game over message
     score = 0
     clearInterval(moodInterval)
     clearInterval(constantCheck)
+    clearInterval(constantCheckDespitePause)
+    clearInterval(invincibilityInterval)
+    clearInterval(flickerInterval)
+
+    invincibilityTimer = 0
+    flickerTimer = 0
     itemToCollect = itemTotal
     scoreDisplay.innerHTML = score
     player.life = player.defaultLife   // reset player life total
@@ -824,11 +863,12 @@ function init() {
 
       //! control how enemies start to move?
       cpuObjects.forEach(cpu =>{  // remove old position before reinitialising
-        // removeCpu(cpu.position,cpu.class)
         removeActor(cpu)
+        cpu.moodTimer = 0
+        cpu.recoveryTimer = 0
+        clearInterval(cpu.recoveryInterval)
       })
       initialiseCpus(cpuObjects) 
-      // removePlayer(player.position)
       removeActor(player)
       player.position = player.defaultPosition
       addPlayer(player.position)
@@ -929,9 +969,10 @@ function init() {
 
   function cpuDetermineTarget(cpu){
     
+    setActorPosition(cpu.defaultTarget)
+    cpu.target = [cpu.defaultTarget.horizontalPosition,cpu.defaultTarget.verticalPosition]
 
     if (cpu.mood.split('_')[0] === 'scatter'){  
-      setActorPosition(cpu.defaultTarget)
       cpu.target = [cpu.defaultTarget.horizontalPosition,cpu.defaultTarget.verticalPosition]
       // console.log(`${cpu.name} mode scatter`)
     }
@@ -1170,7 +1211,7 @@ function init() {
   //* Move cpu
   function cpuMovement(cpu) {
 
-    if (cpu.status === 'inactive'){
+    if (cpu.status === 'inactive' || gameStatus === 'pause'){
       return
     }
 
@@ -1261,6 +1302,9 @@ function init() {
   }
 
   function gameCompletionEvent(){  
+    gameStatus = 'play'
+    pauseCover.classList.remove('pause')
+
     cpuObjects.forEach(cpu => {
       // cpu.display.classList.add('hidden')
       cpu.status = 'inactive'
@@ -1317,13 +1361,13 @@ function init() {
   // * Move Player
   function handleMovementWithKey(e) {
 
-    if (player.display.classList.contains('hidden')){
+    if (player.display.classList.contains('hidden') || gameStartCover.classList.contains('display') || e.key === ' ' || gameStatus === 'pause') {
       return
     }
 
-    // removePlayer(player.position)
     removeActor(player)
     turnPlayer(e.key)
+
 
     switch (e.key) {
       case 'ArrowRight': 
@@ -1362,7 +1406,21 @@ function init() {
         printPosition()
       },110)
   }
+  
+  function pauseGame(){
+    if (itemToCollect > 0 || !gameEndCover.classList.contains('shade')){
 
+      if (gameStatus === 'play') {
+        pauseCover.classList.add('pause')
+        gameStatus = 'pause'
+      } else {
+        pauseCover.classList.remove('pause')
+        gameStatus = 'play'
+      }
+      
+    } 
+    console.log(gameStatus)
+  }
 
   function turnPlayer(keyPressed){
     //! prevents player image disappearing when wrong key is pressed.
@@ -1387,6 +1445,12 @@ function init() {
 
   //* events
   document.addEventListener('keyup', handleMovementWithKey)
+
+  document.addEventListener('keyup', function(e){
+    if (e.key === ' '){
+      pauseGame()
+    }
+  })
 
   startButton.addEventListener('click', triggerGameStart)
   playAgainButton.addEventListener('click',resetGame)
