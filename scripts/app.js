@@ -1,9 +1,7 @@
 
 
-//! if you can't click, you need to disable cover
-//TODO add alt to images
+//! if you can't click page, you need to disable cover
 
-//! issue of points getting blurry? reason unknown.
 
 function init() {
 
@@ -20,8 +18,7 @@ function init() {
   // [271,326,341,889,1153]
   // const cellsWithMarkers = [368,378,613,504,626,851,865,913,1148,1427,1181,1092,1330,1204]
   const cellsWithMarkers = []
- 
-  //! this is exact opposite of cells with Teleport, so may be redundant
+
   
 
   //* items
@@ -153,7 +150,7 @@ function init() {
       },
       target: null,
       facingDirection: 'down',
-      speedRange: [200,250,300],
+      speedRange: [150,250,300],
       speed: 200,
       horizontalPosition: null,
       verticalPosition: null,
@@ -193,7 +190,7 @@ function init() {
       defaultStatus: 'inactive',
       status: 'inactive',
       knockOutAnimationDisplay: null,
-      moodRange: ['scatter_A','scatter_B','cunning_A','cunning_B','wander'],
+      moodRange: ['scatter_A','aggessive_A','cunning_A','cunning_B','wander'],
       mood: 'wander',
       moodTimer: 0,
       recoveryInterval: null,
@@ -249,7 +246,7 @@ function init() {
       },
       target: null,
       facingDirection: 'down',
-      speedRange: [150,200,200],
+      speedRange: [80,200,200],
       speed: 150,
       horizontalPosition: null,
       verticalPosition: null,
@@ -281,7 +278,7 @@ function init() {
       },
       target: null,
       facingDirection: 'down',
-      speedRange: [100,200,200],
+      speedRange: [50,200,200],
       speed: 100,
       horizontalPosition: null,
       verticalPosition: null,
@@ -289,7 +286,7 @@ function init() {
       defaultStatus: 'inactive',
       status: 'inactive',
       knockOutAnimationDisplay: null,
-      moodRange: ['wander_A','wander_B','wander_C','aggressive_A','cunning_A','wander_D'],
+      moodRange: ['wander_A','wander_B','wander_C','aggressive_A','aggressive_B','cunning_A','wander_D'],
       mood: 'cunning',
       moodTimer: 0,
       recoveryInterval: null,
@@ -361,9 +358,8 @@ function init() {
 
 
 
-  //TODO cpu control
-  //! somthing could trigger cpu status to change (some kind of timer?)
-  //! needs to ensure this doesn't trigger when game is already complete
+  //* cpu control
+
 
   function controlCpuActivation(){
     
@@ -409,8 +405,8 @@ function init() {
   }
 
   
-  //TODO
-  // page display
+
+  //* page display
 
   const playerPositionDisplay = document.querySelector('#player_position')
   const cpuOnePositionDisplay = document.querySelector('#cpu_one_position')
@@ -448,7 +444,7 @@ function init() {
     if (!gameStartCover.classList.contains('display')){   // prevents start button being pressed again once game is already in play
       return
     }
-    playSoundEffect('nalalala.wav')
+    playSoundEffect('nalalala.wav',playerAudio)
     countDown()
 
     setInterval(()=>{   //* readjusts actor display sizes incase player resizes window
@@ -523,7 +519,7 @@ function init() {
     countDownCircle.classList.add('countdown_circle')
 
     setTimeout(() =>{
-      playSoundEffect('321.wav')
+      playSoundEffect('321.wav',playerAudio)
       cover.appendChild(countDownCircle)
       countDownCircle.classList.add('count')
       countDownCircle.innerHTML = '3'
@@ -570,7 +566,7 @@ function init() {
       cpu.position = cpu.defaultPosition 
       cpu.status = cpu.defaultStatus
       cpu.display.className = 'cpuClass' //removes any class aquired in previous play
-      clearInterval(cpu.motionInterval)
+      clearInterval(cpu.motionInterval) 
       
       displayActorImage(cpu)
       cpu.motionInterval = setInterval(
@@ -619,7 +615,7 @@ function init() {
   
 
 
-  //TODO muteki
+  //* invincibility
   
 
   function turnPlayerInvincible(){
@@ -637,7 +633,7 @@ function init() {
         } else {
           player.display.classList.remove('invincible')
           player.staticGif = `${player.facingDirection}.gif`  // change back to normal appearance
-          player.display.innerHTML = `<img src = "assets/${player.staticGif}" ></img>` 
+          player.display.innerHTML = `<img src = "./assets/${player.staticGif}" ></img>` 
           knockOutCpuCounter = 1
           invincibilityTimer = 0
           clearInterval(invincibilityInterval) 
@@ -654,7 +650,7 @@ function init() {
     score += knockOutScore * knockOutCpuCounter
     const scoreEarned = knockOutScore * knockOutCpuCounter
     knockOutCpuCounter += 1
-    playCpuSoundEffect('oh.wav')
+    playSoundEffect('oh.wav',cpuAudio)
 
     setTimeout(() =>{
       cpu.knockOutAnimationDisplay.innerHTML = scoreEarned
@@ -668,7 +664,7 @@ function init() {
     setTimeout(() =>{
       cover.removeChild(cpu.knockOutAnimationDisplay)
       animateSparkle(cpu)  //* creates a star that floats back to default position
-      playCpuSoundEffect('ahh.wav')
+      playSoundEffect('ahh.wav',cpuAudio)
       scoreDisplay.innerHTML = score
       scoreDisplayWrapper.classList.add('animate')
     },1000)
@@ -679,7 +675,6 @@ function init() {
 
     setTimeout(() =>{
       // returns cpu to default position, but harmless until hidden class is removed
-      // removeCpu(cpu.position,cpu.class)
       removeActor(cpu)
     },5000)
 
@@ -691,11 +686,6 @@ function init() {
       cpu.display.classList.remove('hidden')
       cpu.display.classList.add('fadein')
     },7000)
-
-    // setTimeout(() =>{
-    //   cpu.display.classList.remove('fadein')
-    //   changeStatusToActive(cpu)
-    // },10000) //* this bit could be paused?
 
     cpu.recoveryInterval = setInterval(
       function(){
@@ -732,7 +722,7 @@ function init() {
   function animateSparkle(cpu){  //this is the sparkle that appears when cpu is defeated
     cpu.knockOutAnimationDisplay = document.createElement('div')
     cpu.knockOutAnimationDisplay.classList.add('effect_animation_slow')
-    cpu.knockOutAnimationDisplay.innerHTML = '<img src = "assets/sparkle.gif" ></img>'      
+    cpu.knockOutAnimationDisplay.innerHTML = '<img src = "./assets/sparkle.gif" ></img>'      
 
     const cpuCurrentPosition = cells[cpu.position].getBoundingClientRect()
     cpu.knockOutAnimationDisplay.style.top = `${cpuCurrentPosition.y}px`        
@@ -769,19 +759,15 @@ function init() {
     soundControl.classList.toggle('off')
   }
 
-  function playSoundEffect(sound){
+
+  function playSoundEffect(sound,audio){
     if (gameSound === 'on'){
-      playerAudio.src = `./assets/${sound}`
-      playerAudio.play()
+      audio.src = `./assets/${sound}`
+      audio.play()
     }
   }
     
-  function playCpuSoundEffect(sound){
-    if (gameSound === 'on'){
-      cpuAudio.src = `./assets/${sound}`
-      cpuAudio.play()
-    }
-  }
+
 
 
 
@@ -789,7 +775,7 @@ function init() {
   function playerLoseLife(){
     
     
-    playSoundEffect('meow_knockOut.wav')
+    playSoundEffect('meow_knockOut.wav',playerAudio)
     displayKnockOutAnimation(player)
     
     if (player.life > 0){
@@ -802,7 +788,6 @@ function init() {
   function displayKnockOutAnimation(actor){
     actor.display.classList.add('hidden')     // stops actor and prevents further playerLoseLife
 
-    // //TODO checking
     if (actor.knockOutAnimationDisplay !== null){
       cover.removeChild(actor.knockOutAnimationDisplay)
       actor.knockOutAnimationDisplay = null
@@ -811,7 +796,7 @@ function init() {
 
     actor.knockOutAnimationDisplay = document.createElement('div')  // displays hurt animation
     actor.knockOutAnimationDisplay.classList.add('effect_animation_fast')
-    actor.knockOutAnimationDisplay.innerHTML = `<img src = "assets/${actor.knockOutImg}" ></img>`
+    actor.knockOutAnimationDisplay.innerHTML = `<img src = "./assets/${actor.knockOutImg}" ></img>`
     const actorCurrentPosition = cells[actor.position].getBoundingClientRect()
 
     actor.knockOutAnimationDisplay.style.top = `${actorCurrentPosition.y - ((knockOutCpuCounter - 1) * 10)}px`   
@@ -844,7 +829,7 @@ function init() {
 
       const lifeDisplayAnimation = document.createElement('div')
       lifeDisplayAnimation.classList.add('effect_animation_medium')
-      lifeDisplayAnimation.innerHTML = '<img src = "assets/down.gif" ></img>'      
+      lifeDisplayAnimation.innerHTML = '<img src = "./assets/down.gif" ></img>'      
       const lifeCounterPosition = lifeCounters[lifeCounters.length - 1].getBoundingClientRect()
       const currentPlayerCell = cells[player.position].getBoundingClientRect()
       lifeDisplayAnimation.style.top = `${lifeCounterPosition.y}px`
@@ -870,10 +855,6 @@ function init() {
         player.display.classList.remove('hidden') 
         player.display.classList.add('flicker')    // make player flicker state for a duration
 
-        // setTimeout(function(){  
-        //   player.display.classList.remove('flicker')     
-        // },flickerStateDuration)  
-
         flickerInterval = setInterval(
           function(){
             if (gameStatus === 'pause'){
@@ -895,7 +876,7 @@ function init() {
   }
   
   function gameOverEvent(){
-    playSoundEffect('nooo.wav')
+    playSoundEffect('nooo.wav',playerAudio)
     gameStatus = 'play'
     pauseCover.classList.remove('pause')
     // console.log('game over!')
@@ -912,7 +893,7 @@ function init() {
 
   
 
-  //TODO jyunbi
+  //* reset
 
   function resetStaticGifAndDisplayActors(){
     player.staticGif = 'down.gif'
@@ -929,7 +910,7 @@ function init() {
     if ( itemToCollect > 0) {  // prevents unwanted resets when reset button is accidentally pressed by space bar
       return
     }
-    playSoundEffect('nalalala.wav')
+    playSoundEffect('nalalala.wav',playerAudio)
     
     cover.innerHTML = ''  // wipe cover to remove actor images
     playAgainButton.classList.remove('display')
@@ -993,16 +974,6 @@ function init() {
     }
   }
 
-
-  function printPosition(){
-    playerPositionDisplay.innerHTML = `${player.position} Horizontal:${player.horizontalPosition} Vertical:${player.verticalPosition} item left:${itemToCollect} blueStar collected:${blueStarCollected}`
-    // cpuOnePositionDisplay.innerHTML = `${cpuObjects[0].position} Horizontal:${cpuObjects[0].verticalPosition} Vertical:${cpuObjects[0].verticalPosition} cpu motion: ${cpuObjects[0].motion} cpu facing ${cpuObjects[0].facingDirection}`
-    wallPositionDisplay.innerHTML = `${cellsWithWalls}`
-
-    cpuOnePositionDisplay.innerHTML = `cpuOne status:${cpuObjects[0].status} / cpuOne mood:${cpuObjects[0].mood.split('_')[0]} / cpuOne moodTimer:${cpuObjects[0].moodTimer} / cpuOne target:${cpuObjects[0].target} cpuOne speed:${cpuObjects[0].speed}  cpuMotion:${cpuObjects[0].motion}`
-
-    cpuTwoPositionDisplay.innerHTML = `cpuTwo status:${cpuObjects[1].status} / cpuTwo mood:${cpuObjects[1].mood} / cpuTwo moodTimer:${cpuObjects[1].moodTimer} / cpuTwo target:${cpuObjects[1].target} cpuTwo speed:${cpuObjects[1].speed}`
-  }
   
 
   function displayPlayerLife(){
@@ -1010,11 +981,13 @@ function init() {
     for (let i = 0; i < player.life; i++ ){
       const lifeCounter = document.createElement('div')
       lifeCounter.classList.add('life_counter')
-      lifeCounter.innerHTML = '<img src = "assets/down.gif" ></img>'
+      lifeCounter.innerHTML = '<img src = "./assets/down.gif" ></img>'
       lifeDisplay.appendChild(lifeCounter)
       lifeCounters.push(lifeCounter)
     }
   }
+
+
 
 
   //* Animation displaying image on page based on movement in the grid
@@ -1029,7 +1002,7 @@ function init() {
       actor.display.style.transition = '0.3s' 
     }
 
-    actor.display.innerHTML = `<img src = "assets/${actor.staticGif}" ></img>`
+    actor.display.innerHTML = `<img src = "./assets/${actor.staticGif}" ></img>`
 
     const currentActor = cells[actor.position].getBoundingClientRect()
     actor.display.style.top = `${currentActor.y}px`
@@ -1044,9 +1017,9 @@ function init() {
   function changeActorImageAndMoveToNewPosition(actor){
 
     if (actor === player && (actor.facingDirection === 'left' || actor.facingDirection === 'right')) {
-      actor.display.innerHTML = `<img src = "assets/${actor.motionGif}" ></img>`
+      actor.display.innerHTML = `<img src = "./assets/${actor.motionGif}" ></img>`
     } else {
-      actor.display.innerHTML = `<img src = "assets/${actor.staticGif}" ></img>`
+      actor.display.innerHTML = `<img src = "./assets/${actor.staticGif}" ></img>`
     }
 
   
@@ -1054,7 +1027,7 @@ function init() {
     actor.display.style.left = `${cells[actor.position].getBoundingClientRect().x}px`
     
     setTimeout(function(){
-      actor.display.innerHTML = `<img src = "assets/${actor.staticGif}" ></img>`
+      actor.display.innerHTML = `<img src = "./assets/${actor.staticGif}" ></img>`
     },500)
   }
 
@@ -1144,7 +1117,7 @@ function init() {
   }
 
 
-  //TODO tekiugoki
+  //* cpu movement
 
   function cpuMovementDecision(cpu){
 
@@ -1347,8 +1320,8 @@ function init() {
     addCpu(cpu)
     changeActorImageAndMoveToNewPosition(cpu)
 
-    // //TODO backend
-    printPosition()
+    // // //TODO backend
+    // printPosition()
   }
   
  
@@ -1370,14 +1343,14 @@ function init() {
     if (outerCells[player.position].classList.contains(itemObject.class)){
       outerCells[player.position].classList.remove(itemObject.class)
       
-      playSoundEffect(itemObject.sound)
+      playSoundEffect(itemObject.sound,playerAudio)
       
       //animate items when taken
       const currentPlayerPosition = outerCells[player.position].getBoundingClientRect()
       
       const itemTaken = document.createElement('div')
       itemTaken.classList.add('effect_animation')
-      itemTaken.innerHTML = `<img src = "assets/${itemObject.image}.gif" ></img>`
+      itemTaken.innerHTML = `<img src = "./assets/${itemObject.image}.gif" ></img>`
       itemTaken.style.top = `${currentPlayerPosition.y}px`
       itemTaken.style.left = `${currentPlayerPosition.x}px`
       itemTaken.style.height = `${currentPlayerPosition.height}px`
@@ -1411,7 +1384,7 @@ function init() {
   function gameCompletionEvent(){  
     gameStatus = 'play'
     pauseCover.classList.remove('pause')
-    playSoundEffect('talalala.wav')
+    playSoundEffect('talalala.wav',playerAudio)
 
     cpuObjects.forEach(cpu => {
       // cpu.display.classList.add('hidden')
@@ -1425,7 +1398,8 @@ function init() {
 
   }
   
-  //TODO shunkan ido
+
+  //* teleport
 
   function teleport(actor){
     //! possibly make the time taken for ghost to return slower, but maybe later.
@@ -1464,7 +1438,7 @@ function init() {
     })
   }
 
-  //TODO player
+
 
   // * Move Player
   function handleMovementWithKey(e) {
@@ -1568,6 +1542,17 @@ function init() {
   playAgainButton.addEventListener('click',resetGame)
   soundControl.addEventListener('click', toggleMute)
 
+
+
+  //* only used during development
+  function printPosition(){
+    playerPositionDisplay.innerHTML = `${player.position} Horizontal:${player.horizontalPosition} Vertical:${player.verticalPosition} item left:${itemToCollect} blueStar collected:${blueStarCollected}`
+    wallPositionDisplay.innerHTML = `${cellsWithWalls}`
+
+    cpuOnePositionDisplay.innerHTML = `cpuOne status:${cpuObjects[0].status} / cpuOne mood:${cpuObjects[0].mood.split('_')[0]} / cpuOne moodTimer:${cpuObjects[0].moodTimer} / cpuOne target:${cpuObjects[0].target} cpuOne speed:${cpuObjects[0].speed}  cpuMotion:${cpuObjects[0].motion}`
+
+    cpuTwoPositionDisplay.innerHTML = `cpuTwo status:${cpuObjects[1].status} / cpuTwo mood:${cpuObjects[1].mood} / cpuTwo moodTimer:${cpuObjects[1].moodTimer} / cpuTwo target:${cpuObjects[1].target} cpuTwo speed:${cpuObjects[1].speed}`
+  }
  
 
 
@@ -1575,3 +1560,19 @@ function init() {
 
 window.addEventListener('DOMContentLoaded', init)
 
+
+//! redundant code
+
+// function playSoundEffect(sound){
+//   if (gameSound === 'on'){
+//     playerAudio.src = `./assets${sound}`
+//     playerAudio.play()
+//   }
+// }
+
+// function playCpuSoundEffect(sound){
+//   if (gameSound === 'on'){
+//     cpuAudio.src = `./assets${sound}`
+//     cpuAudio.play()
+//   }
+// }

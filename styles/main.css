@@ -144,6 +144,8 @@ body {
   background-color: transparent;
 }
 
+
+
 /* effects */
 
 .flicker {
@@ -271,7 +273,6 @@ p.score_wrapper.animate {
   width:200px;
   height: 50px;
   transition:1s;
-  /* text-align: center; */
   display:flex;
   align-items: center;
   /* border: 1px solid pink */
@@ -303,8 +304,6 @@ p.score_wrapper.animate {
   height:100%;
 }
 
-
-
 .effect_animation {
   transition:1s;
   position:absolute;
@@ -334,7 +333,6 @@ p.score_wrapper.animate {
   position:absolute;
   box-sizing:content-box;
   color:hotpink;
-  /* border:1px solid red; */
 }
 
 .effect_animation_slow > img {
@@ -350,7 +348,6 @@ p.score_wrapper.animate {
   box-sizing:content-box;
   height: 30px;
   width: 30px;
-  /* border: 1px solid red; */
 }
 
 .effect_animation_medium > img {
@@ -420,6 +417,11 @@ p.score_wrapper.animate {
   font-size:30px;
 }
 
+.pause_cover > p:nth-child(2){
+  font-size:12px;
+  margin:-10px;
+}
+
 
 button {
   width: 0px;
@@ -446,7 +448,6 @@ button.display{
   transition:0.3s;
   box-sizing:content-box;
   cursor: pointer;
-  /* border:3px solid hotpink; */
 }
   
 button.display:hover{
@@ -493,7 +494,6 @@ button.display:hover{
   margin:10px; 
   background-color: #4627c9;
   color: white;
-  /* border:1px solid hotpink; */
   border-radius:50px; 
   transition:0.3s;
   box-sizing:content-box;
@@ -519,14 +519,14 @@ button.display:hover{
 
 
 .invincible {
-  filter: grayscale(0) hue-rotate(80deg) contrast(80%) brightness(140%); 
+  /* filter: grayscale(0) hue-rotate(80deg) contrast(80%) brightness(140%);  */
   animation: invincible 2s infinite;
 }
 
 @keyframes invincible {
-  0% {filter: grayscale(0) hue-rotate(180deg) contrast(100%) brightness(100%);}
-  50% {filter: grayscale(0) hue-rotate(0deg) contrast(100%) brightness(500%);}
-  100% {filter: grayscale(0) hue-rotate(80deg) contrast(100%) brightness(100%);}
+  0% {filter: grayscale(0) hue-rotate(0deg) contrast(100%) brightness(100%);}
+  50% {filter: grayscale(0) hue-rotate(100deg) contrast(100%) brightness(500%);}
+  100% {filter: grayscale(0) hue-rotate(230deg) contrast(100%) brightness(100%);}
 }
 
 
@@ -540,11 +540,10 @@ button.display:hover{
 }
 
 .grid_inner_wrapper{
-  /* was 595*/
   /* width: 612px; 
   height: 612px; */
-  width: 76.5vh;
-  height: 76.5vh;
+  /* width: 76.5vh;
+  height: 76.5vh; */
   border:red solid 0px;
   overflow:hidden;
   /* background-color:rgb(153, 252, 247); */
@@ -556,23 +555,19 @@ button.display:hover{
 }
 
 .grid {
-  /* box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2); */
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  /*margin-top:-8.5%; */
-  /* margin-left:-8.5%; */
 
   /* margin-top:-54px;
   margin-left:-54px;
   width: 720px;
   height: 720px;  */
-  /* was 700*/
   
-  margin-top:-6.75vh;
+  /* margin-top:-6.75vh;
   margin-left:-6.75vh;
   width: 90vh;
-  height: 90vh;  /*! this could be added to media query, should be based on width for smart phones anyway so maybe apply this to screen narrower than whatever the page is set?) */
+  height: 90vh;   */
 
 }
 
@@ -582,10 +577,6 @@ button.display:hover{
   height: 2.5%;
   width: 2.5%;
   overflow: hidden;
-  /* display:flex;
-  justify-content:center;
-  align-items:center;
-  text-align: center; */
 }
 
 .cell {
@@ -593,35 +584,28 @@ button.display:hover{
   /* flex-grow: 1; */
   height: 100%;
   width: 100%;
-  /* width: 400%; */
-  /* margin-bottom: 10px; */
-  /* overflow: visible; */
   /* background-color:rgba(100,10,10,0.8); */
   background-repeat: no-repeat;
   background-size:contain;
-  /* background-size:100%; */
 }
 
 
 @media screen and (min-width:0px) {
 
   .grid_inner_wrapper{
-    width: 95.2vw;
-    height: 95.2vw;
+    width: 98.6vw;
+    height: 98.6vw;
     
     /* border-radius:0px; */
   }
   
   .grid {
     
-    margin-top:-8.4vw;
-    margin-left:-8.4vw;
-    width: 112vw;
-    height: 112vw;
-    /* margin-left: -8.823529412vw;
-    margin-right: -8.823529412vw;
-    width: 117.647058824vw;
-    height: 117.647058824vw; */
+    margin-top:-8.7vw;
+    margin-left:-8.7vw;
+    width: 116vw;
+    height: 116vw;
+    
   
   }
 
@@ -641,6 +625,16 @@ button.display:hover{
     width: 720px;
     height: 720px; 
   }
+}
+
+/* backend stuff */
+
+.indicater{
+  position:fixed;
+  bottom:0px;
+  height:100px;
+  width:100%;
+  padding:20px;
 }
 
 /* for development, to be changed to*/
@@ -681,12 +675,4 @@ button.display:hover{
 */
 
 
-/* backend stuff */
 
-.indicater{
-  position:fixed;
-  bottom:0px;
-  height:100px;
-  width:100%;
-  padding:20px;
-}
