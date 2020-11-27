@@ -158,7 +158,7 @@ function init() {
       defaultStatus: 'inactive',
       status: 'inactive',  //* determines if cpu is in motion or not 
       knockOutAnimationDisplay: null,
-      moodRange: ['scatter','aggressive_A','aggressive_B','aggressive_C','wander_A','wander_B','aggressive_D'],    //* determine chase behaviour
+      moodRange: ['scatter_A','aggressive_A','aggressive_B','aggressive_C','wander_A','wander_B','aggressive_D'],    //* determine chase behaviour
       mood: 'scatter',
       moodTimer: 0,
       recoveryInterval: null,
@@ -190,7 +190,7 @@ function init() {
       defaultStatus: 'inactive',
       status: 'inactive',
       knockOutAnimationDisplay: null,
-      moodRange: ['scatter_A','aggessive_A','cunning_A','cunning_B','wander'],
+      moodRange: ['scatter_A','aggessive_A','cunning_A','cunning_B','wander_A'],
       mood: 'wander',
       moodTimer: 0,
       recoveryInterval: null,
@@ -222,7 +222,7 @@ function init() {
       defaultStatus: 'inactive',
       status: 'inactive',
       knockOutAnimationDisplay: null,
-      moodRange: ['scatterA','scatterB','wanderA','aggressive_A','wander_B','scatterC','aggressive_B'],
+      moodRange: ['scatter_A','scatter_B','wander_A','aggressive_A','wander_B','scatter_C','aggressive_B'],
       mood: 'wander',
       moodTimer: 0,
       recoveryInterval: null,
