@@ -15,6 +15,8 @@ body {
   font-size:10px;
 }
 
+
+
 .cover,.game_end_cover,.game_start_cover,.pause_cover {
   position:fixed;
   top:0px;
@@ -132,124 +134,15 @@ body {
   font-size:12px;
 }
 
-
-.grid_outer_wrapper {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color:rgb(16, 13, 54);
-}
-
-.grid_inner_wrapper{
-  /* was 595*/
-  /* width: 612px; 
-  height: 612px; */
-  width: 76.5vh;
-  height: 76.5vh;
-  border:red solid 0px;
-  overflow:hidden;
-  /* background-color:rgb(153, 252, 247); */
-  background-image: url('../assets/map.svg');
-  background-repeat: no-repeat;
-  background-size:contain;
-  align-items: center;
-  border-radius:10px;
-}
-
-.grid {
-  /* box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2); */
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  /*margin-top:-8.5%; */
-  /* margin-left:-8.5%; */
-
-  /* margin-top:-54px;
-  margin-left:-54px;
-  width: 720px;
-  height: 720px;  */
-  /* was 700*/
-  
-  margin-top:-6.75vh;
-  margin-left:-6.75vh;
-  width: 90vh;
-  height: 90vh;  /*! this could be added to media query, should be based on width for smart phones anyway so maybe apply this to screen narrower than whatever the page is set?) */
-
-}
-
-.outer_cell {
-  border: 0px solid lightgrey;
-  /* flex-grow: 1; */
-  height: 2.5%;
-  width: 2.5%;
-  overflow: hidden;
-  /* display:flex;
-  justify-content:center;
-  align-items:center;
-  text-align: center; */
-}
-
-.cell {
-  border: 0px;
-  /* flex-grow: 1; */
-  height: 100%;
-  width: 100%;
-  /* width: 400%; */
-  /* margin-bottom: 10px; */
-  /* overflow: visible; */
-  /* background-color:rgba(100,10,10,0.8); */
-  background-repeat: no-repeat;
-  background-size:contain;
-  /* background-size:100%; */
-}
-
 .cell > div > img {
   height:100%;
   width: 100%;
 }
 
-/* for development, to be changed to*/
-/* .cell.player_down {
-  background-color: lightblue;
-  
-}
-
-.cell.player_left {
-  background-color: lightcoral;
-}
-
-.cell.player_right {
-  background-color: lightseagreen;
-}
-
-.cell.player_up {
-  background-color: lightslategray;
-} */
-
-
 /*!! may be come necessart in the future*/
 .cell.cpuClass {
   background-color: transparent;
 }
-
-.cell.cpu_down {
-  background-color: greenyellow;
-}
-
-.cell.cpu_left {
-  background-color: lightseagreen;
-}
-
-.cell.cpu_right {
-  background-color: limegreen;
-}
-
-.cell.cpu_up {
-  background-color: lightslategray;
-}
-
-
 
 /* effects */
 
@@ -303,8 +196,8 @@ body {
 }
 
 .boundary{
-  background-color:rgb(195, 64, 255);
-  /* background-color:transparent; */
+  /* background-color:rgb(195, 64, 255); */
+  background-color:transparent;
 }
 
 
@@ -327,15 +220,6 @@ body {
   background-size:contain;
 }
 
-/* backend stuff */
-
-.indicater{
-  position:fixed;
-  bottom:0px;
-  height:100px;
-  width:100%;
-  padding:20px;
-}
 
 
 
@@ -605,7 +489,7 @@ button.display:hover{
   bottom:20px;
   right:20px;
   z-index: 6;
-  padding:12px; 
+  padding:10px; 
   margin:10px; 
   background-color: #4627c9;
   color: white;
@@ -626,7 +510,7 @@ button.display:hover{
 
   
 .sound_control:hover{
-  padding:18px; 
+  padding:16px; 
   margin:4px; 
   background-color:white; 
   color:rgb(136, 217, 255);
@@ -634,13 +518,175 @@ button.display:hover{
 }
 
 
-/* .invincible {
+.invincible {
   filter: grayscale(0) hue-rotate(80deg) contrast(80%) brightness(140%); 
-  animation: invincible 1s infinite;
+  animation: invincible 2s infinite;
+}
+
+@keyframes invincible {
+  0% {filter: grayscale(0) hue-rotate(180deg) contrast(100%) brightness(100%);}
+  50% {filter: grayscale(0) hue-rotate(0deg) contrast(100%) brightness(500%);}
+  100% {filter: grayscale(0) hue-rotate(80deg) contrast(100%) brightness(100%);}
+}
+
+
+
+.grid_outer_wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color:rgb(16, 13, 54);
+}
+
+.grid_inner_wrapper{
+  /* was 595*/
+  /* width: 612px; 
+  height: 612px; */
+  width: 76.5vh;
+  height: 76.5vh;
+  border:red solid 0px;
+  overflow:hidden;
+  /* background-color:rgb(153, 252, 247); */
+  background-image: url('../assets/map.svg');
+  background-repeat: no-repeat;
+  background-size:contain;
+  align-items: center;
+  border-radius:10px;
+}
+
+.grid {
+  /* box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2); */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  /*margin-top:-8.5%; */
+  /* margin-left:-8.5%; */
+
+  /* margin-top:-54px;
+  margin-left:-54px;
+  width: 720px;
+  height: 720px;  */
+  /* was 700*/
+  
+  margin-top:-6.75vh;
+  margin-left:-6.75vh;
+  width: 90vh;
+  height: 90vh;  /*! this could be added to media query, should be based on width for smart phones anyway so maybe apply this to screen narrower than whatever the page is set?) */
+
+}
+
+.outer_cell {
+  border: 0px solid lightgrey;
+  /* flex-grow: 1; */
+  height: 2.5%;
+  width: 2.5%;
+  overflow: hidden;
+  /* display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align: center; */
+}
+
+.cell {
+  border: 0px;
+  /* flex-grow: 1; */
+  height: 100%;
+  width: 100%;
+  /* width: 400%; */
+  /* margin-bottom: 10px; */
+  /* overflow: visible; */
+  /* background-color:rgba(100,10,10,0.8); */
+  background-repeat: no-repeat;
+  background-size:contain;
+  /* background-size:100%; */
+}
+
+
+@media screen and (min-width:0px) {
+
+  .grid_inner_wrapper{
+    width: 95.2vw;
+    height: 95.2vw;
+    
+    /* border-radius:0px; */
+  }
+  
+  .grid {
+    
+    margin-top:-8.4vw;
+    margin-left:-8.4vw;
+    width: 112vw;
+    height: 112vw;
+    /* margin-left: -8.823529412vw;
+    margin-right: -8.823529412vw;
+    width: 117.647058824vw;
+    height: 117.647058824vw; */
+  
+  }
+
+}
+
+@media screen and (min-width:612px) {
+  .grid_inner_wrapper{
+
+    width: 612px; 
+    height: 612px;
+
+  }
+  
+  .grid {
+    margin-top:-54px;
+    margin-left:-54px;
+    width: 720px;
+    height: 720px; 
+  }
+}
+
+/* for development, to be changed to*/
+/* .cell.player_down {
+  background-color: lightblue;
+  
+}
+
+.cell.player_left {
+  background-color: lightcoral;
+}
+
+.cell.player_right {
+  background-color: lightseagreen;
+}
+
+.cell.player_up {
+  background-color: lightslategray;
 } */
 
-/* @keyframes invincible {
-  0% {filter: grayscale(0) hue-rotate(80deg) contrast(80%) brightness(140%);}
-  100% {filter: grayscale(0) hue-rotate(80deg) contrast(100%) brightness(500%);}
-} */
 
+/*
+.cell.cpu_down {
+  background-color: greenyellow;
+}
+
+.cell.cpu_left {
+  background-color: lightseagreen;
+}
+
+.cell.cpu_right {
+  background-color: limegreen;
+}
+
+.cell.cpu_up {
+  background-color: lightslategray;
+}
+*/
+
+
+/* backend stuff */
+
+.indicater{
+  position:fixed;
+  bottom:0px;
+  height:100px;
+  width:100%;
+  padding:20px;
+}
