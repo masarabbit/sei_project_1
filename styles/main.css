@@ -424,12 +424,11 @@ button.display:hover{
   z-index:999;
 }
 
-.sound_control {
-  width:60px;
+.sound_control,.touch_control {
   text-align:center;
   position:fixed;
-  bottom:20px;
-  right:20px;
+  /* bottom:20px;
+  right:20px; */
   z-index: 6;
   padding:10px; 
   margin:6px; 
@@ -442,7 +441,15 @@ button.display:hover{
 
 }
 
-.sound_control.off {
+.sound_control {
+  width:60px;
+}
+
+.touch_control {
+  width:90px;
+}
+
+.sound_control.off,.touch_control.off {
   background-color: grey;
   color:white;
   border:0px;
@@ -450,7 +457,7 @@ button.display:hover{
 
 
   
-.sound_control:hover{
+.sound_control:hover,.touch_control:hover{
   padding:16px; 
   margin:0px; 
   background-color:white; 
@@ -567,7 +574,11 @@ span.score{
 .sound_control {
   bottom:10px;
   right:5px;
+}
 
+.touch_control {
+  bottom:10px;
+  right:100px;
 }
 
 .score_outer_wrapper {
@@ -672,6 +683,10 @@ p.score_wrapper.animate {
 
 }
 
+.touch_control {
+  bottom:20px;
+  right:130px;
+}
 
 
 .score_outer_wrapper {
