@@ -467,7 +467,7 @@ function init() {
     setTimeout(() =>{
       displayActorImage(player)
       player.display.classList.add('hidden')
-      addPlayer(player.position)
+      addActor(player)
     },2000) 
     
     setTimeout(() =>{
@@ -575,7 +575,7 @@ function init() {
             cpuMovement(cpu)
           }
         },cpu.speed)
-      addCpu(cpu)
+      addActor(cpu)
     })
   }
   
@@ -681,7 +681,7 @@ function init() {
     setTimeout(() =>{
       cpu.position = cpu.defaultPosition
 
-      addCpu(cpu)
+      addActor(cpu)
       displayActorImage(cpu) //syncs actor image with actual position
       cpu.display.classList.remove('hidden')
       cpu.display.classList.add('fadein')
@@ -950,7 +950,7 @@ function init() {
 
       removeActor(player)
       player.position = player.defaultPosition
-      addPlayer(player.position)
+      addActor(player)
 
       resetStaticGifAndDisplayActors()
       player.display.classList.remove('hidden')
@@ -1032,10 +1032,7 @@ function init() {
   }
 
 
-  function addCpu(cpu) {  // * Add cpu to grid
-    cells[cpu.position].classList.add(cpu.class)
-    setActorPosition(cpu)
-  }
+  
 
 
   function removeActor(actor) {
@@ -1317,7 +1314,7 @@ function init() {
         console.log('cpu invalid command')
     }
   
-    addCpu(cpu)
+    addActor(cpu)
     changeActorImageAndMoveToNewPosition(cpu)
 
     // // //TODO backend
@@ -1327,12 +1324,14 @@ function init() {
  
   //* player related motions
 
-  function addPlayer(position) {
-    cells[position].classList.add(player.class)
-    setActorPosition(player)
-  }
 
-  
+
+
+  function addActor(actor) {  
+    cells[actor.position].classList.add(actor.class)
+    setActorPosition(actor)
+    actor.display.style.zIndex = actor.verticalPosition   //* corrects the overlap
+  }
 
 
   function takeItemAndEarnScore(itemObject){
@@ -1406,11 +1405,7 @@ function init() {
 
     actor.display.classList.add('hidden')
     actor.position = cellsWithTeleportExit[cellsWithTeleport.indexOf(actor.position)]
-    if (actor === player){
-      addPlayer(actor.position)
-    } else {
-      addCpu(actor)
-    }
+    addActor(actor)
 
     setTimeout(function(){
       displayActorImage(actor)
@@ -1484,7 +1479,7 @@ function init() {
 
     setTimeout(
       function(){
-        addPlayer(player.position)
+        addActor(player)
         printPosition()
       },110)
   }
@@ -1555,6 +1550,56 @@ function init() {
   }
  
 
+  function handleMovementWithTouch(direction) {
+
+    if (player.display.classList.contains('hidden') || gameStartCover.classList.contains('display') || gameStatus === 'pause') {
+      return
+    }
+
+    removeActor(player)
+    turnPlayer(direction)
+
+
+    switch (direction) {
+      case 'right': 
+        if (player.horizontalPosition < width - 1 && !isElementInFacingDirection(player,'wall')) player.position++
+        break
+      case 'left': 
+        if (player.horizontalPosition > 0 && !isElementInFacingDirection(player,'wall')) player.position--
+        break
+      case 'up': 
+        if (player.verticalPosition > 0 && !isElementInFacingDirection(player,'wall')) player.position -= width
+        break
+      case 'down': 
+        if (player.verticalPosition < height - 1 && !isElementInFacingDirection(player,'wall') && !isElementInFacingDirection(player,'boundary')) player.position += width
+        break
+      default:
+        console.log('invalid command')
+    }
+
+    if (outerCells[player.position].classList.contains('big_star') && !player.display.classList.contains('flicker')){
+      turnPlayerInvincible()
+    }
+
+    if (outerCells[player.position].classList.contains('blue_star') && !player.display.classList.contains('flicker')){
+      blueStarCollected += 1  //* count blue star collected
+    }
+
+    itemObjects.forEach(itemObject =>{
+      takeItemAndEarnScore(itemObject) 
+    })
+    
+    changeActorImageAndMoveToNewPosition(player)
+
+    setTimeout(
+      function(){
+        addActor(player)
+        printPosition()
+      },110)
+  }
+
+
+
 
 }
 
@@ -1575,4 +1620,14 @@ window.addEventListener('DOMContentLoaded', init)
 //     cpuAudio.src = `./assets${sound}`
 //     cpuAudio.play()
 //   }
+// }
+
+// function addCpu(cpu) {  // * Add cpu to grid
+//   cells[cpu.position].classList.add(cpu.class)
+//   setActorPosition(cpu)
+// }
+
+// function addPlayer(position) {
+//   cells[position].classList.add(player.class)
+//   setActorPosition(player)
 // }

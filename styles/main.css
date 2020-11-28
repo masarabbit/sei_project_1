@@ -105,19 +105,19 @@ body {
   height: 420px;
   /* border:yellow 1px solid; */
   border-radius: 10px;
-  overflow: hidden;
+  /* overflow: hidden; */
   /* background-color: rgb(255, 202, 227); */
 }
 
 .game_start_inner > div {
   width: 100%;
-  height: 300px;
+  height: auto;
   /* background-color: rgba(255, 215, 215, 0.5) ; */
 }
 
 .game_start_inner > div > img {
-  height:100%;
   width:100%;
+  height:100%;
 }
 
 .game_start_inner > nav {
@@ -132,6 +132,7 @@ body {
 
 .game_start_inner > nav > p {
   font-size:12px;
+  text-align: center;
 }
 
 .cell > div > img {
@@ -227,86 +228,22 @@ body {
 
 
 /* status */
-.status{
+.status {
   position:fixed;
   top:0px;
   height:80px;
   width:100%;
-  padding:40px;
   /* border:lightblue 1px solid; */
   display:flex;
   justify-content: space-between; 
   align-items: center;
 }
 
-.score_outer_wrapper {
-  width:400px;
-  /* border: red 1px solid; */
-  display:flex;
-  /*! justify-content: center; */
-  justify-content: flex-end;
-}
 
-p.score_wrapper {
-  color:hotpink;
-  font-size:20px;
-  margin-block-start: 0em;
-  margin-block-end: 0em;
-  display:inline;
-  width:230px;
-  transition:1s;
-  /*! text-align: right; */
-  text-align: right;
-}
-
-span.score{
-  color:pink;
-}
-
-p.score_wrapper.animate {
-  width:400px;
-  font-size:40px;
-}
-
-
-.life_wrapper {
-  width:200px;
-  height: 50px;
-  transition:1s;
-  display:flex;
-  align-items: center;
-  /* border: 1px solid pink */
-}
-
-.life_wrapper > p{
-  margin-block-start: 0em;
-  margin-block-end: 0em;
-  color:hotpink;
-  font-size:20px;
-}
-
-.life{
-  /* border: 1px solid pink; */
-  height: 30px;
-  display:flex;
-  align-items: center;
-  justify-content: space-evenly;
-}
-
-.life_counter {
-  margin-left: 5px;
-  width:30px;
-  height:30px;
-}
-
-.life_counter img {
-  width:100%;
-  height:100%;
-}
 
 .effect_animation {
   transition:1s;
-  position:absolute;
+  position:fixed;
 }
 .effect_animation img, .effect_animation_fast img {
   width:100%;
@@ -315,7 +252,7 @@ p.score_wrapper.animate {
 
 .effect_animation_fast {
   transition:0.3s;
-  position:absolute;
+  position:fixed;
   box-sizing:content-box;
   color:hotpink;
   /* border:1px solid red; */
@@ -330,7 +267,7 @@ p.score_wrapper.animate {
 
 .effect_animation_slow {
   transition:5s;
-  position:absolute;
+  position:fixed;
   box-sizing:content-box;
   color:hotpink;
 }
@@ -344,7 +281,7 @@ p.score_wrapper.animate {
 
 .effect_animation_medium {
   transition:1s;
-  position:absolute;
+  position:fixed;
   box-sizing:content-box;
   height: 30px;
   width: 30px;
@@ -480,7 +417,11 @@ button.display:hover{
 }
 
 .game_end_cover {
-  z-index:4;
+  z-index:4; 
+}
+
+.effect_animation, .effect_animation_fast, .effect_animation_slow, .effect_animation_medium {
+  z-index:999;
 }
 
 .sound_control {
@@ -491,7 +432,7 @@ button.display:hover{
   right:20px;
   z-index: 6;
   padding:10px; 
-  margin:10px; 
+  margin:6px; 
   background-color: #4627c9;
   color: white;
   border-radius:50px; 
@@ -511,7 +452,7 @@ button.display:hover{
   
 .sound_control:hover{
   padding:16px; 
-  margin:4px; 
+  margin:0px; 
   background-color:white; 
   color:rgb(136, 217, 255);
   border:0px;
@@ -590,6 +531,15 @@ button.display:hover{
 }
 
 
+span.score{
+  color:pink;
+}
+
+.life_counter img {
+  width:100%;
+  height:100%;
+}
+
 @media screen and (min-width:0px) {
 
   .grid_inner_wrapper{
@@ -609,6 +559,92 @@ button.display:hover{
   
   }
 
+  .status{
+    padding:5px;
+}
+
+
+.sound_control {
+  bottom:10px;
+  right:5px;
+
+}
+
+.score_outer_wrapper {
+  width:200px;
+  /* border: red 1px solid; */
+  display:flex;
+  /*! justify-content: center; */
+  justify-content: flex-end;
+}
+
+p.score_wrapper {
+  color:hotpink;
+  /* border: red 1px solid; */
+  font-size:15px;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  display:inline;
+  width:180px;
+  transition:1s;
+  /*! text-align: right; */
+  text-align: right;
+}
+
+p.score_wrapper.animate {
+  width:200px;
+  font-size:24px;
+}
+
+.life_wrapper {
+  width:200px;
+  height: 50px;
+  transition:1s;
+  display:flex;
+  align-items: center;
+  /* border: 1px solid pink */
+}
+
+.life_wrapper > p{
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  color:hotpink;
+  font-size:15px;
+}
+
+.life{
+  /* border: 1px solid pink; */
+  height: 24px;
+  display:flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.life_counter {
+  margin-left: 5px;
+  width:24px;
+  height:24px;
+}
+
+.link {
+  z-index:6;
+  position:fixed;
+  bottom:20px;
+  left:5px;
+}
+
+.link a{
+  color:hotpink;
+  font-size:14px;
+  text-decoration:none;
+}
+
+.link a:hover{
+  color: white;
+}
+
+
+
 }
 
 @media screen and (min-width:612px) {
@@ -625,8 +661,83 @@ button.display:hover{
     width: 720px;
     height: 720px; 
   }
+
+  .status{
+    padding:40px;
 }
 
+.sound_control {
+  bottom:20px;
+  right:34px;
+
+}
+
+
+
+.score_outer_wrapper {
+  width:400px;
+  /* border: red 1px solid; */
+  display:flex;
+  /*! justify-content: center; */
+  justify-content: flex-end;
+}
+
+p.score_wrapper {
+  color:hotpink;
+  /* border: red 1px solid; */
+  font-size:20px;
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  display:inline;
+  width:230px;
+  transition:1s;
+  /*! text-align: right; */
+  text-align: right;
+}
+
+p.score_wrapper.animate {
+  width:400px;
+  font-size:40px;
+}
+
+.life_wrapper {
+  width:200px;
+  height: 50px;
+  transition:1s;
+  display:flex;
+  align-items: center;
+  /* border: 1px solid pink */
+}
+
+.life_wrapper > p{
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  color:hotpink;
+  font-size:20px;
+}
+
+.life{
+  /* border: 1px solid pink; */
+  height: 30px;
+  display:flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.life_counter {
+  margin-left: 5px;
+  width:30px;
+  height:30px;
+}
+
+.link {
+  bottom:26px;
+  left:40px;
+}
+
+
+
+}
 /* backend stuff */
 
 .indicater{
