@@ -1366,7 +1366,7 @@ function init() {
         cover.removeChild(itemTaken)
         score += itemObject.score
         scoreDisplay.innerHTML = score
-        scoreDisplayWrapper.classList.toggle('animate')
+        scoreDisplayWrapper.classList.add('animate')
         if (itemToCollect < 1){
           gameCompletionEvent()
           return
@@ -1374,7 +1374,7 @@ function init() {
       },1000)
 
       setTimeout(function(){ // animate score board
-        scoreDisplayWrapper.classList.toggle('animate')
+        scoreDisplayWrapper.classList.remove('animate')
       },1200)
 
     }
