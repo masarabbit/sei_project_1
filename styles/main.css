@@ -300,7 +300,7 @@ body {
   top:30px;
   height:30px;
   width:100%;
-  border:lightblue 1px solid;
+  /* border:lightblue 1px solid; */
   display:flex;
   justify-content: space-between; 
   align-items: center;
