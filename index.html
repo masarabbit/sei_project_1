@@ -22,7 +22,7 @@
           <img src='./assets/title.svg' alt = 'title image with cat blob being chased by dog blobs'>
         </div>
         <nav>
-          <p>(Use arrow keys to collect stars &amp; avoid dog blobs. Press spacebar to pause)</p>
+          <p>Use arrow keys to collect stars &amp; avoid dog blobs. Press spacebar to pause. For smartphones and tablets, turn touch mode on to display direction and pause button.</p>
           <button id="start" class ='display'>start game!</button>
         </nav>
       </div>
@@ -31,12 +31,12 @@
 
   <div class="pause_cover">
     <p>pause</p>
-    <p>(press spacebar to resume game)</p>
+    <p id="pause_instruction">(press spacebar to resume game)</p>
   </div>
 
   <div class="game_end_cover">
     <div class="game_end_text_wrapper">
-      <p class="game_end_text">game over!</p>
+      <p class="game_end_text"></p>
     </div>
     <nav>
       <button id="play_again">
@@ -60,6 +60,18 @@
     <div class="grid_inner_wrapper">
         <div class="grid"></div>
     </div>
+
+    <div class="arrow_wrapper">
+      <div>
+        <div class="left"><img src= "./assets/arrow_left.svg" alt="left arrow"></div>
+        <div class="middle_arrows">
+          <div class="up"><img src= "/assets/arrow_up.svg" alt="up arrow"></div>
+          <div class="down"><img src= "/assets/arrow_down.svg" alt="down arrow"></div>
+        </div>
+        <div class="right"><img src= "/assets/arrow_right.svg" alt="right arrow"></div> 
+      </div>
+    </div>
+
   </main>
   
   <div class="indicater">
@@ -72,9 +84,12 @@
     <!-- <p>player position:<span class='player position'></span></p> -->
   </div>
   
-  <div class="sound_control">sound: ON</div>
-  <!-- <div class="touch_control off">touch mode: OFF</div> -->
-  <div class="link"><a href= "http://www.ma5a.com/" target="blank"> ma5a.com</a></div>
+  <div class="button_wrapper">
+    <div class="sound_control">sound: ON</div>
+    <div class="touch_control off">touch mode: OFF</div>
+    <div class="pause_button">pause</div>
+    <div class="link"><a href= "http://www.ma5a.com/" target="blank"> ma5a.com</a></div>
+  </div>
 
 </body>
 </html>

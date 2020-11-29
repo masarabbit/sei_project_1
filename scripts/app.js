@@ -70,6 +70,18 @@ function init() {
   const playerAudio = document.querySelector('#player_audio')
   const cpuAudio = document.querySelector('#cpu_audio')
   const soundControl = document.querySelector('.sound_control')
+  const gameStatusDisplay = document.querySelector('.status')
+  const buttonWrapper = document.querySelector('.button_wrapper')
+
+  //* touch
+  const arrowWrapper = document.querySelector('.arrow_wrapper')
+  const touchModeControl = document.querySelector('.touch_control')
+  const left = document.querySelector('.left')
+  const up = document.querySelector('.up')
+  const right = document.querySelector('.right')
+  const down = document.querySelector('.down')
+  const pauseButton = document.querySelector('.pause_button')
+  const pauseInstruction = document.querySelector('#pause_instruction')
 
   //* status display
   const scoreDisplay = document.querySelector('.score')
@@ -77,6 +89,7 @@ function init() {
   let score = 0
   let gameStatus = 'play'  //!for pause setting.
   let gameSound = 'on'
+  let touchMode = 'off'
   let invincibilityTimer = 0
   let flickerTimer = 0
   const lifeDisplay = document.querySelector('#life')
@@ -759,6 +772,24 @@ function init() {
     soundControl.classList.toggle('off')
   }
 
+  function toggleTouch(){
+    if (touchMode === 'on') {
+      touchMode  = 'off'
+      touchModeControl.innerHTML = 'touch mode: OFF'
+      pauseInstruction.innerHTML = '(press spacebar to resume game)'
+    } else {
+      touchMode = 'on'
+      touchModeControl.innerHTML = 'touch mode: ON'
+      pauseInstruction.innerHTML = '(press resume button to resume game)'
+    }
+    touchModeControl.classList.toggle('off')
+    gameStatusDisplay.classList.toggle('touch')
+    buttonWrapper.classList.toggle('touch')
+    touchModeControl.classList.toggle('touch')
+    arrowWrapper.classList.toggle('touch')
+    pauseButton.classList.toggle('touch')
+  }
+
 
   function playSoundEffect(sound,audio){
     if (gameSound === 'on'){
@@ -768,7 +799,7 @@ function init() {
   }
     
 
-
+  
 
 
 
@@ -913,6 +944,7 @@ function init() {
     playSoundEffect('nalalala.wav',playerAudio)
     
     cover.innerHTML = ''  // wipe cover to remove actor images
+    document.querySelector('.game_end_text').innerHTML = ''  // gameEnd message delete
     playAgainButton.classList.remove('display')
     gameEndCover.classList.remove('shade') // hide game over message
     score = 0
@@ -1434,127 +1466,20 @@ function init() {
   }
 
 
-
+  let direction = null
   // * Move Player
-  function handleMovementWithKey(e) {
+  function handleMovement(e) {
 
     if (player.display.classList.contains('hidden') || gameStartCover.classList.contains('display') || e.key === ' ' || gameStatus === 'pause') {
       return
     }
-
-    removeActor(player)
-    turnPlayer(e.key)
-
-
-    switch (e.key) {
-      case 'ArrowRight': 
-        if (player.horizontalPosition < width - 1 && !isElementInFacingDirection(player,'wall')) player.position++
-        break
-      case 'ArrowLeft': 
-        if (player.horizontalPosition > 0 && !isElementInFacingDirection(player,'wall')) player.position--
-        break
-      case 'ArrowUp': 
-        if (player.verticalPosition > 0 && !isElementInFacingDirection(player,'wall')) player.position -= width
-        break
-      case 'ArrowDown': 
-        if (player.verticalPosition < height - 1 && !isElementInFacingDirection(player,'wall') && !isElementInFacingDirection(player,'boundary')) player.position += width
-        break
-      default:
-        console.log('invalid command')
-    }
-
-    if (outerCells[player.position].classList.contains('big_star') && !player.display.classList.contains('flicker')){
-      turnPlayerInvincible()
-    }
-
-    if (outerCells[player.position].classList.contains('blue_star') && !player.display.classList.contains('flicker')){
-      blueStarCollected += 1  //* count blue star collected
-    }
-
-    itemObjects.forEach(itemObject =>{
-      takeItemAndEarnScore(itemObject) 
-    })
     
-    changeActorImageAndMoveToNewPosition(player)
-
-    setTimeout(
-      function(){
-        addActor(player)
-        printPosition()
-      },110)
-  }
-  
-  function pauseGame(){
-    if (itemToCollect > 0 || !gameEndCover.classList.contains('shade')){
-
-      if (gameStatus === 'play') {
-        pauseCover.classList.add('pause')
-        gameStatus = 'pause'
-      } else {
-        pauseCover.classList.remove('pause')
-        gameStatus = 'play'
-      }
-      
-    } 
-    // console.log(gameStatus)
-  }
-
-  function turnPlayer(keyPressed){
-    //! prevents player image disappearing when wrong key is pressed.
-    if (keyPressed !== 'ArrowLeft' && keyPressed !== 'ArrowRight' && keyPressed !== 'ArrowUp' && keyPressed !== 'ArrowDown'){
-      return
-    }
-    const directionString = keyPressed.replace('Arrow','').toLowerCase()
-    player.facingDirection = directionString
-    player.class = `player_${directionString}`
-
-    if (!player.display.classList.contains('invincible')){ 
-      player.staticGif = `${directionString}.gif`
-      if (directionString === 'left' || directionString === 'right'){
-        player.motionGif = `${directionString}_shift.gif`
-      }
-
+    if (e === 'left' || e === 'up' || e === 'right' || e === 'down'){
+      direction = e
     } else {
-
-      player.staticGif = `invi_${directionString}.gif`
-      
-      if (directionString === 'left' || directionString === 'right'){
-        player.motionGif = `invi_${directionString}_shift.gif`
-      }
+      direction = e.key.replace('Arrow','').toLowerCase()
     }
-  }
-
-  //* events
-  document.addEventListener('keyup', handleMovementWithKey)
-
-  document.addEventListener('keyup', function(e){
-    if (e.key === ' '){
-      pauseGame()
-    }
-  })
-
-  startButton.addEventListener('click', triggerGameStart)
-  playAgainButton.addEventListener('click',resetGame)
-  soundControl.addEventListener('click', toggleMute)
-
-
-
-  //* only used during development
-  function printPosition(){
-    playerPositionDisplay.innerHTML = `${player.position} Horizontal:${player.horizontalPosition} Vertical:${player.verticalPosition} item left:${itemToCollect} blueStar collected:${blueStarCollected}`
-    wallPositionDisplay.innerHTML = `${cellsWithWalls}`
-
-    cpuOnePositionDisplay.innerHTML = `cpuOne status:${cpuObjects[0].status} / cpuOne mood:${cpuObjects[0].mood.split('_')[0]} / cpuOne moodTimer:${cpuObjects[0].moodTimer} / cpuOne target:${cpuObjects[0].target} cpuOne speed:${cpuObjects[0].speed}  cpuMotion:${cpuObjects[0].motion}`
-
-    cpuTwoPositionDisplay.innerHTML = `cpuTwo status:${cpuObjects[1].status} / cpuTwo mood:${cpuObjects[1].mood} / cpuTwo moodTimer:${cpuObjects[1].moodTimer} / cpuTwo target:${cpuObjects[1].target} cpuTwo speed:${cpuObjects[1].speed}`
-  }
- 
-
-  function handleMovementWithTouch(direction) {
-
-    if (player.display.classList.contains('hidden') || gameStartCover.classList.contains('display') || gameStatus === 'pause') {
-      return
-    }
+    
 
     removeActor(player)
     turnPlayer(direction)
@@ -1597,6 +1522,107 @@ function init() {
         printPosition()
       },110)
   }
+  
+  function pauseGame(){
+    if (itemToCollect > 0 || !gameEndCover.classList.contains('shade')){
+
+      if (gameStatus === 'play') {
+        pauseCover.classList.add('pause')
+        gameStatus = 'pause'
+      } else {
+        pauseCover.classList.remove('pause')
+        gameStatus = 'play'
+      }
+      
+    } 
+    // console.log(gameStatus)
+  }
+
+  function pauseWithPauseButton() {
+    pauseGame()
+    if (gameStatus === 'play'){
+      pauseButton.innerHTML = 'pause'
+    } else {
+      pauseButton.innerHTML = 'resume'
+    }
+  }
+
+  function turnPlayer(keyPressed){
+    //! prevents player image disappearing when wrong key is pressed.
+    if (keyPressed !== 'ArrowLeft' && keyPressed !== 'ArrowRight' && keyPressed !== 'ArrowUp' && keyPressed !== 'ArrowDown' && keyPressed !== 'left' && keyPressed !== 'up' && keyPressed !== 'right' && keyPressed !== 'down'){
+      return
+    }
+    const directionString = keyPressed.replace('Arrow','').toLowerCase()
+    player.facingDirection = directionString
+    player.class = `player_${directionString}`
+
+    if (!player.display.classList.contains('invincible')){ 
+      player.staticGif = `${directionString}.gif`
+      if (directionString === 'left' || directionString === 'right'){
+        player.motionGif = `${directionString}_shift.gif`
+      }
+
+    } else {
+
+      player.staticGif = `invi_${directionString}.gif`
+      
+      if (directionString === 'left' || directionString === 'right'){
+        player.motionGif = `invi_${directionString}_shift.gif`
+      }
+    }
+  }
+
+  //* events
+  document.addEventListener('keyup', handleMovement)
+
+  document.addEventListener('keyup', function(e){
+    if (e.key === ' '){
+      pauseGame()
+    }
+  })
+
+  startButton.addEventListener('click', triggerGameStart)
+  playAgainButton.addEventListener('click',resetGame)
+  soundControl.addEventListener('click', toggleMute)
+  touchModeControl.addEventListener('click', toggleTouch)
+  pauseButton.addEventListener('click', pauseWithPauseButton)
+  
+  //* touch events
+  left.addEventListener('click', moveLeftWithTouch)
+  up.addEventListener('click', moveUpWithTouch)
+  right.addEventListener('click', moveRightWithTouch)
+  down.addEventListener('click', moveDownWithTouch)
+  
+  function moveLeftWithTouch(){
+    handleMovement('left')
+  }
+
+  function moveUpWithTouch(){
+    handleMovement('up')
+  }
+
+  function moveRightWithTouch(){
+    handleMovement('right')
+  }
+
+  function moveDownWithTouch(){
+    handleMovement('down')
+  }
+
+  //* only used during development
+  function printPosition(){
+    playerPositionDisplay.innerHTML = `${player.position} Horizontal:${player.horizontalPosition} Vertical:${player.verticalPosition} item left:${itemToCollect} blueStar collected:${blueStarCollected}`
+    wallPositionDisplay.innerHTML = `${cellsWithWalls}`
+
+    cpuOnePositionDisplay.innerHTML = `cpuOne status:${cpuObjects[0].status} / cpuOne mood:${cpuObjects[0].mood.split('_')[0]} / cpuOne moodTimer:${cpuObjects[0].moodTimer} / cpuOne target:${cpuObjects[0].target} cpuOne speed:${cpuObjects[0].speed}  cpuMotion:${cpuObjects[0].motion}`
+
+    cpuTwoPositionDisplay.innerHTML = `cpuTwo status:${cpuObjects[1].status} / cpuTwo mood:${cpuObjects[1].mood} / cpuTwo moodTimer:${cpuObjects[1].moodTimer} / cpuTwo target:${cpuObjects[1].target} cpuTwo speed:${cpuObjects[1].speed}`
+  }
+ 
+
+  
+
+
 
 
 
@@ -1630,4 +1656,54 @@ window.addEventListener('DOMContentLoaded', init)
 // function addPlayer(position) {
 //   cells[position].classList.add(player.class)
 //   setActorPosition(player)
+// }
+
+
+//! combined with handleMovement
+// function handleMovementWithTouch(direction) {
+
+//   if (player.display.classList.contains('hidden') || gameStartCover.classList.contains('display') || gameStatus === 'pause') {
+//     return
+//   }
+
+//   removeActor(player)
+//   turnPlayer(direction)
+
+
+//   switch (direction) {
+//     case 'right': 
+//       if (player.horizontalPosition < width - 1 && !isElementInFacingDirection(player,'wall')) player.position++
+//       break
+//     case 'left': 
+//       if (player.horizontalPosition > 0 && !isElementInFacingDirection(player,'wall')) player.position--
+//       break
+//     case 'up': 
+//       if (player.verticalPosition > 0 && !isElementInFacingDirection(player,'wall')) player.position -= width
+//       break
+//     case 'down': 
+//       if (player.verticalPosition < height - 1 && !isElementInFacingDirection(player,'wall') && !isElementInFacingDirection(player,'boundary')) player.position += width
+//       break
+//     default:
+//       console.log('invalid command')
+//   }
+
+//   if (outerCells[player.position].classList.contains('big_star') && !player.display.classList.contains('flicker')){
+//     turnPlayerInvincible()
+//   }
+
+//   if (outerCells[player.position].classList.contains('blue_star') && !player.display.classList.contains('flicker')){
+//     blueStarCollected += 1  //* count blue star collected
+//   }
+
+//   itemObjects.forEach(itemObject =>{
+//     takeItemAndEarnScore(itemObject) 
+//   })
+  
+//   changeActorImageAndMoveToNewPosition(player)
+
+//   setTimeout(
+//     function(){
+//       addActor(player)
+//       printPosition()
+//     },110)
 // }

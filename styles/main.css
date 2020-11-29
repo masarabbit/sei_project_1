@@ -122,7 +122,7 @@ body {
 
 .game_start_inner > nav {
   width: 100%;
-  height: 120px;
+  height: 140px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -223,20 +223,88 @@ body {
   background-size:contain;
 }
 
+.arrow_wrapper {
+  /* position:fixed; */
+  z-index: 7;
+  width: 100%;
+  bottom: 50px;
+  height: 0px;
+  /* border: 1px solid white; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow:hidden;
+  transition:0.5s;
+}
 
+.arrow_wrapper.touch {
+  height: 140px;
+}
+
+
+
+.arrow_wrapper > div {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 200px;
+  height: 100%;
+  /* border: 1px solid hotpink; */
+}
+
+.middle_arrows{
+  height: 100%;
+  /* border: 1px solid yellow; */
+  display:flex;
+  flex-direction:column;
+  justify-content: space-evenly;
+}
+
+.left,.right {
+  width:90px;
+  height: 53px;
+}
+
+.up,.down {
+  width:53px;
+  height: 90px;
+}
+
+.left img,.up img,.right img,.down img {
+  width: 100%;
+  height: 100%;
+}
+
+.left:hover,.up:hover,.right:hover,.down:hover {
+  filter: brightness(500%);
+}
+
+/* .arrow_wrapper.touch {
+  
+} */
+
+
+.status.touch {
+  top:50px;
+}
+
+.button_wrapper.touch {
+  top:0px;
+}
 
 
 
 /* status */
 .status {
   position:fixed;
-  top:0px;
-  height:80px;
+  top:30px;
+  height:30px;
   width:100%;
-  /* border:lightblue 1px solid; */
+  border:lightblue 1px solid;
   display:flex;
   justify-content: space-between; 
   align-items: center;
+  transition:1s;
 }
 
 
@@ -405,7 +473,7 @@ button.display:hover{
   z-index:1;
 }
 .game_start_cover.display {
-  z-index:5;
+  z-index:7;
 }
 .indicater{
   z-index: 2;
@@ -424,12 +492,16 @@ button.display:hover{
   z-index:999;
 }
 
-.sound_control,.touch_control {
+.status {
+  z-index:6;
+}
+
+.sound_control,.touch_control,.pause_button.touch {
   text-align:center;
-  position:fixed;
+  position:absolute;
   /* bottom:20px;
   right:20px; */
-  z-index: 6;
+  z-index: 8;
   padding:10px; 
   margin:6px; 
   background-color: #4627c9;
@@ -438,15 +510,16 @@ button.display:hover{
   transition:0.3s;
   box-sizing:content-box;
   cursor: pointer;
-
+  font-size:13px;
+  /* align-self:flex-end; */
 }
 
 .sound_control {
-  width:60px;
+  width:80px;
 }
 
 .touch_control {
-  width:90px;
+  width:120px;
 }
 
 .sound_control.off,.touch_control.off {
@@ -455,9 +528,20 @@ button.display:hover{
   border:0px;
 }
 
+.pause_button{
+  width:0px;
+  overflow:hidden;
+  padding:0;
+}
+
+.pause_button.touch{
+  width:60px;
+}
+
+
 
   
-.sound_control:hover,.touch_control:hover{
+.sound_control:hover,.touch_control:hover,.pause_button:hover{
   padding:16px; 
   margin:0px; 
   background-color:white; 
@@ -484,6 +568,7 @@ button.display:hover{
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   background-color:rgb(16, 13, 54);
 }
 
@@ -567,18 +652,27 @@ span.score{
   }
 
   .status{
-    padding:5px;
+    padding: 0 5px;
 }
 
 
 .sound_control {
-  bottom:10px;
+  /* bottom:10px; */
   right:5px;
 }
 
+
 .touch_control {
-  bottom:10px;
-  right:100px;
+  /* bottom:20px; */
+  right:121px;
+}
+
+.touch_control.touch {
+  right:217px;
+}
+
+.pause_button {
+  right:121px;
 }
 
 .score_outer_wrapper {
@@ -638,15 +732,17 @@ p.score_wrapper.animate {
 }
 
 .link {
-  z-index:6;
-  position:fixed;
-  bottom:20px;
+  position:absolute;
+  /* bottom:14px; */
+  height:100%;
   left:5px;
+  top:0px;
 }
 
 .link a{
   color:hotpink;
   font-size:14px;
+  line-height:50px;
   text-decoration:none;
 }
 
@@ -654,7 +750,15 @@ p.score_wrapper.animate {
   color: white;
 }
 
-
+.button_wrapper{
+  position:fixed;
+  top:calc(100% - 63px);
+  width:100%;
+  height:50px;
+  z-index:7;
+  /* border: 1px solid hotpink; */
+  transition:0.5s;
+}
 
 }
 
@@ -674,18 +778,25 @@ p.score_wrapper.animate {
   }
 
   .status{
-    padding:40px;
+    padding:0 40px;
 }
 
 .sound_control {
-  bottom:20px;
+  /* bottom:20px; */
   right:34px;
-
 }
 
 .touch_control {
-  bottom:20px;
-  right:130px;
+  /* bottom:20px; */
+  right:150px;
+}
+
+.touch_control.touch {
+  right:246px;
+}
+
+.pause_button {
+  right:150px;
 }
 
 
@@ -746,7 +857,7 @@ p.score_wrapper.animate {
 }
 
 .link {
-  bottom:26px;
+  /* bottom:6px; */
   left:40px;
 }
 
