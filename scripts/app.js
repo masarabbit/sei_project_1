@@ -83,7 +83,7 @@ function init() {
   const down = document.querySelector('.down')
   const pauseButton = document.querySelector('.pause_button')
   const pauseInstruction = document.querySelector('#pause_instruction')
-  const linkWrapper = document.querySelector('.link')
+  // const linkWrapper = document.querySelector('.link')
 
   //* status display
   const scoreDisplay = document.querySelector('.score')
@@ -790,7 +790,7 @@ function init() {
     touchModeControl.classList.toggle('touch')
     arrowWrapper.classList.toggle('touch')
     pauseButton.classList.toggle('touch')
-    linkWrapper.classList.toggle('touch')
+    // linkWrapper.classList.toggle('touch')
   }
 
 

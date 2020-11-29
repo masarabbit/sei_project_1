@@ -557,6 +557,8 @@ button.display:hover{
   width:0px;
   overflow:hidden;
   padding:0;
+  z-index:8;
+  bottom: 10px;
 }
 
 .pause_button.touch{
@@ -675,11 +677,13 @@ span.score{
 
 .touch_control.touch {
   /* right:217px; */
-  left:5px;
+  /* left:5px; */
+  right:121px;
 }
 
 .pause_button {
-  right:121px;
+  /* right:121px; */
+  right: 5px;
 }
 
 .score_outer_wrapper {
@@ -739,18 +743,18 @@ p.score_wrapper.animate {
 }
 
 .link {
-  position:fixed;
-  z-index:8;
-  bottom:14px;
+  position:absolute;
+  /* z-index:8; */
+  /* bottom:14px; */
   height:50px;
   left:5px;
   transition:0.5;
-  /* top:0px; */
+  top:0px;
 }
 
-.link.touch {
+/* .link.touch {
   bottom:5px;
-}
+} */
 
 .link a{
   color:hotpink;
@@ -808,11 +812,13 @@ p.score_wrapper.animate {
 
 .touch_control.touch {
   /* right:246px; */
-  left:34px;
+  right:150px;
+  /* left:34px; */
 }
 
 .pause_button {
-  right:150px;
+  /* right:150px; */
+  right: 34px;
 }
 
 
