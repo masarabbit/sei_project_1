@@ -406,7 +406,12 @@ body {
 
 }
 
-.tweetbox{
+.tweetbox {
+  display:none;
+}
+
+.tweetbox.display{
+  display: visible;
   margin-left: 10px;
   width:auto;
   /* border:solid 1px red; */
@@ -415,6 +420,8 @@ body {
   /* height:35px; */
   margin:10px; 
   }
+
+ 
 
 iframe {
   border-radius: 50px;

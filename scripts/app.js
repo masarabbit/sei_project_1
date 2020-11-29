@@ -72,6 +72,7 @@ function init() {
   const soundControl = document.querySelector('.sound_control')
   const gameStatusDisplay = document.querySelector('.status')
   const buttonWrapper = document.querySelector('.button_wrapper')
+  // const twitterBox = document.querySelector('.tweetbox')
 
   //* touch
   const arrowWrapper = document.querySelector('.arrow_wrapper')
@@ -918,7 +919,8 @@ function init() {
     gameOverText.innerHTML = 'game over!!'
     gameOverText.classList.add('display')
     gameEndCover.classList.add('shade')
-  
+
+    // twitterBox.classList.add('display')
   }
 
 
@@ -940,9 +942,15 @@ function init() {
   
   //* reset all timers, including cpu 
   function resetGame(){
-    if ( itemToCollect > 0) {  // prevents unwanted resets when reset button is accidentally pressed by space bar
+    // console.log('test1')
+
+    // if (itemToCollect > 0 && player.life > 0 
+    if (!gameEndCover.classList.contains('shade')) {  // prevents unwanted resets when reset button is accidentally pressed by space bar
       return
     }
+
+    // console.log('test2')
+
     playSoundEffect('nalalala.wav',playerAudio)
     
     cover.innerHTML = ''  // wipe cover to remove actor images
@@ -953,7 +961,6 @@ function init() {
     clearInterval(moodInterval)
     clearInterval(constantCheck)
     clearInterval(constantCheckDespitePause)
-   
 
     clearInterval(invincibilityInterval)     //*remove various class attached in prior play
     clearInterval(flickerInterval)
@@ -992,6 +999,8 @@ function init() {
       constantActions()
 
     },2200)
+
+    // twitterBox.classList.remove('display')
 
   }
 
@@ -1428,7 +1437,8 @@ function init() {
     gameCompletionText.innerHTML = 'complete!!'
     gameCompletionText.classList.add('display')
     gameEndCover.classList.add('shade')
-
+    
+    // twitterBox.classList.add('display')
   }
   
 
