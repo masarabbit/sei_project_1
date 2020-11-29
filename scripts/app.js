@@ -822,10 +822,10 @@ function init() {
   function displayKnockOutAnimation(actor){
     actor.display.classList.add('hidden')     // stops actor and prevents further playerLoseLife
 
-    if (actor.knockOutAnimationDisplay !== null){
-      cover.removeChild(actor.knockOutAnimationDisplay)
-      actor.knockOutAnimationDisplay = null
-    }
+    // if (actor.knockOutAnimationDisplay !== null){
+    //   cover.removeChild(actor.knockOutAnimationDisplay)
+    //   actor.knockOutAnimationDisplay = null
+    // }   //! this fix seems to make player disappear in very fast collision, so removed.
   
 
     actor.knockOutAnimationDisplay = document.createElement('div')  // displays hurt animation
