@@ -6,8 +6,7 @@ Index:
 [Technologies Used](./README.md#technologies%20used)
 
 
-## #Overview
-
+# Overview 
 At General Assemblies Software Engineering course, we were given the challenge to make a game in one week using HTML, CSS and Javascript. We were given couple of games to choose from, so I decided to base my game on Pac-Man. 
 
 In case you are not familiar with the 80s arcade classic, the game involves navigating a maze to eat all the food, while running away from colourful ghosts. When Pac-Man eats an Energizer, he can eat the ghosts too - when this happens, the ghost runs away from Pac-Man instead.
@@ -15,14 +14,12 @@ In case you are not familiar with the 80s arcade classic, the game involves navi
 We were allowed to use remade assets for this project, but I really wanted to make my own to showcase my illustration. Since I didn’t have much time, I designed a simple character called Cat Blob to be my Pac-Man, and Dog Blobs to replace the ghosts (I don’t really have a back story for them, but I imagine them to be aliens resembling cats and dogs. Cat Blob’s mission is collect all the stars in the cave, guarded by the Dog Blobs. )
 
 
-
-## #Brief
+# Brief
 * To make a game based on Pac-Man, where the player is able to clear at least one board
 * The player's score should be displayed at the end of the game
 
 
-
-## #Technologies Used
+# Technologies Used
 * HTML5 with HTML5 audio
 * CSS3 with animation
 * JavaScript (ES6)
