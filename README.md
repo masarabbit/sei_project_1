@@ -69,9 +69,7 @@ To overcome the issue described earlier, I decided to place a transparent div wh
 	  <img src="README_images/fig1.png” alt=“diagram2” />
 </p>
 
-	* Div with character image is positioned based on the grid underneath it.
-	* Using the movement logic explained earlier, character class is removed from the original div, and added to the div next to it.
-	* Once character’s new position is determined, the character image div is repositioned. The character image div has ‘transition’ in the css, which means the movement between the grids are fully animated.
+Div with character image is positioned based on the grid underneath it. Using the movement logic explained earlier, character class is removed from the original div, and added to the div next to it. Once character’s new position is determined, the character image div is repositioned. The character image div has ‘transition’ in the css, which means the movement between the grids are fully animated.
 
 <p align="center">
 	  <img src="README_images/fig2.png” alt=“diagram3” />
