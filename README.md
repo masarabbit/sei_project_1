@@ -1,9 +1,17 @@
 # Project 1: Cat Blob
 
 Index:
-[Overview](./README.md#overview)
-[Brief](./README.md#brief)
-[Technologies Used](./README.md#technologies%20used)
+* [Overview](./README.md#overview)
+* [Brief](./README.md#brief)
+* [Technologies Used](./README.md#technologies-used)
+* [Approach](./README.md#approach)
+	* [Navigation Using Grids](./README.md#navigation-using-grids)
+	* [Using Additional Layers](./README.md#using-additional-layers)
+	* [Sprite Animation](./README.md#sprite-animation)
+	* [Items](./README.md#items)
+	* [Creating the Maze](./README.md#creating-the-maze)
+	* [Dog Blob’s Movement](./README.md#dog-blobs-movement)
+	* [Dog Blob’s Personality](./README.md#dog-blobs-personality)
 
 
 ## Overview 
@@ -51,30 +59,35 @@ There are pros and cons for this approach:
 	* When characters move, it appears to ‘jump’ from div to div (ie animation becomes jittery) 
 
 <p align="center">
-	  <img src="README_images/game_play.gif">
+	  <img src="README_images/game_play.gif" alt=“diagram1” />
 </p>
 
 ### Using Additional layers
 To overcome the issue described earlier, I decided to place a transparent div which covered the whole page, which contained divs that were positioned based on the character movement in the grid. Here’s a diagram to explain this approach:
 
-![](README/BFDB3881-06D3-440C-9322-EBB046BFC153.png)
+<p align="center">
+	  <img src="README_images/fig1.png” alt=“diagram2” />
+</p>
 
 	* Div with character image is positioned based on the grid underneath it.
 	* Using the movement logic explained earlier, character class is removed from the original div, and added to the div next to it.
 	* Once character’s new position is determined, the character image div is repositioned. The character image div has ‘transition’ in the css, which means the movement between the grids are fully animated.
 
-![](README/0B503AF7-9F69-42C2-ADF6-09461CC938DE.png)
-
+<p align="center">
+	  <img src="README_images/fig2.png” alt=“diagram3” />
+</p>
 
 As a result, the animation became smoother:
 
-![](README/gameplay_2.gif)
-
+<p align="center">
+	  <img src="README_images/gameplay_2.gif" alt=“diagram4” />
+</p>
 
 However, this technique had a strange side effect where the character position became misaligned with the actual position when browser windows were resized. This happened because the character image was positioned using .getBoundingClientRect() on the div, meaning that the position was relative to the browser window.
 
-![](README/screen_size.gif)
-
+<p align="center">
+	  <img src="README_images/screen_size.gif" alt=“diagram5” />
+</p>
 
 To fix this issue, function below was called every second using setInterval. It checked the position of each ‘actors’ (both Cat Blob and Dog Blob) and made sure the images lined up with their corresponding grid. I eventually made the grid responsive, so I made sure the image heights matched the grid as well. In retrospect, I think I could have called this function by using EventListener triggered by window resize, but setInterval worked fine since you wouldn’t resize the window too often during game play.
 
@@ -87,7 +100,9 @@ To fix this issue, function below was called every second using setInterval. It 
 ```
 
 
-![](README/screen_size_2.gif)
+<p align="center">
+	  <img src="README_images/screen_size_2.gif" alt=“diagram6” />
+</p>
 
 
 Further codes were added for the Dog Blobs, to make sure the images’ transition kept up with the position changing. By default the transition was 0.3 seconds, but sometimes the Dog Blobs moved faster, so transition was adjusted to keep everything in sync.
@@ -114,11 +129,15 @@ There are further techniques used for animating the sprites:
 	* The function for turning the character will work even if there is a wall in the destination (ie, character can face different direction whilst staying in the same position). 
 	* This was important because some of the ghost’s logic relied on knowing which way the player was facing.
 
-![](README/sprites.gif)
+<p align="center">
+	  <img src="README_images/sprites.gif" alt=“diagram7” />
+</p>
 
 * When Cat Blob moved left or right, the image momentarily changed to gifs below before moving to the new position, adding further variation to the movement
 
-![](README/sprites2.gif)
+<p align="center">
+	  <img src="README_images/sprites2.gif" alt=“diagram8” />
+</p>
 
 When the Cat Blob becomes ‘invincible’, following css class with keyframe animation was added.  Brightness and hue of the gif was animated to make it look like it was sparkling, effect similar to when Super Mario becomes invincible  (the gif itself was changed to a pink image to take advantage of the hue-rotate, since it would not work well on a white image)
 ```css
@@ -133,7 +152,9 @@ When the Cat Blob becomes ‘invincible’, following css class with keyframe an
 }
 ```
 
-![](README/invincible.gif)
+<p align="center">
+	  <img src="README_images/invincible.gif" alt=“diagram8” />
+</p>
 
 
 
@@ -146,7 +167,9 @@ When Cat Blob enters a div with an item, function is called looping through an a
 **Item Animation**
 Each items are rendered by adding background image to a div.  When item is taken,  function is triggered for animation effect - the star flies from its position to where the score board is, visualising that score is earned through these items (if you have ever played Donkey Kong, it’s similar to how the banana is animated each time player collects them).
 
-![](README/score.gif)
+<p align="center">
+	  <img src="README_images/score.gif" alt=“diagram9” />
+</p>
 
 This animation is achieved by first removing the item gif from the grid, then immediately creating a new div containing the item gif in the same place. After the div is created, position is reassigned to where the score board is. This div also has CSS transition, so it appears to fly from one position to another. When the item reaches the score board, a class is added to the score board to enlarge it. Everything is timed by using setTimeout.
 
@@ -208,7 +231,9 @@ Position of each elements were planned by designing the maze in Google Sheets.
 
 The maze went through number of iterations through trial and error. One of my earlier approach involved looked like below. 
 
-![](README/C9413AEE-E34A-498F-8836-3B0BFAC06BCD.png)
+<p align="center">
+	  <img src="README_images/fig3.png” alt=“diagram10” />
+</p>
 
 Through test plays, following issues were found:
 	* Dog Blobs circulated similar routes, resulting in some areas becoming ‘unguarded’. 
@@ -225,23 +250,31 @@ In the original Pac-Man, when Pac-Man or ghosts went through a tunnel at the rig
 **More ‘open spaces’**  
 Due to how the Dog Blobs’ behaviours were coded, it did not work well when it was surrounded by too many walls. To fix this, I simply made some areas of the maze wider.
 
-![](README/62F59A28-E40C-48CE-A173-5EF70A7ECEE1.png)
+<p align="center">
+	  <img src="README_images/fig4.png” alt=“diagram11” />
+</p>
 
 Grids drawn in the spreadsheets were converted into arrays through a formula in the spreadsheet, then removing excess data such as spaces using VScode:
 
-![](README/CE965B7B-0212-4181-8B66-D8B5F0AAE201.png)
+<p align="center">
+	  <img src="README_images/fig5.png” alt=“diagram12” />
+</p>
 
-![](README/88E26C75-46EA-4D80-BA0F-45803D9CEF09.png)
+<p align="center">
+	  <img src="README_images/fig6.png” alt=“diagram13” />
+</p>
 
-![](README/CD5FF6C5-B209-45F9-8841-6B839001B110.png)
+<p align="center">
+	  <img src="README_images/fig7.png” alt=“diagram14” />
+</p>
 
 
 I made sure the walls were at least 2 divs thick - this enabled me to make the sprite slightly larger than the grid. Background image for the maze was drawn with this in mind. 
 
-![](README/sprite_size.png)
-
-![](README/sprite_size_2.png)
-
+<p align="center">
+	  <img src="README_images/sprite_size.png” alt=“diagram15” />
+	  <img src="README_images/sprite_size_2.png” alt=“diagram16” />
+</p>
 
 
 ### Dog Blob’s Movement
@@ -279,7 +312,7 @@ In other words, it starts with Scatter for 5 seconds, then becomes Aggressive fo
 
 Also, each Dog Blobs ‘wake up’ from their nests based on progression of the  game:
 
-	* **Dog Blob One:** wakes up 1 second after game starts
+	* <strong>Dog Blob One:</strong> wakes up 1 second after game starts
 	* **Dog Blob Two:** wakes up once Cat Blob collects 20 items
 	* **Dog Blob Three:** wakes up once Cat Blob collects 2 blue stars
 	* **Dog Blob Four:** wakes up 2 seconds after either Dog Blob Two and/or Three wakes up
@@ -301,9 +334,14 @@ Because of how the characters are displayed on the screen, when Cat Blob moved n
 
 This was because Dog Blobs had higher z-index than Cat Blob.
 
-![](README/F5B95EF2-55E2-4157-9C96-F3793C1A61C8.png)
+<p align="center">
+	  <img src="README_images/fig8.png” alt=“diagram17” />
+</p>
+
 
 To fix this, z-index is adjusted each time characters moved around the maze - lower it is in the grid, higher the z-index becomes, ensuring that images overlap correctly.
 
-![](README/E74E0204-83F4-42F4-A58E-FD3141241B35.png)
+<p align="center">
+	  <img src="README_images/fig9.png” alt=“diagram18” />
+</p>
 
