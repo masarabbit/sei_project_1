@@ -6,7 +6,7 @@ Index:
 [Technologies Used](./README.md#technologies%20used)
 
 
-# Overview 
+## Overview 
 At General Assemblies Software Engineering course, we were given the challenge to make a game in one week using HTML, CSS and Javascript. We were given couple of games to choose from, so I decided to base my game on Pac-Man. 
 
 In case you are not familiar with the 80s arcade classic, the game involves navigating a maze to eat all the food, while running away from colourful ghosts. When Pac-Man eats an Energizer, he can eat the ghosts too - when this happens, the ghost runs away from Pac-Man instead.
@@ -14,12 +14,12 @@ In case you are not familiar with the 80s arcade classic, the game involves navi
 We were allowed to use remade assets for this project, but I really wanted to make my own to showcase my illustration. Since I didn’t have much time, I designed a simple character called Cat Blob to be my Pac-Man, and Dog Blobs to replace the ghosts (I don’t really have a back story for them, but I imagine them to be aliens resembling cats and dogs. Cat Blob’s mission is collect all the stars in the cave, guarded by the Dog Blobs. )
 
 
-# Brief
+## Brief
 * To make a game based on Pac-Man, where the player is able to clear at least one board
 * The player's score should be displayed at the end of the game
 
 
-# Technologies Used
+## Technologies Used
 * HTML5 with HTML5 audio
 * CSS3 with animation
 * JavaScript (ES6)
@@ -36,9 +36,9 @@ We were allowed to use remade assets for this project, but I really wanted to ma
 
 
 
-## #Approach
+## Approach
 
-### #Navigation Using Grids
+### Navigation Using Grids
 Starting point was to use grids to enable player to move around the map. Grids were made from square divs mapped into a wrapper. Player and ghosts are positioned on the grid by adding a background image using a class. By using EventListener triggered by ‘keyup’, the player is able to move up, down, left or right by pressing the corresponding arrow keys on the keyboard. For example if up key is pressed, class is removed from a div and added to a div above the original div. This creates the illusion of the characters moving. To ensure the player (and ghosts) remains on the grid, logic was added to restrict the movement if the div in the moving direction contained a class called ‘wall’. Same logic was used to create the maze.
 
 There are pros and cons for this approach:
@@ -54,7 +54,7 @@ There are pros and cons for this approach:
 	  <img src="README_images/game_play.gif">
 </p>
 
-### #Using Additional layers
+### Using Additional layers
 To overcome the issue described earlier, I decided to place a transparent div which covered the whole page, which contained divs that were positioned based on the character movement in the grid. Here’s a diagram to explain this approach:
 
 ![](README/BFDB3881-06D3-440C-9322-EBB046BFC153.png)
@@ -106,7 +106,7 @@ Further codes were added for the Dog Blobs, to make sure the images’ transitio
 
 
 
-### #Sprite Animation
+### Sprite Animation
 There are further techniques used for animating the sprites:
 
 * Character image used a looped gif (rough created in Procreate, final version created with Illustrator and Photoshop).
@@ -137,7 +137,7 @@ When the Cat Blob becomes ‘invincible’, following css class with keyframe an
 
 
 
-### #Items
+### Items
 There are three items in the game - ‘normal star’, ‘blue star’ and ‘big star’. The game is completed by collecting all stars in the maze. There were number of functions tailored for these items:
 
 **Item effect**
@@ -190,7 +190,7 @@ Similar animation technique is used when player loses life, and when Cat Blob ca
 
 
 
-### #Creating the Maze
+### Creating the Maze
 
 As explained earlier, the maze is created by mapping divs into a grid.  To position the walls and items, following function was used: 
 
@@ -244,7 +244,7 @@ I made sure the walls were at least 2 divs thick - this enabled me to make the s
 
 
 
-### #Dog Blob’s Movement
+### Dog Blob’s Movement
 
 I think the most interesting thing about Pac-Man is how the ghosts behave - in the original, each ghosts had different set of behaviour, which were influenced by player’s movement around the maze, and alternated using timers. 
 
@@ -267,7 +267,7 @@ When Cat Blob becomes invincible,  the direction array is filtered to ensure Dog
 
 
 
-### #Dog Blob’s Personality
+### Dog Blob’s Personality
 
 Each Dog Blobs are given its unique pattern of mood. For example, Dog Blob One has the following ‘mood range’:
 ```
@@ -286,7 +286,7 @@ Also, each Dog Blobs ‘wake up’ from their nests based on progression of the 
 	* **Dog Blob Five:** wakes up once Cat Blob collects 225 items (Dog Blob Five is very fast when Aggressive, so players should try to collect stars near his nest before he wakes up…)
 
 
-### #Notable Bugs
+### Notable Bugs
 
 There were many bugs whilst putting together this game - I have noted below ones I found interesting, with comments on how they were resolved.
 
