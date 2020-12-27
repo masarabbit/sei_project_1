@@ -51,7 +51,7 @@ There are pros and cons for this approach:
 **Cons**
 	* When characters move, it appears to ‘jump’ from div to div (ie animation becomes jittery) 
 
-[](“._README_images_game_play.gif”)
+![](README_images/game_play.gif)
 
 
 ### Using Additional layers
