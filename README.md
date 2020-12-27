@@ -1,11 +1,10 @@
 # Project 1: Cat Blob
 
 Index:
- [Overview](#overview)
+[Overview](./README.md#overview)
 
 
-
-## [Overview]{#overview}
+## #Overview
 
 At General Assemblies Software Engineering course, we were given the challenge to make a game in one week using HTML, CSS and Javascript. We were given couple of games to choose from, so I decided to base my game on Pac-Man. 
 
@@ -14,9 +13,11 @@ In case you are not familiar with the 80s arcade classic, the game involves navi
 We were allowed to use remade assets for this project, but I really wanted to make my own to showcase my illustration. Since I didn’t have much time, I designed a simple character called Cat Blob to be my Pac-Man, and Dog Blobs to replace the ghosts (I don’t really have a back story for them, but I imagine them to be aliens resembling cats and dogs. Cat Blob’s mission is collect all the stars in the cave, guarded by the Dog Blobs. )
 
 
+
 ## Brief
 * To make a game based on Pac-Man, where the player is able to clear at least one board
 * The player's score should be displayed at the end of the game
+
 
 
 ## Technologies Used
@@ -33,6 +34,7 @@ We were allowed to use remade assets for this project, but I really wanted to ma
 * Procreate
 * Illustrator
 * Google Sheets
+
 
 
 ## Approach
@@ -103,6 +105,7 @@ Further codes were added for the Dog Blobs, to make sure the images’ transitio
 
 
 
+
 ### Sprite Animation
 There are further techniques used for animating the sprites:
 
@@ -131,6 +134,7 @@ When the Cat Blob becomes ‘invincible’, following css class with keyframe an
 ```
 
 ![](Project%201%20Cat%20Blob/invincible.gif)
+
 
 
 ### Items
@@ -184,7 +188,6 @@ This animation is achieved by first removing the item gif from the grid, then im
 
 Similar animation technique is used when player loses life, and when Cat Blob catches Dog Blobs during invincibility. 
 
-<enter gifs here>
 
 
 ### Creating the Map
@@ -240,6 +243,7 @@ I made sure the walls were at least 2 divs thick - this enabled me to make the s
 ![](Project%201%20Cat%20Blob/sprite_size_2.png)
 
 
+
 ### Dog Blob’s Movement
 
 I think the most interesting thing about Pac-Man is how the ghosts behave - in the original, each ghosts had different set of behaviour, which were influenced by player’s movement around the maze, and alternated using timers. 
@@ -260,6 +264,7 @@ Dog Blob’s movement is ultimately random - it is decided by using Math.random 
 However, this direction array is influenced by number of factors, such as Dog Blob’s mood and Cat Blob’s position within the maze. For example, if  Cat Blob is position to the right of Dog Blob, direction ‘right’ is pushed into the direction array, making it more likely for Dog Blob to move right.
 
 When Cat Blob becomes invincible,  the direction array is filtered to ensure Dog Blob do not move towards Cat Blob 
+
 
 
 ### Dog Blob’s Personality
