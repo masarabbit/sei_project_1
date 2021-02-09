@@ -18,7 +18,7 @@
 * [Final Thoughts](./README.md#final-thoughts)
 
 
-[Link to the game](http://www.ma5a.com/)
+(Click [here](http://www.ma5a.com/catblob/) to see project)
 
 
 <br/>
@@ -363,7 +363,7 @@ To fix this, z-index is adjusted each time characters moved around the maze - lo
 
 Since this was a one week project, there were several features I couldn't complete in time, such as bonus items, moveable walls etc. I did however squeeze in some sounds (sound effects created by chip-munking my own voice in Garage Band) and a touch mode for mobile and tablets. As well as gaining more confidence working with the DOM and learning new JavaScript Tricks, I ended up with several code snippets which may lead to new projects. At one point I added a feature to create and delete walls by clicking on the grids, which could be used to guide the movement of Dog Blobs. This was taken out of the final game, but I think could be developed into a different kind of game. Working out the logic for Dog Blob's behaviour required a lot of thought, and I think similar concept could be adapted for non-game websites, perhaps for making dynamic contents that react to user's interaction.
 
-[Link to the game](http://www.ma5a.com/)
+(Click [here](http://www.ma5a.com/catblob/) to see project)
 
 <p align="center">
 	  <img src="README_images/game_play_3.png" alt="cat blob game play" width="600" style="border-radius:8px" />
