@@ -48,7 +48,7 @@ We were allowed to use premade assets for this project, but I really wanted to m
 * GitHub
 * Google Fonts
 * Google Chrome dev tools
-* VScode
+* VS Code
 * Eslint
 * Photoshop
 * Procreate

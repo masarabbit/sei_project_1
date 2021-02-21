@@ -447,7 +447,7 @@ function init() {
     }
   } 
 
-  //* initialise
+  //* initialise *//
 
   let constantCheck = null
   let constantCheckDespitePause = null
