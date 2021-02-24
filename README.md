@@ -19,8 +19,10 @@
 	* [Wins and Challenges](./README.md#wins-and-challenges)
 	* [Key Learnings](./README.md#key-learnings)
 
+<br />
+<br />
 
-(Click [here](http://www.ma5a.com/catblob/) to see project.)
+Click [here](http://www.ma5a.com/catblob/) to see project.
 
 
 <br/>
